@@ -1,4 +1,4 @@
-package File.File_reader;
+package File_reader;
 
 public class Read {
 
