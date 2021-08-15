@@ -270,10 +270,12 @@ public class Main extends Application{
 	   window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
 	   });
+	   
+	   File_reader.Write_encoded.Main(null);
 		
 		try {
-			window.setY(257.0);
-			window.setX(2677.0);
+			//window.setY(257.0);
+			//window.setX(2677.0);
 			window.getIcons().add(new Image("images/LOGO_half.png"));
 			window.setScene(scene1);
 			window.setTitle("F1 Tracker");
