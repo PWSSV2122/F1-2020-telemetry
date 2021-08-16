@@ -162,6 +162,12 @@ public class Packet_recieve {
 			        Data_saves.Packet_store.Session_Packet_store.put(String.valueOf(Session_Packet_int), Session_Packet);
 			        Session_Packet_int = Session_Packet_int + 1;
 			        //nog checken
+			        
+			    	final int session_test = Session_Packet_int;
+					Thread Session = new Thread(() -> {
+						File_reader.Write_encoded.Session(session_test);
+					});
+					Session.start();
 				}
 				
 				if (e[5] == 02) {
@@ -210,7 +216,7 @@ public class Packet_recieve {
 					if (current_lap == (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car)) {
 					} else {
 						current_lap = (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car);
-						int[] Write_encode_int = new int[] {Motion_Packet_int, Session_Packet_int, Lap_Data_Packet_int, Event_Packet_int, Participants_Packet_int, Car_Setups_Packet_int, 
+						int[] Write_encode_int = new int[] {Motion_Packet_int, Lap_Data_Packet_int, Event_Packet_int, Participants_Packet_int, Car_Setups_Packet_int, 
 								Car_Telemetry_Packet_int, Car_Status_Packet_int, Final_Classification_Packet_int, Lobby_Info_Packet_int};
 						Thread Write_encode = new Thread(() -> {
 							File_reader.Write_encoded.Main(Write_encode_int);
