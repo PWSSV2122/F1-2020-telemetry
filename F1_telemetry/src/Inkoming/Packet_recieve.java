@@ -22,6 +22,7 @@ public class Packet_recieve {
 		int Lobby_Info_Packet_int = 0;
 		int first_car = 0;
 		int current_lap = 0;
+		HashMap<String, Integer> participants = new HashMap<String, Integer>();
 		try {
 			DatagramSocket socket = new DatagramSocket(20777);
 			while (test2 == true) {
@@ -163,11 +164,13 @@ public class Packet_recieve {
 			        Session_Packet_int = Session_Packet_int + 1;
 			        //nog checken
 			        
-			    	final int session_test = Session_Packet_int;
-					Thread Session = new Thread(() -> {
-						File_reader.Write_encoded.Session(session_test);
-					});
-					Session.start();
+			        if (Session_Packet_int == 750) {
+				    	final int session_test = Session_Packet_int;
+						Thread Session = new Thread(() -> {
+							File_reader.Write_encoded.Session(session_test);
+						});
+						Session.start();
+			        }
 				}
 				
 				if (e[5] == 02) {
@@ -216,10 +219,10 @@ public class Packet_recieve {
 					if (current_lap == (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car)) {
 					} else {
 						current_lap = (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car);
-						int[] Write_encode_int = new int[] {Motion_Packet_int, Lap_Data_Packet_int, Event_Packet_int, Participants_Packet_int, Car_Setups_Packet_int, 
+						int[] Write_encode_int = new int[] {Motion_Packet_int, Lap_Data_Packet_int, Car_Setups_Packet_int, 
 								Car_Telemetry_Packet_int, Car_Status_Packet_int, Final_Classification_Packet_int, Lobby_Info_Packet_int};
 						Thread Write_encode = new Thread(() -> {
-							File_reader.Write_encoded.Main(Write_encode_int);
+							File_reader.Write_encoded.Main(Write_encode_int, participants);
 						});
 						Write_encode.start();
 					}
@@ -274,6 +277,7 @@ public class Packet_recieve {
 					Data_saves.Packet_store.Event_Packet.putAll(Event_Packet);
 					Data_saves.Packet_store.Event_Packet_store.put(String.valueOf(Event_Packet_int), Event_Packet);
 					Event_Packet_int = Event_Packet_int + 1;
+					//nog een mechanisme maken voor opslaan
 					//nog checken
 				}
 				
@@ -298,6 +302,15 @@ public class Packet_recieve {
 					Data_saves.Packet_store.Participants_Packet_store.put(String.valueOf(Participants_Packet_int), Participants_Packet);
 					Participants_Packet_int = Participants_Packet_int + 1;
 					//nog checken
+			        if (Participants_Packet_int == 300) {
+				    	final int participants_packet = Participants_Packet_int;
+						Thread Session = new Thread(() -> {
+							File_reader.Write_encoded.Participants(participants_packet);
+						});
+						Session.start();
+			        }
+			        
+			        participants.put(String.valueOf(Participants_Packet_int), (int)e[24]);
 				}
 				
 				if (e[5] == 05) {
