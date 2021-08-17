@@ -16,8 +16,8 @@ public class Write_encoded {
 	static int Event_Packet_int;
 	static int Participants_Packet_int;
 	static int[] Car_Setups_Packet_int = new int[] {0,0};
-	static int Car_Telemetry_Packet_int;
-	static int Car_Status_Packet_int;
+	static int[] Car_Telemetry_Packet_int = new int[] {0,0};
+	static int[] Car_Status_Packet_int = new int[] {0,0};
 	static int Final_Classifiaction_Packet_int;
 	static int Lobby_Info_Packet_int;
 	
@@ -104,20 +104,24 @@ public class Write_encoded {
 			output_Session_packet += "id : " + (i + Session_Packet_int) + "\n";
 			HashMap<String, Object> Session_Packet = new HashMap<String, Object>();
 			Session_Packet.putAll(Packet_store.Session_Packet_store.get(String.valueOf(i + Session_Packet_int)));
-			if (i % 10 == 0 || i == 0) {
+			if ((i + Session_Packet_int) % 10 == 0 || (i + Session_Packet_int) == 0) {
 				Session_Packet_full.putAll(Session_Packet);
 				for (int o = 0; i < Names.length; i++) {
 					output_Session_packet += Session_Packet_Encode.get(Names[o]) + Session_Packet.get(Names[o]) + "\n";
 				}
 			} else {
 				for (int o = 0; i < Names.length; i++) {
+					int change = 0;
 					if (Session_Packet.get(Names[o]) != Session_Packet_full.get(Names[o])) {
 						output_Session_packet += Session_Packet_Encode.get(Names[o]) + Session_Packet.get(Names[o]) + "\n";
+						change++;
+					}
+					if (change >= 1) {
+						output_Session_packet += "car id: " + o + "\n";
 					}
 				}
 			}
 			//marshal zones en wheater events worden niet opgenomen
-			//laten weten voor welk loop numer de change is 
 		}
 	}
 	
@@ -166,20 +170,25 @@ public class Write_encoded {
 		for (int i = 0; i < Participants_Packet_num - Participants_Packet_int; i++) {
 			output_Participants_Packet += "id : " + (i + Participants_Packet_int) + "\n";
 			HashMap<String, Object> Participants_Packet = new HashMap<String, Object>();
-			output_Participants_Packet += Participants_Packet_Encode.get(Names[0]) + Participants_Packet.get(Names[0]) + "\n";
 			Participants_Packet.putAll(Packet_store.Participants_Packet_store.get(String.valueOf(i + Participants_Packet_int)));
-			for (int o = 0; o < (int)Participants_Packet.get("m_numActiveCars"); i++) {
-				for (int p = 0; i < 7; i++) {
-					if (i % 10 == 0 || i == 0) {
-						Participants_full.putAll(Participants_Packet);
+			output_Participants_Packet += Participants_Packet_Encode.get(Names[0]) + Participants_Packet.get(Names[0]) + "\n";
+			if ((i + Participants_Packet_int) % 10 == 0 || (i + Participants_Packet_int) == 0) {
+				Participants_full.putAll(Participants_Packet);
+				for (int o = 0; o < (int)Participants_Packet.get("m_numActiveCars"); i++) {
+					for (int p = 0; i < 7; i++) {
 						output_Participants_Packet += Participants_Packet_Encode.get(Names[p + 1]) + Participants_Packet.get(Names[p + 1]) + "\n";
-					} else {
-						if (Participants_Packet.get(Names[p + 1]) != Participants_full.get(Names[p + 1])) {
-							output_Participants_Packet += Participants_Packet_Encode.get(Names[p + 1]) + Participants_Packet.get(Names[p + 1]) + "\n";
-						}
 					}
-					//if uit de loop halen
-					//laten weten voor welk loop numer de change is 
+				}
+			} else {
+				for (int o = 0; o < (int)Participants_Packet.get("m_numActiveCars"); i++) {
+					int change = 0;
+					for (int p = 0; i < 7; i++) {
+						output_Participants_Packet += Participants_Packet_Encode.get(Names[p + 1]) + Participants_Packet.get(Names[p + 1]) + "\n";
+						change++;
+					}
+					if (change >= 1) {
+						output_Participants_Packet += "car id: " + o + "\n";
+					}
 				}
 			}
 		}
@@ -195,7 +204,7 @@ public class Write_encoded {
 			output_Car_Setups_Packet += "Participants : " + participants.get(String.valueOf(Car_Setups_Packet_int[1])) + "\n";
 			HashMap<String, Object> Car_setup = new HashMap<String, Object>();
 			Car_setup.putAll(Packet_store.Car_Setups_Packet_store.get(String.valueOf(i + Car_Setups_Packet_int[0])));
-			if (i % 10 == 0 || i == 0) {
+			if ((i + Car_Setups_Packet_int[0]) % 10 == 0 || (i + Car_Setups_Packet_int[0]) == 0) {
 				Car_Setup_full.putAll(Car_setup);
 				for (int o = 0; o < participants.get(String.valueOf(Car_Setups_Packet_int[1])); o++) {
 					for (int p = 0; p < 22; p++) {
@@ -205,20 +214,41 @@ public class Write_encoded {
 			} else {
 				for (int o = 0; o < participants.get(String.valueOf(Car_Setups_Packet_int[1])); o++) {
 					for (int p = 0; p < 22; p++) {
+						int change = 0;
 						if (Car_setup.get(Names[p]) != Car_Setup_full.get(Names[p])) {
 							output_Car_Setups_Packet += Car_Setups_Packet_Encode.get(Names[p]) + Car_setup.get(Names[p]) + "\n";
+							change++;
+						}
+						if (change >= 1) {
+							output_Car_Setups_Packet += "car id: " + o + "\n";
 						}
 					}
 				}
 			}
-			//laten weten voor welk loop numer de change is 
-
+		}
+	}
+	
+	public static void Final_Classification(int Final_Classification_int) {
+		get_encode();
+		String output_Final_Classification_Packet = "";
+		String[] Names = Names(null);
+		for (int i = 0; i < Final_Classification_int; i++) {
+			output_Final_Classification_Packet += "id : " + (i + Final_Classifiaction_Packet_int) + "\n";
+			HashMap<String, Object> Final_Classification = new HashMap<String, Object>();
+			Final_Classification.putAll(Packet_store.Final_Classification_Packet_store.get(String.valueOf(i + Final_Classifiaction_Packet_int)));
+			output_Final_Classification_Packet += Final_Classification_Packet_Encode.get(Names[0]) + Final_Classification.get(Names[0]) + "\n";
+			for (int o = 0; o < (int) Final_Classification.get(Names[0]); o++) {
+				for (int p = 0; p < Names.length; p++) {
+					output_Final_Classification_Packet += Final_Classification_Packet_Encode.get(Names[p + 1]) + Final_Classification.get(Names[p + 1]) + "\n";
+				}
+			}
 		}
 	}
 	
 	public static void Main(int ids[], HashMap<String, Integer> participants) {
 		get_encode();
-		String output_Motion_Packet = ""; 
+		String output_Motion_Packet = "";
+		String[] Names = Names(null);
 		for (int i = 0; i < ids[0] - Motion_Packet_int[0]; i++) {
 			HashMap<String, Object> Motion_Packet = new HashMap<String, Object>();
 			if ((i + Motion_Packet_int[0]) % send_rate * 5 == 0) {
@@ -227,7 +257,6 @@ public class Write_encoded {
 			Motion_Packet.putAll(Packet_store.Motion_Packet_store.get(String.valueOf(i + Motion_Packet_int[0])));
 			output_Motion_Packet += "id : " + (i + Motion_Packet_int[0]) + "\n";
 			output_Motion_Packet += "participants" + participants.get(String.valueOf(Motion_Packet_int[1])) + "\n";
-			String[] Names = Names(null);
 			for (int o = 0; o < (int) participants.get(String.valueOf(Motion_Packet_int[1])); o++) {
 				for (int p = 0; 0 < 18; i++) {
 					output_Motion_Packet += Motion_Packet_Encode.get(Names[p]) + Motion_Packet.get(Names[p] + "_" + o) + "\n";
@@ -240,8 +269,8 @@ public class Write_encoded {
 		Motion_Packet_int[0] = ids[0] + Motion_Packet_int[0];
 		
 		String output_Lap_Data_Packet = "";
+		Names = Names(null);
 		for(int i = 0; i < ids[1] - Lap_Data_Packet_int[0]; i++) {
-			output_Lap_Data_Packet += "id : " + i + "\n";
 			HashMap<String, Object> Lap_Data_Packet = new HashMap<String, Object>();
 			if ((i + Lap_Data_Packet_int[0]) % send_rate * 5 == 0) {
 				Lap_Data_Packet_int[1]++;
@@ -249,7 +278,6 @@ public class Write_encoded {
 			Lap_Data_Packet.putAll(Packet_store.Lap_Data_Packet_store.get(String.valueOf(i + Lap_Data_Packet_int[0])));
 			output_Lap_Data_Packet += "id : " + (i + Lap_Data_Packet_int[0]) + "\n";
 			output_Lap_Data_Packet += "Participants :" + participants.get(String.valueOf(Lap_Data_Packet_int[1])) + "\n";
-			String[] Names = Names(null);
 			for (int o = 0; o < (int) participants.get(String.valueOf(Lap_Data_Packet_int[1])); o++) {
 				for (int p = 0; i < 27; i++) {
 					output_Lap_Data_Packet += Lap_Data_Packet_Encode.get(Names[p]) + Lap_Data_Packet.get(Names[p]) + "\n"; 
@@ -257,5 +285,91 @@ public class Write_encoded {
 			}
 		}
 		Lap_Data_Packet_int[0] = ids[1] + Lap_Data_Packet_int[0];
+		
+		String output_Car_Telemetry_Packet = "";
+		Names = Names(null);
+		HashMap<String, Object> Car_Telemetry_full = new HashMap<String, Object>();
+		for (int i = 0; i < ids[2] - Car_Telemetry_Packet_int[0]; i++) {
+			output_Car_Telemetry_Packet += "id : " + (i + Car_Telemetry_Packet_int[0]) + "\n";
+			output_Car_Telemetry_Packet += "Participants : " + participants.get(String.valueOf(Car_Telemetry_Packet_int[1])) + "\n";
+			if ((i + Car_Telemetry_Packet_int[0]) % send_rate * 5 == 0) {
+				Car_Telemetry_Packet_int[1]++;
+			}
+			HashMap<String, Object> Car_Telemetry = new HashMap<String, Object>();
+			Car_Telemetry.putAll(Packet_store.Car_Telemetry_Packet_store.get(String.valueOf( + Car_Telemetry_Packet_int[0])));
+			if ((i + Car_Telemetry_Packet_int[0]) % 10 == 0 || (i + Car_Telemetry_Packet_int[0] == 0)) {
+				for (int o = 0; o < 4; o++) {
+					output_Car_Telemetry_Packet += Car_Telemetry_Packet_Encode.get(Names[o]) + Car_Telemetry.get(Names[o]) + "\n";
+				}
+				Car_Telemetry_full.putAll(Car_Telemetry);
+				for (int o = 0; o < participants.get(String.valueOf(Car_Telemetry_Packet_int[1])); o++) {
+					for (int p = 0; p < (Names.length - 4); p++) {
+						output_Car_Telemetry_Packet += Car_Telemetry_Packet_Encode.get(Names[p + 4]) + Car_Telemetry.get(Names[p + 4] + "_" + o) + "\n";
+					}
+				}
+			} else {
+				for (int o = 0; o < 4; o++) {
+					if (Car_Telemetry.get(Names[o]) != Car_Telemetry_full.get(Names[o])) {
+						output_Car_Telemetry_Packet += Car_Telemetry_Packet_Encode.get(Names[o]) + Car_Telemetry.get(Names[o]) + "\n";
+					}
+				}
+				for (int o = 0; o < participants.get(String.valueOf(Car_Telemetry_Packet_int[1])); o++) {
+					for (int p = 0; p < (Names.length - 4); p++) {
+						int change = 0;
+						if (Car_Telemetry.get(Names[p + 4] + "_" + o) != Car_Telemetry_full.get(Names[p + 4]) + "_" + o) {
+							output_Car_Telemetry_Packet += Car_Telemetry_Packet_Encode.get(Names[p + 4]) + Car_Telemetry.get(Names[p+ 4] + "_" + o) + "\n";
+							change++;
+						}
+						if (change >= 1) {
+							output_Car_Telemetry_Packet += "car id: " + o + "\n";
+						}
+					}
+				}
+			}
+		}
+		
+		String output_Car_Status_Packet = "";
+		Names = Names(null);
+		HashMap<String, Object> Car_Status_full = new HashMap<String, Object>();
+		for (int i = 0; i < ids[3] - Car_Status_Packet_int[0]; i++) {
+			output_Car_Status_Packet += "id : " + (i + Car_Status_Packet_int[0]) + "\n";
+			output_Car_Status_Packet += "Participants : " + participants.get(String.valueOf(Car_Status_Packet_int[1])).byteValue() + "\n";
+			if ((i + Car_Status_Packet_int[0]) % send_rate * 5 == 0) {
+				Car_Status_Packet_int[1]++;
+			}
+			HashMap<String, Object> Car_Status = new HashMap<String, Object>();
+			Car_Status.putAll(Packet_store.Car_Status_Packet_store.get(String.valueOf(i + Car_Status_Packet_int[0])));
+			if ((i + Car_Status_Packet_int[0]) % 10 == 0 || (i + Car_Status_Packet_int[0]) == 0) {
+				for (int o = 0; o < participants.get(String.valueOf(Car_Status_Packet_int[1])); o++) {
+					for (int p = 0; p < Names.length; p++) {
+						output_Car_Status_Packet += Car_Status_Packet_Encode.get(Names[p]) + Car_Status.get(Names[p] + "_" + o) + "\n";
+					}
+				}
+			} else {
+				for (int o = 0; o < participants.get(String.valueOf(Car_Status_Packet_int[1])); o++) {
+					for (int p = 0; p < Names.length; p++) {
+						int change = 0;
+						if (Car_Status.get(Names[p] + "_" + o) != Car_Status_full.get(Names[o] + "_" + o)) {
+							output_Car_Status_Packet += Car_Status_Packet_Encode.get(Names[p]) + Car_Status.get(Names[p] + "_" + o) + "\n";
+							change++;
+						}
+						if (change >= 1) {
+							output_Car_Status_Packet += "car id: " + o + "\n";
+						}
+					}
+				}
+			}
+		}
 	}
 }
+//alle woorden moeten nog worden geconvert met .byteValue() en de "\n" is voor nu alleen maar dat het goed te zien is in een .txt bestand
+
+//todo
+//testen van file of de string eruit komen zoals verwacht
+//names file's maken
+//encode file's maken
+//.byteValue() achter alle data zetten
+//"\n" weg halen
+//string converten naar bytes
+//bytes naar files write
+//aanroepen van de methoden
