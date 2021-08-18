@@ -270,8 +270,6 @@ public class Main extends Application{
 	   window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
 	   });
-	   
-	   File_reader.Write_encoded.Main(null);
 		
 		try {
 			//window.setY(257.0);
