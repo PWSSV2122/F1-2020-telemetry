@@ -1,27 +1,27 @@
-m_lastLapTime_ : 00000 :
-m_currentLapTime_ : 00001 :
-m_sector1TimeInMS_: 00010 :
-m_sector2TimeInMS_ : 00011 :
-m_bestLapTime_
-m_bestLapNum_
-m_bestLapSector1TimeInMS_
-m_bestLapSector2TimeInMS_
-m_bestLapSector3TimeInMS_
-m_bestOverallSector1TimeInMS_
-m_bestOverallSector1LapNum_
-m_bestOverallSector2TimeInMS_
-m_bestOverallSector2LapNum_
-m_bestOverallSector3TimeInMS_
-m_bestOverallSector3LapNum_
-m_lapDistance_
-m_totalDistance_
-m_safetyCarDelta_
-m_carPosition_
-m_currentLapNum_
-m_pitStatus_
-m_sector_
-m_currentLapInvalid_
-m_penalties_
-m_gridPosition_
-m_driverStatus_
-m_resultStatus_
+m_lastLapTime_ : 00000 : 24, 25, 26, 27
+m_currentLapTime_ : 00001 : 28, 29, 30, 31
+m_sector1TimeInMS_: 00010 : 32, 33
+m_sector2TimeInMS_ : 00011 : 34, 35
+m_bestLapTime_ : 00100 : 36, 37, 38, 39
+m_bestLapNum_ : 00101 : 40
+m_bestLapSector1TimeInMS_ : 00110 : 41, 42
+m_bestLapSector2TimeInMS_ : 00111 : 43, 44
+m_bestLapSector3TimeInMS_ : 01000 : 45, 46
+m_bestOverallSector1TimeInMS_ : 01001 : 47, 48
+m_bestOverallSector1LapNum_ : 01010 : 49
+m_bestOverallSector2TimeInMS_ : 01011 : 50, 51
+m_bestOverallSector2LapNum_ : 01100 : 52
+m_bestOverallSector3TimeInMS_ : 01101 : 53, 54
+m_bestOverallSector3LapNum_ : 01110 : 55
+m_lapDistance_ : 01111 : 56, 57, 58, 59
+m_totalDistance_ : 10000 : 60, 61, 62, 63
+m_safetyCarDelta_ : 10001 : 64, 65, 66, 67
+m_carPosition_ : 10010 : 68
+m_currentLapNum_ : 10011 : 69
+m_pitStatus_ : 10100 : 70
+m_sector_ : 10101 : 71
+m_currentLapInvalid_ : 10110 : 72
+m_penalties_ : 10111 : 73
+m_gridPosition_ : 11000 : 74
+m_driverStatus_ : 11001 : 75
+m_resultStatus_ : 11010 : 76

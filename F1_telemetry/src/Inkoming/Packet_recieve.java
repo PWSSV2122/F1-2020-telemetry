@@ -176,7 +176,7 @@ public class Packet_recieve {
 				if (e[5] == 02) {
 					HashMap<String, Object> Lap_Data_Packet = new HashMap<String, Object>();
 					for (int i = 0; i < 22; i++) {
-						int y = i * 53;
+						int y = i * 52;
 						Lap_Data_Packet.put("m_lastLapTime_" + i, ByteBuffer.wrap(new byte[] {e[24 + y], e[25 + y], e[26 + y], e[27 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 						Lap_Data_Packet.put("m_currentLapTime_" + i, ByteBuffer.wrap(new byte[] {e[28 + y], e[29 + y], e[30 + y], e[31 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 						Lap_Data_Packet.put("m_sector1TimeInMS_" + i, (short)((e[33 + y] & 0xFF) << 8) | ((e[32 + y] & 0xFF) << 0));
@@ -194,20 +194,20 @@ public class Packet_recieve {
 						Lap_Data_Packet.put("m_bestOverallSector3LapNum_" + i, (int) e[55 + y]);
 						Lap_Data_Packet.put("m_lapDistance_" + i, ByteBuffer.wrap(new byte[] {e[56 + y], e[57 + y], e[58 + y], e[59 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 						Lap_Data_Packet.put("m_totalDistance_" + i, ByteBuffer.wrap(new byte[] {e[60 + y], e[61 + y], e[62 + y], e[63 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
-						Lap_Data_Packet.put("m_safetyCarDelta_" + i, ByteBuffer.wrap(new byte[] {e[64 + y], e[65 + y], e[67 + y], e[68 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
+						Lap_Data_Packet.put("m_safetyCarDelta_" + i, ByteBuffer.wrap(new byte[] {e[64 + y], e[65 + y], e[66 + y], e[67 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 						//moet nog in data gekeken worden welke nummering ze voor de posities gebruiken
 						if (e[69 + y] == 00) {
 							first_car = i;
 						}
-						Lap_Data_Packet.put("m_carPosition_" + i, (int) e[69 + y]);
-						Lap_Data_Packet.put("m_currentLapNum_" + i, (int) e[70 + y]);
-						Lap_Data_Packet.put("m_pitStatus_" + i, (int) e[71 + y]);
-						Lap_Data_Packet.put("m_sector_" + i, (int) e[72 + y]);
-						Lap_Data_Packet.put("m_currentLapInvalid_" + i, (int) e[73 + y]);
-						Lap_Data_Packet.put("m_penalties_" + i, (int) e[74 + y]);
-						Lap_Data_Packet.put("m_gridPosition_" + i, (int) e[75 + y]);
-						Lap_Data_Packet.put("m_driverStatus_" + i, (int) e[76 + y]);
-						Lap_Data_Packet.put("m_resultStatus_" + i, (int) e[77 + y]);
+						Lap_Data_Packet.put("m_carPosition_" + i, (int) e[68 + y]);
+						Lap_Data_Packet.put("m_currentLapNum_" + i, (int) e[69 + y]);
+						Lap_Data_Packet.put("m_pitStatus_" + i, (int) e[70 + y]);
+						Lap_Data_Packet.put("m_sector_" + i, (int) e[71 + y]);
+						Lap_Data_Packet.put("m_currentLapInvalid_" + i, (int) e[72 + y]);
+						Lap_Data_Packet.put("m_penalties_" + i, (int) e[73 + y]);
+						Lap_Data_Packet.put("m_gridPosition_" + i, (int) e[74 + y]);
+						Lap_Data_Packet.put("m_driverStatus_" + i, (int) e[75 + y]);
+						Lap_Data_Packet.put("m_resultStatus_" + i, (int) e[76 + y]);
 						//nog checken
 					}
 					
