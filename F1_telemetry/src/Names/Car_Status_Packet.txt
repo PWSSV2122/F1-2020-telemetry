@@ -1,0 +1,36 @@
+m_tractionControl_ : 000000 : 24
+m_antiLockBrakes_ : 000001 : 25
+m_fuelMix_ : 000010 : 26
+m_frontBrakeBias_ : 000011 : 27
+m_pitLimiterStatus_ : 000100 : 28
+m_fuelInTank_ : 000101 : 29, 30, 31, 32
+m_fuelCapacity_ : 000110 : 33, 34, 35, 36
+m_fuelRemainingLaps_: 000111 :37, 38, 39, 40
+m_maxRPM_ : 001000 : 41, 42
+m_idleRPM_ : 001001 : 43, 44
+m_maxGears_ : 001010 : 45
+m_drsAllowed_ : 001011 : 46
+m_drsActivationDistance_ : 001100 : 47, 48
+m_tyresWear_RL_ : 001101 : 49
+m_tyresWear_RR_ : 001110 : 50
+m_tyresWear_FL_ : 001111 : 51
+m_tyresWear_FR_ : 010000 : 52
+m_actualTyreCompound_ : 010001 : 53
+m_visualTyreCompound_ : 010010 : 54
+m_tyresAgeLaps_ : 010011 : 55
+m_tyresDamage_RL_ : 010100 : 56
+m_tyresDamage_RR_ : 010101 : 57
+m_tyresDamage_FL_ : 010110 : 58
+m_tyresDamage_FR_ : 010111 : 59
+m_frontLeftWingDamage_ : 011000 : 60
+m_frontRightWingDamage_ : 011001 : 61
+m_rearWingDamage_ : 011010 : 62
+m_drsFault_ : 011011 : 63
+m_engineDamage_ : 011100 : 64
+m_gearBoxDamage_ : 011101 : 65
+m_vehicleFiaFlags_ : 011110 : 66
+m_ersStoreEnergy_ : 011111 : 67, 68, 69, 70
+m_ersDeployMode_ : 100000 : 71
+m_ersHarvestedThisLapMGUK_ : 100001 : 72, 73, 74, 75
+m_ersHarvestedThisLapMGUH_ : 100010 : 76, 77, 78, 79
+m_ersDeployedThisLap_ : 100011 : 80, 81, 82, 83

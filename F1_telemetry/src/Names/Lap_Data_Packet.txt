@@ -1,0 +1,27 @@
+m_lastLapTime_ : 00000 :
+m_currentLapTime_ : 00001 :
+m_sector1TimeInMS_: 00010 :
+m_sector2TimeInMS_ : 00011 :
+m_bestLapTime_
+m_bestLapNum_
+m_bestLapSector1TimeInMS_
+m_bestLapSector2TimeInMS_
+m_bestLapSector3TimeInMS_
+m_bestOverallSector1TimeInMS_
+m_bestOverallSector1LapNum_
+m_bestOverallSector2TimeInMS_
+m_bestOverallSector2LapNum_
+m_bestOverallSector3TimeInMS_
+m_bestOverallSector3LapNum_
+m_lapDistance_
+m_totalDistance_
+m_safetyCarDelta_
+m_carPosition_
+m_currentLapNum_
+m_pitStatus_
+m_sector_
+m_currentLapInvalid_
+m_penalties_
+m_gridPosition_
+m_driverStatus_
+m_resultStatus_

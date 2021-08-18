@@ -237,11 +237,11 @@ public class Packet_recieve {
 											
 										}
 					if (Event_Packet.get("m_eventStringCode") == "FTLP") {
-						Event_Packet.put("vehicleIdx", (int) e[28]);
+						Event_Packet.put("vehicleIdx_FTLP", (int) e[28]);
 						Event_Packet.put("lapTime", ByteBuffer.wrap(new byte[] {e[29], e[30], e[31], e[32]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 					}
 					if (Event_Packet.get("m_eventStringCode") == "RTMT") {
-						Event_Packet.put("vehicleIdx", (int) e[28]);
+						Event_Packet.put("vehicleIdx_RTMT", (int) e[28]);
 					}
 					if (Event_Packet.get("m_eventStringCode") == "DRSE") {
 						
@@ -250,25 +250,25 @@ public class Packet_recieve {
 						
 					}
 					if (Event_Packet.get("m_eventStringCode") == "TMPT") {
-						Event_Packet.put("vehicleIdx", (int) e[28]);
+						Event_Packet.put("vehicleIdx_TMPT", (int) e[28]);
 					}
 					if (Event_Packet.get("m_eventStringCode") == "CHQF") {
 						
 					}
 					if (Event_Packet.get("m_eventStringCode") == "RCWN") {
-						Event_Packet.put("vehicleIdx", (int) e[28]);
+						Event_Packet.put("vehicleIdx_RCWN", (int) e[28]);
 					}
 					if (Event_Packet.get("m_eventStringCode") == "PENA") {
 						Event_Packet.put("penaltyType", (int) e[28]);
 						Event_Packet.put("infringementType", (int) e[29]);
-						Event_Packet.put("vehicleIdx", (int) e[30]);
+						Event_Packet.put("vehicleIdx_PENA", (int) e[30]);
 						Event_Packet.put("otherVehicleIdx", (int) e[31]);
 						Event_Packet.put("time", (int) e[32]);
 						Event_Packet.put("lapNum", (int) e[33]);
 						Event_Packet.put("placesGained", (int) e[34]);
 					}
 					if (Event_Packet.get("m_eventStringCode") == "SPTP") {
-						Event_Packet.put("vehicleIdx", (int) e[28]);
+						Event_Packet.put("vehicleIdx_SPTP", (int) e[28]);
 						Event_Packet.put("speed", ByteBuffer.wrap(new byte[] {e[29], e[30], e[31], e[32]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 					}
 					
@@ -315,7 +315,7 @@ public class Packet_recieve {
 				if (e[5] == 05) {
 					HashMap<String, Object> Car_Setups_Packet = new HashMap<String, Object>();
 					for (int i = 0; i < 22; i++) {
-						int y = i * 0;
+						int y = i * 22;
 						Car_Setups_Packet.put("m_frontWing_" + i, (int) e[24 + y]);
 						Car_Setups_Packet.put("m_rearWing_" + i, (int) e[25 + y]);
 						Car_Setups_Packet.put("m_onThrottle_" + i, (int) e[26 + y]);
@@ -382,10 +382,10 @@ public class Packet_recieve {
 						Car_Telemetry_Packet.put("m_surfaceType_FL_" + i, (int) e[80 + y]);
 						Car_Telemetry_Packet.put("m_surfaceType_FR_" + i, (int) e[81 + y]);
 					}
-					Car_Telemetry_Packet.put("m_brakesTemperature", (int)((e[1300] & 0xFF) << 24) | ((e[1301] & 0xFF) << 16) | ((e[1302] & 0xFF) << 8) | ((e[1303] & 0xFF) << 0));
-					Car_Telemetry_Packet.put("m_brakesTemperature", (int) e[1304]);
-					Car_Telemetry_Packet.put("m_brakesTemperature", (int) e[1305]);
-					Car_Telemetry_Packet.put("m_brakesTemperature", (int) e[1306]);
+					Car_Telemetry_Packet.put("m_buttonStatus", (int)((e[1300] & 0xFF) << 24) | ((e[1301] & 0xFF) << 16) | ((e[1302] & 0xFF) << 8) | ((e[1303] & 0xFF) << 0));
+					Car_Telemetry_Packet.put("m_mfdPanelIndex", (int) e[1304]);
+					Car_Telemetry_Packet.put("m_mfdPanelIndexSecondaryPlayer", (int) e[1305]);
+					Car_Telemetry_Packet.put("m_suggestedGear", (int) e[1306]);
 					
 					Data_saves.Packet_store.Car_Telemetry_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Car_Telemetry_Packet.putAll(Car_Telemetry_Packet);

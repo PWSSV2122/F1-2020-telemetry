@@ -1,0 +1,15 @@
+m_eventStringCode : 0000 : 24, 25, 26, 27
+vehicleIdx_FTLP : 0001 : 28
+lapTime : 0010 : 29, 30, 31, 32
+vehicleIdx_RTMT : 0011 : 28
+vehicleIdx_TMPT : 0100 : 28
+vehicleIdx_RCWN : 0101 : 28
+penaltyType : 0110 : 28
+infringementType : 0111 : 29
+vehicleIdx_PENA : 1000 : 30
+otherVehicleIdx : 1001 : 31
+time : 1010 : 32
+lapNum : 1011 : 33
+placesGained : 1100 : 34
+vehicleIdx_SPTP : 1101 : 28
+speed : 1110 : 29, 30, 31, 32
