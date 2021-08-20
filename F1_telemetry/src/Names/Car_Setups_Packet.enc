@@ -1,22 +1,22 @@
-m_frontWing_ : 00000 : 24
-m_rearWing_ : 00001 : 25
-m_onThrottle_ : 00010 : 26
-m_offThrottle_ : 00011 : 27
-m_frontCamber_ : 00100 : 28, 29, 30, 31
-m_rearCamber_ : 00101 : 32, 33, 34, 35
-m_frontToe_ : 00110 : 36, 37, 38, 39
-m_rearToe_ : 00111 : 40, 41, 42, 43
-m_frontSuspension_ : 01000 : 44
-m_rearSuspension_ : 01001 : 45
-m_frontAntiRollBar_ : 01010 : 46
-m_rearAntiRollBar_ : 01011 : 47
-m_frontSuspensionHeight_ : 01100 : 48
-m_rearSuspensionHeight_ : 01101 : 49
-m_brakePressure_ : 01110 : 50
-m_brakeBias_ : 01111 : 51
-m_rearLeftTyrePressure_ : 10000 : 52, 53, 54, 55
-m_rearRightTyrePressure_ : 10001 : 56, 57, 58, 59
-m_frontLeftTyrePressure_ : 10010 : 60, 61, 62, 63
-m_frontRightTyrePressure_ : 10011 : 64, 65, 66, 67
-m_ballast_ : 10100 : 68
-m_fuelLoad_ : 10101 : 69
+m_frontWing_ : 00000000 : 24
+m_rearWing_ : 00000001 : 25
+m_onThrottle_ : 00000010 : 26
+m_offThrottle_ : 00000011 : 27
+m_frontCamber_ : 00000100 : 28, 29, 30, 31
+m_rearCamber_ : 00000101 : 32, 33, 34, 35
+m_frontToe_ : 00000110 : 36, 37, 38, 39
+m_rearToe_ : 00000111 : 40, 41, 42, 43
+m_frontSuspension_ : 00001000 : 44
+m_rearSuspension_ : 00001001 : 45
+m_frontAntiRollBar_ : 00001010 : 46
+m_rearAntiRollBar_ : 00001011 : 47
+m_frontSuspensionHeight_ : 00001100 : 48
+m_rearSuspensionHeight_ : 00001101 : 49
+m_brakePressure_ : 00001110 : 50
+m_brakeBias_ : 00001111 : 51
+m_rearLeftTyrePressure_ : 00010000 : 52, 53, 54, 55
+m_rearRightTyrePressure_ : 00010001 : 56, 57, 58, 59
+m_frontLeftTyrePressure_ : 00010010 : 60, 61, 62, 63
+m_frontRightTyrePressure_ : 00010011 : 64, 65, 66, 67
+m_ballast_ : 00010100 : 68
+m_fuelLoad_ : 00010101 : 69

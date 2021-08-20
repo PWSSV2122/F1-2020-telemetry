@@ -1,26 +1,26 @@
-m_weather : 00000 : 24
-m_trackTemperature : 00001: 25
-m_airTemperature : 00010 : 26
-m_totalLaps : 00011: 27
-m_trackLength : 00100 : 28, 29
-m_sessionType : 00101 : 30
-m_trackId : 00110 : 31
-m_formula : 00111 : 32
-m_sessionTimeLeft : 01000 : 33, 34
-m_sessionDuration : 01001 : 35, 36
-m_pitSpeedLimit : 01010 : 37
-m_gamePaused : 01011 : 38
-m_isSpectating : 01100 : 39
-m_spectatorCarIndex : 01101 : 40
-m_sliProNativeSupport : 01110 : 41
-m_numMarshalZones : 01111 : 42
-m_zoneStart_ : 10000 : 43
-m_zoneFlag_ : 10001 : 44
-m_safetyCarStatus : 10010 : 45
-m_networkGame : 10011 : 46
-m_numWeatherForecastSamples : 10100 : 47
-m_sessionType_ : 10101 : 48
-m_timeOffset_ : 10110 : 49
-m_weather_ : 10111 : 50
-m_trackTemperature_ : 11000 : 51
-m_airTemperature_ : 11001 : 52
+m_weather : 00000000 : 24
+m_trackTemperature : 00000001: 25
+m_airTemperature : 00000010 : 26
+m_totalLaps : 00000011: 27
+m_trackLength : 00000100 : 28, 29
+m_sessionType : 00000101 : 30
+m_trackId : 00000110 : 31
+m_formula : 00000111 : 32
+m_sessionTimeLeft : 00001000 : 33, 34
+m_sessionDuration : 00001001 : 35, 36
+m_pitSpeedLimit : 00001010 : 37
+m_gamePaused : 00001011 : 38
+m_isSpectating : 00001100 : 39
+m_spectatorCarIndex : 00001101 : 40
+m_sliProNativeSupport : 00001110 : 41
+m_numMarshalZones : 00001111 : 42
+m_zoneStart_ : 00010000 : 43
+m_zoneFlag_ : 00010001 : 44
+m_safetyCarStatus : 00010010 : 45
+m_networkGame : 00010011 : 46
+m_numWeatherForecastSamples : 00010100 : 47
+m_sessionType_ : 00010101 : 48
+m_timeOffset_ : 00010110 : 49
+m_weather_ : 00010111 : 50
+m_trackTemperature_ : 00011000 : 51
+m_airTemperature_ : 00011001 : 52

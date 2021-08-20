@@ -1,5 +1,6 @@
 package application;
 	
+import File_reader.Write_encoded;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -270,6 +271,8 @@ public class Main extends Application{
 	   window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
 	   });
+
+	   Write_encoded.Names("src/Names/Motion_Packet.enc");
 		
 		try {
 			//window.setY(257.0);

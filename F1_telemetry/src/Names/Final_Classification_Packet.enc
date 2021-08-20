@@ -1,28 +1,28 @@
-m_numCars : 00000 : 24
-m_position_ : 00001 : 25
-m_numLaps_ : 00010 : 26
-m_gridPosition_ : 00011 : 27 
-m_points_ : 00100 : 28
-m_numPitStops_ : 00101 : 29
-m_resultStatus_ : 00110 : 30
-m_bestLapTime_ : 00111 : 31, 32, 33, 34
-m_totalRaceTime_ : 01000 : 35, 36, 37, 38, 39, 40, 41, 42
-m_penaltiesTime_ : 01001 : 43
-m_numPenalties_ : 01010 : 44
-m_numTyreStints_ : 01011 : 45
-m_tyreStintsActual_1_ : 01100 : 46
-m_tyreStintsActual_2_ : 01101 : 47
-m_tyreStintsActual_3_ : 01110 : 48
-m_tyreStintsActual_4_ : 01111 : 49
-m_tyreStintsActual_5_ : 10000 : 50
-m_tyreStintsActual_6_ : 10001 : 51
-m_tyreStintsActual_7_ : 10010 : 52
-m_tyreStintsActual_8_ : 10011 : 53
-m_tyreStintsVisual_1_ : 10100 : 54
-m_tyreStintsVisual_2_ : 10101 : 55
-m_tyreStintsVisual_3_ : 10110 : 56
-m_tyreStintsVisual_4_ : 10111 : 57
-m_tyreStintsVisual_5_ : 11000 : 58
-m_tyreStintsVisual_6_ : 11001 : 59
-m_tyreStintsVisual_7_ : 11010 : 60
-m_tyreStintsVisual_8_ : 11011 : 61
+m_numCars : 00000000 : 24
+m_position_ : 00000001 : 25
+m_numLaps_ : 00000010 : 26
+m_gridPosition_ : 00000011 : 27 
+m_points_ : 00000100 : 28
+m_numPitStops_ : 00000101 : 29
+m_resultStatus_ : 00000110 : 30
+m_bestLapTime_ : 00000111 : 31, 32, 33, 34
+m_totalRaceTime_ : 00001000 : 35, 36, 37, 38, 39, 40, 41, 42
+m_penaltiesTime_ : 00001001 : 43
+m_numPenalties_ : 00001010 : 44
+m_numTyreStints_ : 00001011 : 45
+m_tyreStintsActual_1_ : 00001100 : 46
+m_tyreStintsActual_2_ : 00001101 : 47
+m_tyreStintsActual_3_ : 00001110 : 48
+m_tyreStintsActual_4_ : 00001111 : 49
+m_tyreStintsActual_5_ : 00010000 : 50
+m_tyreStintsActual_6_ : 00010001 : 51
+m_tyreStintsActual_7_ : 00010010 : 52
+m_tyreStintsActual_8_ : 00010011 : 53
+m_tyreStintsVisual_1_ : 00010100 : 54
+m_tyreStintsVisual_2_ : 00010101 : 55
+m_tyreStintsVisual_3_ : 00010110 : 56
+m_tyreStintsVisual_4_ : 00010111 : 57
+m_tyreStintsVisual_5_ : 00011000 : 58
+m_tyreStintsVisual_6_ : 00011001 : 59
+m_tyreStintsVisual_7_ : 00011010 : 60
+m_tyreStintsVisual_8_ : 00011011 : 61

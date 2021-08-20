@@ -82,6 +82,7 @@ public class Packet_recieve {
 						Motion_Packet.put("m_yaw_" + i, ByteBuffer.wrap(new byte[] {e[72 + y], e[73 + y], e[74 + y], e[75 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 						Motion_Packet.put("m_pitch_" + i, ByteBuffer.wrap(new byte[] {e[76 + y], e[77 + y], e[78 + y], e[79 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 						Motion_Packet.put("m_roll_" + i, ByteBuffer.wrap(new byte[] {e[80 + y], e[81 + y], e[82 + y], e[83 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
+					
 					}
 					Motion_Packet.put("m_suspensionPosition_RL", ByteBuffer.wrap(new byte[] {e[1344], e[1345], e[1346], e[1347]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 					Motion_Packet.put("m_suspensionPosition_RR", ByteBuffer.wrap(new byte[] {e[1348], e[1349], e[1350], e[1351]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
@@ -116,7 +117,7 @@ public class Packet_recieve {
 				
 					Data_saves.Packet_store.Motion_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Motion_Packet.putAll(Motion_Packet);
-					Data_saves.Packet_store.Motion_Packet_store.put(String.valueOf(Motion_Packet_int), Motion_Packet);
+					Data_saves.Packet_store.Motion_Packet_store.put(String.valueOf(Motion_Packet_int), e);
 					Motion_Packet_int = Motion_Packet_int + 1;
 				}
 				
@@ -160,7 +161,7 @@ public class Packet_recieve {
 			        
 			        Data_saves.Packet_store.Session_Packet_Header.putAll(Header);
 			        Data_saves.Packet_store.Session_Packet.putAll(Session_Packet);
-			        Data_saves.Packet_store.Session_Packet_store.put(String.valueOf(Session_Packet_int), Session_Packet);
+			        Data_saves.Packet_store.Session_Packet_store.put(String.valueOf(Session_Packet_int), e);
 			        Session_Packet_int = Session_Packet_int + 1;
 			        //nog checken
 			        
@@ -213,7 +214,7 @@ public class Packet_recieve {
 					
 					Data_saves.Packet_store.Lap_Data_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Lap_Data_Packet.putAll(Lap_Data_Packet);
-					Data_saves.Packet_store.Lap_Data_Packet_store.put(String.valueOf(Lap_Data_Packet_int), Lap_Data_Packet);
+					Data_saves.Packet_store.Lap_Data_Packet_store.put(String.valueOf(Lap_Data_Packet_int), e);
 					Lap_Data_Packet_int = Lap_Data_Packet_int + 1;
 					
 					if (current_lap == (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car)) {
@@ -274,7 +275,7 @@ public class Packet_recieve {
 					
 					Data_saves.Packet_store.Event_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Event_Packet.putAll(Event_Packet);
-					Data_saves.Packet_store.Event_Packet_store.put(String.valueOf(Event_Packet_int), Event_Packet);
+					Data_saves.Packet_store.Event_Packet_store.put(String.valueOf(Event_Packet_int), e);
 					Event_Packet_int = Event_Packet_int + 1;
 					//nog een mechanisme maken voor opslaan
 					//nog checken
@@ -298,7 +299,7 @@ public class Packet_recieve {
 					
 					Data_saves.Packet_store.Participants_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Participants_Packet.putAll(Participants_Packet);
-					Data_saves.Packet_store.Participants_Packet_store.put(String.valueOf(Participants_Packet_int), Participants_Packet);
+					Data_saves.Packet_store.Participants_Packet_store.put(String.valueOf(Participants_Packet_int), e);
 					Participants_Packet_int = Participants_Packet_int + 1;
 					//nog checken
 			        if (Participants_Packet_int == 300) {
@@ -342,7 +343,7 @@ public class Packet_recieve {
 					
 					Data_saves.Packet_store.Car_Setups_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Car_Setups_Packet.putAll(Car_Setups_Packet);
-					Data_saves.Packet_store.Car_Setups_Packet_store.put(String.valueOf(Car_Setups_Packet_int), Car_Setups_Packet);
+					Data_saves.Packet_store.Car_Setups_Packet_store.put(String.valueOf(Car_Setups_Packet_int), e);
 					Car_Setups_Packet_int = Car_Setups_Packet_int + 1;
 					//nog checken
 				}
@@ -389,7 +390,7 @@ public class Packet_recieve {
 					
 					Data_saves.Packet_store.Car_Telemetry_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Car_Telemetry_Packet.putAll(Car_Telemetry_Packet);
-					Data_saves.Packet_store.Car_Telemetry_Packet_store.put(String.valueOf(Car_Telemetry_Packet_int), Car_Telemetry_Packet);
+					Data_saves.Packet_store.Car_Telemetry_Packet_store.put(String.valueOf(Car_Telemetry_Packet_int), e);
 					Car_Telemetry_Packet_int = Car_Telemetry_Packet_int + 1;
 					//nog checken
 				}
@@ -438,7 +439,7 @@ public class Packet_recieve {
 					
 					Data_saves.Packet_store.Car_Status_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Car_Status_Packet.putAll(Car_Status_Packet);
-					Data_saves.Packet_store.Car_Status_Packet_store.put(String.valueOf(Car_Status_Packet_int), Car_Status_Packet);
+					Data_saves.Packet_store.Car_Status_Packet_store.put(String.valueOf(Car_Status_Packet_int), e);
 					Car_Status_Packet_int = Car_Status_Packet_int + 1;
 					//nog checken
 				}
@@ -479,7 +480,7 @@ public class Packet_recieve {
 					
 					Data_saves.Packet_store.Final_Classification_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Final_Classification_Packet.putAll(Final_Classification_Packet);
-					Data_saves.Packet_store.Final_Classification_Packet_store.put(String.valueOf(Final_Classification_Packet_int), Final_Classification_Packet);
+					Data_saves.Packet_store.Final_Classification_Packet_store.put(String.valueOf(Final_Classification_Packet_int), e);
 					Final_Classification_Packet_int = Final_Classification_Packet_int + 1;
 					//nog checken
 				}
@@ -500,7 +501,7 @@ public class Packet_recieve {
 					
 					Data_saves.Packet_store.Lobby_Info_Packet_Header.putAll(Header);
 					Data_saves.Packet_store.Lobby_Info_Packet.putAll(Lobby_Info_Packet);
-					Data_saves.Packet_store.Lobby_Info_Packet_store.put(String.valueOf(Lobby_Info_Packet_int), Lobby_Info_Packet);
+					Data_saves.Packet_store.Lobby_Info_Packet_store.put(String.valueOf(Lobby_Info_Packet_int), e);
 					Lobby_Info_Packet_int = Lobby_Info_Packet_int + 1;
 					//nog checken
 				}
