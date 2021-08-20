@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-
-import Data_saves.Packet_store;
 
 public class Write_encoded {
 	static int send_rate = 60;
