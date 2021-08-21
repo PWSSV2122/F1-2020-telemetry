@@ -23,7 +23,6 @@ public class Write_encoded {
 				if (split.length >= 3) {
 					Names[i] = split[0];
 					if (split[1].length() % 8 == 0) {
-						byte test;
 						for (int o = 0; o < split[1].length(); o++) {
 							char c = split[1].charAt(o);
 							if (c == '1') {
@@ -60,9 +59,9 @@ public class Write_encoded {
 	public static void Motion(int Motion_int, byte[] e) {
 		Names(file[0]);
 		byte[] Output_Motion = new byte[1890 * (Motion_int - Motion)];
+		int counter = 0;
 		for (int i = 0; i < (Motion_int - Motion); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < 22; o++) {
 				num = 18 * o;
 				for (int p = 0; p < 18; p++) {
@@ -91,9 +90,9 @@ public class Write_encoded {
 	public static void Session(int Session_int, byte[] e) {
 		Names(file[1]);
 		byte[] Output_Session = null;
+		int counter = 0;
 		for (int i = 0; i < (Session_int - Session); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < 16; o++) {
 				Output_Session[counter] = Names_encode[o];
 				counter++;
@@ -142,15 +141,15 @@ public class Write_encoded {
 		}
 		Session = Session_int;
 	}
-	//testen + interlacing toevoegen + id boven aan packet
+	//testen + interlacing toevoegen + id boven aan packet + groote output byte[]
 	
 	static int Lap_Data = 0;
 	public static void Lap_Data(int Lap_Data_int, byte[] e) {
 		Names(file[2]);
 		byte[] Output_Lap_Data = null;
+		int counter = 0;
 		for (int i =0; i < (Lap_Data_int - Lap_Data); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < 22; o++) {
 				num = 18 * o;
 				for (int p = 0; p < 27; p++) {
@@ -165,27 +164,90 @@ public class Write_encoded {
 		}
 		Lap_Data = Lap_Data_int;
 	}
-	//testen + interlacing + num car loop dynamisch maken + id en participants boven aan packet
+	//testen + interlacing + num car loop dynamisch maken + id en participants boven aan packet + groote output byte[]
 	
 	static int Event = 0;
 	public static void Event(int Event_int, byte[] e) {
 		Names(file[3]);
 		byte[] Output_Event = null;
+		int counter = 0;
 		for (int i = 0; i < (Event_int - Event); i++) {
-			
+			String Event_code = new String(new byte[] {e[byte_codes[0][0]], e[byte_codes[0][1]], e[byte_codes[0][2]], e[byte_codes[0][3]]});
+			Output_Event[counter] = Names_encode[0];
+			counter++;
+			for (int o = 0; o < byte_codes[0].length; o++) {
+				Output_Event[counter] = e[byte_codes[0][o]];
+			}
+			if (Event_code == "SSTA") {
+				
+			} else if (Event_code == "SEND") {
+				
+			} else if (Event_code == "FTLP") {
+				for (int o = 0; o < 2; o++) {
+					Output_Event[counter] = Names_encode[1 + o];
+					counter++;
+					for (int p = 0; p < byte_codes[1 + o].length; p++) {
+						Output_Event[counter] = e[byte_codes[1 + o][p]];
+						counter++;
+					}
+				}
+			} else if (Event_code == "RTMT") {
+				Output_Event[counter] = Names_encode[3];
+				counter++;
+				
+				Output_Event[counter] = e[byte_codes[3][0]];
+				counter++;
+			} else if (Event_code == "DRSE") {
+				
+			} else if (Event_code == "DRSD") {
+				
+			} else if (Event_code == "TMPT") {
+				Output_Event[counter] = Names_encode[4];
+				counter++;
+				
+				Output_Event[counter] = e[byte_codes[4][0]];
+				counter++;
+			} else if (Event_code == "CHQF") {
+				
+			} else if (Event_code == "RCWN") {
+				Output_Event[counter] = Names_encode[5];
+				counter++;
+				
+				Output_Event[counter] = e[byte_codes[6][0]];
+				counter++;
+			} else if (Event_code == "PENA") {
+				for (int o = 0; o < 7; o++) {
+					Output_Event[counter] = Names_encode[6 + o];
+					counter++;
+					for (int p = 0; p < byte_codes[6 + o].length; p++) {
+						Output_Event[counter] = e[byte_codes[6 + o][p]];
+						counter++;
+					}
+				}
+			} else if (Event_code == "SPTP") {
+				for (int o = 0; o < 2; o++) {
+					Output_Event[counter] = Names_encode[13 + o];
+					counter++;
+					for (int p = 0; p < byte_codes[13 + o].length; p++) {
+						Output_Event[counter] = e[byte_codes[13 + o][p]];
+						counter++;
+					}
+				}
+			}
 		}
 	}
+	//testen + id en participants boven aan packet + groote output byte[]
 
 	static int Participants = 0;
 	public static void Participants(int Participants_int, byte[] e) {
 		Names(file[4]);
 		byte[] Output_Participants = null;
+		int counter = 0;
 		for (int i = 0; i < (Participants_int - Participants); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < e[byte_codes[0][0]]; o++) {
-				num = 18 * o;
-				for (int p = 0; p < 18; p++) {
+				num = 54 * o;
+				for (int p = 0; p < 7; p++) {
 					Output_Participants[counter] = Names_encode[p];
 					counter++;
 					for (int l = 0; l < byte_codes[p].length; l++) {
@@ -197,17 +259,18 @@ public class Write_encoded {
 		}
 		Participants = Participants_int;
 	}
+	//testen + interlacing + id en participants boven aan packet + groote output byte[]
 	
 	static int Car_Setups = 0;
 	public static void Car_Setups(int Car_Setups_int, byte[] e) {
 		Names(file[5]);
 		byte[] Output_Car_Setups = null;
+		int counter = 0;
 		for (int i = 0; i < (Car_Setups_int - Car_Setups); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < 22; o++) {
-				num = 18 * o;
-				for (int p = 0; p < 18; p++) {
+				num = 46 * o;
+				for (int p = 0; p < 22; p++) {
 					Output_Car_Setups[counter] = Names_encode[p];
 					counter++;
 					for (int l = 0; l < byte_codes[p].length; l++) {
@@ -219,17 +282,18 @@ public class Write_encoded {
 		}
 		Car_Setups = Car_Setups_int;
 	}
+	//testen + interlacing + num car loop dynamisch maken + id en participants boven aan packet + groote output byte[]
 
 	static int Car_Telemetry = 0;
 	public static void Car_Telemetry(int Car_Telemetry_int, byte[] e) {
 		Names(file[6]);
 		byte[] Output_Car_Telemetry = null;
+		int counter = 0;
 		for (int i = 0; i < (Car_Telemetry_int - Car_Telemetry); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < 22; o++) {
-				num = 18 * o;
-				for (int p = 0; p < 18; p++) {
+				num = 58 * o;
+				for (int p = 0; p < 30; p++) {
 					Output_Car_Telemetry[counter] = Names_encode[p];
 					counter++;
 					for (int l = 0; l < byte_codes[p].length; l++) {
@@ -238,17 +302,26 @@ public class Write_encoded {
 					}
 				}
 			}
+			for (int o = 0; o < 4; o++) {
+				Output_Car_Telemetry[counter] = Names_encode[30 + o];
+				counter++;
+				for (int p = 0; p < byte_codes[30 + o].length; p++) {
+					Output_Car_Telemetry[counter] = e[byte_codes[30 + o][p]];
+					counter++;
+				}
+			}
 		}
 		Car_Telemetry = Car_Telemetry_int;
 	}
+	//testen + interlacing + num car loop dynamisch maken + id en participants boven aan packet + groote output byte[]
 
 	static int Car_Status = 0;
 	public static void Car_Status(int Car_Status_int, byte[] e) {
 		Names(file[7]);
 		byte[] Output_Car_Status = null;
+		int counter = 0;
 		for (int i = 0; i < (Car_Status_int - Car_Status); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < 22; o++) {
 				num = 18 * o;
 				for (int p = 0; p < 18; p++) {
@@ -268,9 +341,9 @@ public class Write_encoded {
 	public static void Final_Classification(int Final_Classification_int, byte[] e) {
 		Names(file[8]);
 		byte[] Output_Final_Classsification = null;
+		int counter = 0;
 		for (int i = 0; i < (Final_Classification_int - Final_Classification); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < 22; o++) {
 				num = 18 * o;
 				for (int p = 0; p < 18; p++) {
@@ -290,9 +363,9 @@ public class Write_encoded {
 	public static void Lobby_Info(int Lobby_Info_int, byte[] e) {
 		Names(file[9]);
 		byte[] Output_Lobby_Info = null;
+		int counter = 0;
 		for (int i = 0; i < (Lobby_Info_int - Lobby_Info); i++) {
 			int num = 0;
-			int counter = 0;
 			for (int o = 0; o < 22; o++) {
 				num = 18 * o;
 				for (int p = 0; p < 18; p++) {

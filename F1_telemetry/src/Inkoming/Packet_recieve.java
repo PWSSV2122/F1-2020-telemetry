@@ -316,7 +316,7 @@ public class Packet_recieve {
 				if (e[5] == 05) {
 					HashMap<String, Object> Car_Setups_Packet = new HashMap<String, Object>();
 					for (int i = 0; i < 22; i++) {
-						int y = i * 22;
+						int y = i * 46;
 						Car_Setups_Packet.put("m_frontWing_" + i, (int) e[24 + y]);
 						Car_Setups_Packet.put("m_rearWing_" + i, (int) e[25 + y]);
 						Car_Setups_Packet.put("m_onThrottle_" + i, (int) e[26 + y]);
