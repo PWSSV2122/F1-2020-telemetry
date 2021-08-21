@@ -142,21 +142,21 @@ public class Packet_recieve {
 			        Session_Packet.put("m_sliProNativeSupport", (int) e[41]);
 			        Session_Packet.put("m_numMarshalZones", (int) e[42]);
 			        for (int i = 0; i < (int) Session_Packet.get("m_numMarshalZones"); i++ ) {
-			        	int y = i * 2;
-			        	Session_Packet.put("m_zoneStart_" + i, (int) e[43 + y]);
-			        	Session_Packet.put("m_zoneFlag_" + i, (int) e[44 + y]);
+			        	int y = i * 5;
+			        	Session_Packet.put("m_zoneStart_" + i, ByteBuffer.wrap(new byte[] {e[43 + y], e[44 + y], e[45 + y], e[46 + y]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
+			        	Session_Packet.put("m_zoneFlag_" + i, (int) e[47 + y]);
 			        }
-			        int u = (int) Session_Packet.get("m_numMarshalZones") * 2;
-			        Session_Packet.put("m_safetyCarStatus", (int) e[45 + u]);
-			        Session_Packet.put("m_networkGame", (int) e[46 + u]);
-			        Session_Packet.put("m_numWeatherForecastSamples", (int) e[47 + u]);
+			        int u = (int) Session_Packet.get("m_numMarshalZones") * 5;
+			        Session_Packet.put("m_safetyCarStatus", (int) e[48 + u]);
+			        Session_Packet.put("m_networkGame", (int) e[49 + u]);
+			        Session_Packet.put("m_numWeatherForecastSamples", (int) e[50 + u]);
 			        for (int i = 0; i < (int) Session_Packet.get("m_numWeatherForecastSamples"); i++) {
 			        	int y = i * 5 + u;
-			        	Session_Packet.put("m_sessionType_" + i, (int) e[48 + y]);
-			        	Session_Packet.put("m_timeOffset_" + i, (int) e[49 + y]);
-			        	Session_Packet.put("m_weather_" + i, (int) e[50 + y]);
-			        	Session_Packet.put("m_trackTemperature_" + i, (int) e[51 + y]);
-			        	Session_Packet.put("m_airTemperature_" + i, (int) e[52 + y]);
+			        	Session_Packet.put("m_sessionType_" + i, (int) e[51 + y]);
+			        	Session_Packet.put("m_timeOffset_" + i, (int) e[52 + y]);
+			        	Session_Packet.put("m_weather_" + i, (int) e[53 + y]);
+			        	Session_Packet.put("m_trackTemperature_" + i, (int) e[54 + y]);
+			        	Session_Packet.put("m_airTemperature_" + i, (int) e[55 + y]);
 			        }
 			        
 			        Data_saves.Packet_store.Session_Packet_Header.putAll(Header);

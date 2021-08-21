@@ -14,13 +14,13 @@ m_isSpectating : 00001100 : 39
 m_spectatorCarIndex : 00001101 : 40
 m_sliProNativeSupport : 00001110 : 41
 m_numMarshalZones : 00001111 : 42
-m_zoneStart_ : 00010000 : 43
-m_zoneFlag_ : 00010001 : 44
-m_safetyCarStatus : 00010010 : 45
-m_networkGame : 00010011 : 46
-m_numWeatherForecastSamples : 00010100 : 47
-m_sessionType_ : 00010101 : 48
-m_timeOffset_ : 00010110 : 49
-m_weather_ : 00010111 : 50
-m_trackTemperature_ : 00011000 : 51
-m_airTemperature_ : 00011001 : 52
+m_zoneStart_ : 00010000 : 43, 44, 45, 46
+m_zoneFlag_ : 00010001 : 47
+m_safetyCarStatus : 00010010 : 48
+m_networkGame : 00010011 : 49
+m_numWeatherForecastSamples : 00010100 : 50
+m_sessionType_ : 00010101 : 51
+m_timeOffset_ : 00010110 : 52
+m_weather_ : 00010111 : 53
+m_trackTemperature_ : 00011000 : 54
+m_airTemperature_ : 00011001 : 55

@@ -59,7 +59,7 @@ public class Write_encoded {
 	static int Motion = 0;
 	public static void Motion(int Motion_int, byte[] e) {
 		Names(file[0]);
-		byte[] Output_Motion = null;
+		byte[] Output_Motion = new byte[1890 * (Motion_int - Motion)];
 		for (int i = 0; i < (Motion_int - Motion); i++) {
 			int num = 0;
 			int counter = 0;
@@ -74,9 +74,18 @@ public class Write_encoded {
 					}
 				}
 			}
+			for (int o = 0; o < 30; o++) {
+				Output_Motion[counter] = Names_encode[o + 17];
+				counter++;
+				for (int p = 0; p < byte_codes[o + 17].length; p++) {
+					Output_Motion[counter] = e[byte_codes[o + 17][p]];
+					counter++;
+				}
+			}
 		}
 		Motion = Motion_int;
 	}
+	//testen + num car loop dynamisch maken + id en participants boven aan packet
 	
 	static int Session = 0;
 	public static void Session(int Session_int, byte[] e) {
@@ -85,20 +94,55 @@ public class Write_encoded {
 		for (int i = 0; i < (Session_int - Session); i++) {
 			int num = 0;
 			int counter = 0;
-			for (int o = 0; o < 22; o++) {
-				num = 18 * o;
-				for (int p = 0; p < 18; p++) {
-					Output_Session[counter] = Names_encode[p];
+			for (int o = 0; o < 16; o++) {
+				Output_Session[counter] = Names_encode[o];
+				counter++;
+				for (int p = 0; p < byte_codes[o].length; p++) {
+					Output_Session[counter] = e[byte_codes[o][p]];
 					counter++;
-					for (int l = 0; l < byte_codes[p].length; l++) {
-						Output_Session[counter] = e[byte_codes[p][l] + num];
+				}
+			}
+			for (int o = 0; o < e[byte_codes[15][0]]; o++) {
+				num = 5 * o;
+				for (int p = o; p < 2; p++) {
+					Output_Session[counter] = Names_encode[16 + p];
+					counter++;
+					for (int l = 0; l < byte_codes[o + 16].length; l++) {
+						Output_Session[counter] = e[num + byte_codes[o + 16][l]];
+						counter++;
+					}
+				}				
+			}
+			Output_Session[counter] = Names_encode[18];
+			counter++;
+			Output_Session[counter] = e[num + byte_codes[18][0]];
+			counter++;
+			
+			Output_Session[counter] = Names_encode[19];
+			counter++;
+			Output_Session[counter] = e[num + byte_codes[19][0]];
+			counter++;
+			
+			Output_Session[counter] = Names_encode[20];
+			counter++;
+			Output_Session[counter] = e[num + byte_codes[20][0]];
+			counter++;
+			
+			for (int o = 0; o < e[num + byte_codes[20][0]]; o++) {
+				for (int p = 0; p < 5; p++) {
+					Output_Session[counter] = Names_encode[21 + o];
+					counter++;
+					for (int l = 0; l < byte_codes[21 + o].length; l++) {
+						Output_Session[counter] = e[num + byte_codes[21 + o][l]];
 						counter++;
 					}
 				}
+				num = num + 5;
 			}
 		}
 		Session = Session_int;
 	}
+	//testen + interlacing toevoegen + id boven aan packet
 	
 	static int Lap_Data = 0;
 	public static void Lap_Data(int Lap_Data_int, byte[] e) {
@@ -109,7 +153,7 @@ public class Write_encoded {
 			int counter = 0;
 			for (int o = 0; o < 22; o++) {
 				num = 18 * o;
-				for (int p = 0; p < 18; p++) {
+				for (int p = 0; p < 27; p++) {
 					Output_Lap_Data[counter] = Names_encode[p];
 					counter++;
 					for (int l = 0; l < byte_codes[p].length; l++) {
@@ -121,6 +165,7 @@ public class Write_encoded {
 		}
 		Lap_Data = Lap_Data_int;
 	}
+	//testen + interlacing + num car loop dynamisch maken + id en participants boven aan packet
 	
 	static int Event = 0;
 	public static void Event(int Event_int, byte[] e) {
@@ -138,7 +183,7 @@ public class Write_encoded {
 		for (int i = 0; i < (Participants_int - Participants); i++) {
 			int num = 0;
 			int counter = 0;
-			for (int o = 0; o < 22; o++) {
+			for (int o = 0; o < e[byte_codes[0][0]]; o++) {
 				num = 18 * o;
 				for (int p = 0; p < 18; p++) {
 					Output_Participants[counter] = Names_encode[p];
@@ -267,14 +312,7 @@ public class Write_encoded {
 		
 	}
 }
-//alle woorden moeten nog worden geconvert met .byteValue() en de "\n" is voor nu alleen maar dat het goed te zien is in een .txt bestand
-
 //todo
 //id aan alle .enc file toevoegen
-//alle bit coodes in .enc files naar 8 zetten
-//testen van file of de string eruit komen zoals verwacht
-//.byteValue() achter alle data zetten
-//"\n" weg halen
-//string converten naar bytes
 //bytes naar files write
 //aanroepen van de methoden
