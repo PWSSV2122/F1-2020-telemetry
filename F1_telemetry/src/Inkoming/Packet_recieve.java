@@ -36,10 +36,11 @@ public class Packet_recieve {
 //					System.out.println(0);
 //				}
 				
-//		        for (byte b : e) {
-//		            String st = String.format("%02X ", b);
-//		            System.out.print(st);
-//		        }
+		        for (byte b : e) {
+		            String st = String.format("%02X ", b);
+		            System.out.print(st);
+		        }
+		        System.out.println("\n");
 
 		        HashMap<String, Object> Header = new HashMap<String, Object>();
 				Header.put("packetFormat", (short)((e[1] & 0xFF) << 8) | (e[0] & 0xFF));
@@ -119,6 +120,7 @@ public class Packet_recieve {
 					Data_saves.Packet_store.Motion_Packet.putAll(Motion_Packet);
 					Data_saves.Packet_store.Motion_Packet_store.put(String.valueOf(Motion_Packet_int), e);
 					Motion_Packet_int = Motion_Packet_int + 1;
+					File_reader.Write_encoded.Motion(Motion_Packet_int, e);
 				}
 				
 				
@@ -165,13 +167,13 @@ public class Packet_recieve {
 			        Session_Packet_int = Session_Packet_int + 1;
 			        //nog checken
 			        
-			        if (Session_Packet_int == 750) {
-				    	final int session_test = Session_Packet_int;
-						Thread Session = new Thread(() -> {
-							File_reader.Write_encoded.Session(session_test);
-						});
-						Session.start();
-			        }
+//			        if (Session_Packet_int == 750) {
+//				    	final int session_test = Session_Packet_int;
+//						Thread Session = new Thread(() -> {
+//							File_reader.Write_encoded.Session(session_test);
+//						});
+//						Session.start();
+//			        }
 				}
 				
 				if (e[5] == 02) {
@@ -217,15 +219,15 @@ public class Packet_recieve {
 					Data_saves.Packet_store.Lap_Data_Packet_store.put(String.valueOf(Lap_Data_Packet_int), e);
 					Lap_Data_Packet_int = Lap_Data_Packet_int + 1;
 					
-					if (current_lap == (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car)) {
-					} else {
-						current_lap = (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car);
-						int[] Write_encode_int = new int[] {Motion_Packet_int, Lap_Data_Packet_int, Car_Telemetry_Packet_int, Car_Status_Packet_int,};
-						Thread Write_encode = new Thread(() -> {
-							File_reader.Write_encoded.Main(Write_encode_int, participants);
-						});
-						Write_encode.start();
-					}
+//					if (current_lap == (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car)) {
+//					} else {
+//						current_lap = (int) Lap_Data_Packet.get("m_currentLapNum_" + first_car);
+//						int[] Write_encode_int = new int[] {Motion_Packet_int, Lap_Data_Packet_int, Car_Telemetry_Packet_int, Car_Status_Packet_int,};
+//						Thread Write_encode = new Thread(() -> {
+//							File_reader.Write_encoded.Main(Write_encode_int, participants);
+//						});
+//						Write_encode.start();
+//					}
 				}
 				
 				if (e[5] == 03) {
@@ -302,13 +304,13 @@ public class Packet_recieve {
 					Data_saves.Packet_store.Participants_Packet_store.put(String.valueOf(Participants_Packet_int), e);
 					Participants_Packet_int = Participants_Packet_int + 1;
 					//nog checken
-			        if (Participants_Packet_int == 300) {
-				    	final int participants_packet = Participants_Packet_int;
-						Thread Session = new Thread(() -> {
-							File_reader.Write_encoded.Participants(participants_packet);
-						});
-						Session.start();
-			        }
+//			        if (Participants_Packet_int == 300) {
+//				    	final int participants_packet = Participants_Packet_int;
+//						Thread Session = new Thread(() -> {
+//							File_reader.Write_encoded.Participants(participants_packet);
+//						});
+//						Session.start();
+//			        }
 			        
 			        participants.put(String.valueOf(Participants_Packet_int), (int)e[24]);
 				}

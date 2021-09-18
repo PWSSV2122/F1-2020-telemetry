@@ -2,12 +2,13 @@ package File_reader;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Write_encoded {
 	static int send_rate = 60;
-	static String[] file = new String[] {"Names/Motion_Packet.enc", "Names/Session_Packet", "Names/Lap_Data_Packet.enc", "Names/Event_Packet.enc", "Names/Participants_Packet.enc",
+	static String[] file = new String[] {"src/Names/Motion_Packet.enc", "Names/Session_Packet", "Names/Lap_Data_Packet.enc", "Names/Event_Packet.enc", "Names/Participants_Packet.enc",
 			"Names/Car_Setup_Packet.enc", "Names/Car_Telemetry.enc", "Names/Car_Status_Packet.enc", "Names/Final_Classification_Packet.enc", "Names/Lobby_Info_Packet.enc"};
 	
 	static String[] Names = new String[70];
@@ -55,6 +56,22 @@ public class Write_encoded {
 		return Names;
 	}
 	
+	private static void Write(String file, byte[] Write_content) {
+		FileOutputStream output;
+		try {
+			output = new FileOutputStream(file, true);
+			try {
+				output.write(Write_content);
+			} finally {
+				output.close();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	static int Motion = 0;
 	public static void Motion(int Motion_int, byte[] e) {
 		Names(file[0]);
@@ -83,6 +100,8 @@ public class Write_encoded {
 			}
 		}
 		Motion = Motion_int;
+		Write("src/test/test.data", Output_Motion);
+		System.out.println("write");
 	}
 	//testen + num car loop dynamisch maken + id en participants boven aan packet
 	
