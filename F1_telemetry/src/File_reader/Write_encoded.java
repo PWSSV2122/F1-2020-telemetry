@@ -77,7 +77,18 @@ public class Write_encoded {
 		Names(file[0]);
 		byte[] Output_Motion = new byte[1890 * (Motion_int - Motion)];
 		int counter = 0;
+
 		for (int i = 0; i < (Motion_int - Motion); i++) {
+			Output_Motion[counter] = (byte) 10000000;
+			counter++;
+			Output_Motion[counter] = (byte)((Motion >> 24) & 0xff);
+			counter++;
+			Output_Motion[counter] = (byte)((Motion >> 16) & 0xff);
+			counter++;
+			Output_Motion[counter] = (byte)((Motion >> 8) & 0xff);
+			counter++;
+			Output_Motion[counter] = (byte)((Motion >> 0) & 0xff);
+			counter++;
 			int num = 0;
 			for (int o = 0; o < 22; o++) {
 				num = 18 * o;
@@ -98,8 +109,8 @@ public class Write_encoded {
 					counter++;
 				}
 			}
+			Motion++;
 		}
-		Motion = Motion_int;
 		Write("src/test/test.data", Output_Motion);
 		System.out.println("write");
 	}
