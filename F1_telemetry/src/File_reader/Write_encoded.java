@@ -75,7 +75,7 @@ public class Write_encoded {
 	static int Motion = 0;
 	public static void Motion(int Motion_int, byte[] e) {
 		Names(file[0]);
-		byte[] Output_Motion = new byte[1890 * (Motion_int - Motion)];
+		byte[] Output_Motion = new byte[1913 * (Motion_int - Motion)];
 		int counter = 0;
 
 		for (int i = 0; i < (Motion_int - Motion); i++) {
@@ -89,6 +89,10 @@ public class Write_encoded {
 			counter++;
 			Output_Motion[counter] = (byte)((Motion >> 0) & 0xff);
 			counter++;
+			for (int o = 0; o < 24; o++) {
+				Output_Motion[counter] = e[o];
+						counter++;
+			}
 			int num = 0;
 			for (int o = 0; o < 22; o++) {
 				num = 18 * o;

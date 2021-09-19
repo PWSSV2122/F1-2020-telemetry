@@ -36,11 +36,11 @@ public class Packet_recieve {
 //					System.out.println(0);
 //				}
 				
-		        for (byte b : e) {
-		            String st = String.format("%02X ", b);
-		            System.out.print(st);
-		        }
-		        System.out.println("\n");
+//		        for (byte b : e) {
+//		            String st = String.format("%02X ", b);
+//		            System.out.print(st);
+//		        }
+//		        System.out.println("\n");
 
 		        HashMap<String, Object> Header = new HashMap<String, Object>();
 				Header.put("packetFormat", (short)((e[1] & 0xFF) << 8) | (e[0] & 0xFF));
@@ -53,6 +53,7 @@ public class Packet_recieve {
 				Header.put("frameIdentifier", (int)(((e[21] & 0xFF) << 24) | ((e[20] & 0xFF) << 16) | ((e[19] & 0xFF) << 8) | ((e[18] & 0xFF) << 0)));
 				Header.put("playerCarIndex", (byte) e[22]);
 				Header.put("secondaryPlayerCarIndex", (byte) e[23]);
+				System.out.println(Header.get("gameMinorVersion"));
 				
 				
 //				long y = (long)((e[13] & 0xFFL) << 56) | ((e[12] & 0xFFL) << 48) | ((e[11] & 0xFFL) << 40) | ((e[10] & 0xFFL) << 32) | ((e[9] & 0xFFL) << 24) | ((e[8] & 0xFFL) << 16) | ((e[7] & 0xFFL) << 8) | ((e[6] & 0xFFL) << 0);
@@ -121,6 +122,8 @@ public class Packet_recieve {
 					Data_saves.Packet_store.Motion_Packet_store.put(String.valueOf(Motion_Packet_int), e);
 					Motion_Packet_int = Motion_Packet_int + 1;
 					File_reader.Write_encoded.Motion(Motion_Packet_int, e);
+					System.out.println(Motion_Packet_int);
+					System.out.println(Motion_Packet.get("m_worldPositionX_1"));
 				}
 				
 				
