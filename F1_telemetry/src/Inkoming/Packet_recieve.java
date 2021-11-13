@@ -8,8 +8,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteOrder;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Arrays;
 import java.nio.ByteBuffer;
 
 public class Packet_recieve {
@@ -102,7 +100,8 @@ public class Packet_recieve {
 							Data_decode.put(Packet_names.get(File_Path[PacketId]).get(3 + i), (int) e[Packet_byte_array.get(File_Path[PacketId]).get(3 + i)[0]]);
 						}
 					}					
-				} else {
+				} else if (PacketId < 11) {
+					System.out.println(PacketId);
 					for (int i = 0; i < Packet_names.get(File_Path[PacketId]).size(); i++) {
 						int Data_type = Packet_byte_array.get(File_Path[PacketId]).get(i).length;
 						int[] array_places = Packet_byte_array.get(File_Path[PacketId]).get(i);
@@ -140,6 +139,8 @@ public class Packet_recieve {
 							}
 						}
 					}
+				} else {
+					System.out.println("wat de neuk");
 				}
 				
 				HashMap<String, Object> Needed_data = new HashMap<String, Object>();
