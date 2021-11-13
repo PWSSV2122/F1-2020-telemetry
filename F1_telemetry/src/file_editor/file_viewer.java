@@ -9,21 +9,40 @@ import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class file_viewer extends Application{
+	@FXML
 	Stage window;
+	@FXML
 	Scene scene1;
 	HashMap<Integer, HashMap<String, Object>> Packet = new HashMap<Integer, HashMap<String, Object>>();
+	@FXML
+	ScrollPane root = new ScrollPane();
+	@FXML
+	Text T = new Text();
+	String newLine = System.getProperty("line.separator");
+	int packet = 0;
 	public void start(Stage primaryStage) {
 		read();
+		text();
 		window = primaryStage;
+		String test = text_overig;
+    	T.setText(text_overig);
 		VBox top_level = new VBox();
+		root.setContent(T);
+		top_level.getChildren().add(root);
 		scene1 = new Scene(top_level, 1500, 1000);
 		top_level.setPrefHeight(1000);
 		try {
@@ -34,20 +53,56 @@ public class file_viewer extends Application{
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		window.setOnCloseRequest(e -> PreferenceSave());
+		
+		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+		executor.scheduleAtFixedRate(textUpdate, 0, (1000 / 60), TimeUnit.MILLISECONDS);
 	}
+	
+	Runnable textUpdate = new Runnable() {
+	    public void run() {
+	    	try {
+		    	text_overig = "";
+		    	text();
+		    	String test = text_overig;
+		    	if (text_overig.length() <= 0) {
+		    		System.out.println("nooooooo!!!!!");
+		    	}
+		    	try {
+			    	T.setText(text_overig);
+		    	} catch (Exception e) {
+		    		
+		    	}
+		    	packet++;
+		        System.out.println(packet + "\n" + packet);
+	    	} catch (Exception e){
+	    		e.printStackTrace();
+	    	} 
+	    }
+	};
 	
 	public void PreferenceSave() {
 		
 	}
 	
-//	public void Float() {
-//		
-//	}
-//	
-//	public void Short() {
-//		
-//	}
+	String text_overig = "";
+	public void text() {
+		for (int i = 0; i < 21; i ++) {
+			text_overig += "Car : " + i + "\n";
+			for (int o = 0; o < 18; o++) {
+				text_overig += Names[o];
+				text_overig += " : ";
+				text_overig += String.valueOf(Packet.get(packet + 1).get(Names[o] + i));
+				text_overig += newLine;
+			}
+			text_overig +="\n";
+		}
+		for(int i = 0; i < 30; i++) {
+			text_overig += Names[i + 18];
+			text_overig += " : " + String.valueOf(Packet.get(packet + 1).get(Names[i + 18]));
+			text_overig += "\n";
+		}
+		System.out.println(Packet.get(packet + 1).get(Names[2] + 2));
+	}
 	
 	static String[] file = new String[] {"src/Names/Motion_Packet.enc", "src/Names/Session_Packet", "src/Names/Lap_Data_Packet.enc", "src/Names/Event_Packet.enc", "src/Names/Participants_Packet.enc",
 			"src/Names/Car_Setup_Packet.enc", "src/Names/Car_Telemetry.enc", "src/Names/Car_Status_Packet.enc", "src/Names/Final_Classification_Packet.enc", "src/Names/Lobby_Info_Packet.enc"};
@@ -98,7 +153,7 @@ public class file_viewer extends Application{
 		
 		return Names;
 	}
-	
+	int id = 0;
 	private void read() {
 		try {
 			byte[] input = Files.readAllBytes(Paths.get("src/test/test.data"));
@@ -108,7 +163,7 @@ public class file_viewer extends Application{
 			int participant = 0;
 			if (input[0] == -128) {
 				if (input[10] == 00) {
-					int id = (int)((input[1] & 0xFF) << 24) | ((input[2] & 0xFF) << 16) | ((input[3] & 0xFF) << 8) | ((input[4] & 0xFF) << 0);
+					id = (int)((input[1] & 0xFF) << 24) | ((input[2] & 0xFF) << 16) | ((input[3] & 0xFF) << 8) | ((input[4] & 0xFF) << 0);
 					Names(file[0]);
 					HashMap<Byte, Integer> Motion = new HashMap<Byte, Integer>();
 					for (int i = 0; i < length; i++) {
@@ -154,20 +209,30 @@ public class file_viewer extends Application{
 							}
 						} else {
 							if (input[input_counter] == -128) {
-								Packet.put(id, temp_save);
+//								if (Packet.get(id) == null) {
+//									Packet.put(id, temp_save);
+//								} else {
+//									Packet.get(id).putAll(temp_save);
+//									System.out.println("wut");
+//								}
+								//System.out.println(Packet.get(id));
+								Packet.put(id, new HashMap<String, Object>(temp_save));
+								//Packet.get(id).put("1", 1);
 								id = (int)((input[input_counter + 1] & 0xFF) << 24) | ((input[input_counter + 2] & 0xFF) << 16) | ((input[input_counter + 3] & 0xFF) << 8) | ((input[input_counter + 4] & 0xFF) << 0);
 								input_counter = input_counter + 29;
 								participant = 0;
-								temp_save.clear();
 							} else {
 								System.out.println("Ongeldige byte in bestand");
 								input_counter = input.length;
 							}
 						}
 					}
-//					for (int i = 0; i < 2803; i++) {
+//					for (int i = 0; i < id + 10; i++) {
 //						System.out.println(i + " : " + Packet.get(i));
 //					}
+//					System.out.println(Packet.size());
+//					System.out.println(Packet.get(0));
+//					System.out.println(packet);
 				}
 			} else {
 				System.out.println("geen geldig bestand");

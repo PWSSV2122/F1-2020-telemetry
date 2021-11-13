@@ -1,48 +1,48 @@
-m_worldPositionX_ : 00000000 : 24, 25, 26, 27
-m_worldPositionY_ : 00000001 : 28, 29, 30, 31
-m_worldPositionZ_ : 00000010 : 32, 33, 34, 35
-m_worldVelocityX_ : 00000011 : 36, 37, 38, 39
-m_worldVelocityY_ : 00000100 : 40, 41, 42, 43
-m_worldVelocityZ_ : 00000101 : 44, 45, 46, 47
-m_worldForwardDirX_ : 00000110 : 48, 49
-m_worldForwardDirY_ : 00000111 : 50, 51
-m_worldForwardDirZ_ : 00001000 : 52, 53
-m_worldRightDirX_ : 00001001 : 54, 55
-m_worldRightDirY_ : 00001010 : 56, 57
-m_worldRightDirZ_ : 00001011 : 58, 59
-m_gForceLateral_ : 00001100 : 60, 61, 62, 63
-m_gForceLongitudinal_ : 00001101 : 64, 65, 66, 67
-m_gForceVertical_ : 00001110 : 68, 69, 70, 71
-m_yaw_ : 00001111 : 72, 73, 74, 75
-m_pitch_ : 00010000 : 76, 77, 78, 79
-m_roll_ : 00010001 : 80, 81, 82, 83
-m_suspensionPosition_RL : 00010010 : 1344, 1345, 1346, 1347
-m_suspensionPosition_RR : 00010011 : 1348, 1349, 1350, 1351
-m_suspensionPosition_FL : 00010100 : 1352, 1353, 1354, 1355
-m_suspensionPosition_FR : 00010101 : 1356, 1357, 1358, 1359
-m_suspensionVelocity_RL : 00010110 : 1360, 1361, 1362, 1363
-m_suspensionVelocity_RR : 00010111 : 1364, 1365, 1366, 1367
-m_suspensionVelocity_FL : 00011000 : 1368, 1369, 1370, 1371
-m_suspensionVelocity_FR : 00011001 : 1372, 1373, 1374, 1375
-m_suspensionAcceleration_RL : 00011010 : 1376, 1377, 1378, 1379
-m_suspensionAcceleration_RR : 00011011 : 1380, 1381, 1382, 1383
-m_suspensionAcceleration_FR : 00011100 : 1384, 1385, 1386, 1387
-m_suspensionAcceleration_FL : 00011101 : 1388, 1389, 1390, 1391
-m_wheelSpeed_RL : 00011110 : 1392, 1393, 1394, 1395
-m_wheelSpeed_RR : 00011111 : 1396, 1397, 1398, 1399
-m_wheelSpeed_FR : 00100000 : 1400, 1401, 1402, 1403
-m_wheelSpeed_FL : 00100001 : 1404, 1405, 1406, 1407
-m_wheelSlip_RL : 00100010 : 1408, 1409, 1410, 1411
-m_wheelSlip_RR : 00100011 : 1412, 1413, 1414, 1415
-m_wheelSlip_FL : 00100100 : 1416, 1417, 1418, 1419
-m_wheelSlip_FR : 00100101 : 1420, 1421, 1422, 1423
-m_localVelocityX : 00100110 : 1424, 1425, 1426, 1427
-m_localVelocityY : 00100111 : 1428, 1429, 1430, 1431
-m_localVelocityZ : 00101000 : 1432, 1433, 1434, 1435
-m_angularVelocityX : 00101001 : 1436, 1437, 1438, 1439
-m_angularVelocityY : 00101010 : 1440, 1441, 1442, 1443
-m_angularVelocityZ : 00101011 : 1444, 1445, 1446, 1447
-m_angularAccelerationX : 00101100 : 1448, 1449, 1450, 1451
-m_angularAccelerationY : 00101101 : 1452, 1453, 1454, 1455
-m_angularAccelerationZ : 00101110 : 1456, 1457, 1458, 1459
-m_frontWheelsAngle : 00101111 : 1460, 1461, 1462, 1463
+m_worldPositionX_ : 24, 25, 26, 27
+m_worldPositionY_ : 28, 29, 30, 31
+m_worldPositionZ_ : 32, 33, 34, 35
+m_worldVelocityX_ : 36, 37, 38, 39
+m_worldVelocityY_ : 40, 41, 42, 43
+m_worldVelocityZ_ : 44, 45, 46, 47
+m_worldForwardDirX_ : 48, 49
+m_worldForwardDirY_ : 50, 51
+m_worldForwardDirZ_ : 52, 53
+m_worldRightDirX_ : 54, 55
+m_worldRightDirY_ : 56, 57
+m_worldRightDirZ_ : 58, 59
+m_gForceLateral_ : 60, 61, 62, 63
+m_gForceLongitudinal_ : 64, 65, 66, 67
+m_gForceVertical_ : 68, 69, 70, 71
+m_yaw_ : 72, 73, 74, 75
+m_pitch_ : 76, 77, 78, 79
+m_roll_ : 80, 81, 82, 83
+m_suspensionPosition_RL : 1344, 1345, 1346, 1347
+m_suspensionPosition_RR : 1348, 1349, 1350, 1351
+m_suspensionPosition_FL : 1352, 1353, 1354, 1355
+m_suspensionPosition_FR : 1356, 1357, 1358, 1359
+m_suspensionVelocity_RL : 1360, 1361, 1362, 1363
+m_suspensionVelocity_RR : 1364, 1365, 1366, 1367
+m_suspensionVelocity_FL : 1368, 1369, 1370, 1371
+m_suspensionVelocity_FR : 1372, 1373, 1374, 1375
+m_suspensionAcceleration_RL : 1376, 1377, 1378, 1379
+m_suspensionAcceleration_RR : 1380, 1381, 1382, 1383
+m_suspensionAcceleration_FR : 1384, 1385, 1386, 1387
+m_suspensionAcceleration_FL : 1388, 1389, 1390, 1391
+m_wheelSpeed_RL : 1392, 1393, 1394, 1395
+m_wheelSpeed_RR : 1396, 1397, 1398, 1399
+m_wheelSpeed_FR : 1400, 1401, 1402, 1403
+m_wheelSpeed_FL : 1404, 1405, 1406, 1407
+m_wheelSlip_RL : 1408, 1409, 1410, 1411
+m_wheelSlip_RR : 1412, 1413, 1414, 1415
+m_wheelSlip_FL : 1416, 1417, 1418, 1419
+m_wheelSlip_FR : 1420, 1421, 1422, 1423
+m_localVelocityX : 1424, 1425, 1426, 1427
+m_localVelocityY : 1428, 1429, 1430, 1431
+m_localVelocityZ : 1432, 1433, 1434, 1435
+m_angularVelocityX : 1436, 1437, 1438, 1439
+m_angularVelocityY : 1440, 1441, 1442, 1443
+m_angularVelocityZ : 1444, 1445, 1446, 1447
+m_angularAccelerationX : 1448, 1449, 1450, 1451
+m_angularAccelerationY : 1452, 1453, 1454, 1455
+m_angularAccelerationZ : 1456, 1457, 1458, 1459
+m_frontWheelsAngle : 1460, 1461, 1462, 1463

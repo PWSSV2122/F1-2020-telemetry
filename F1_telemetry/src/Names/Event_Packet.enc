@@ -1,15 +1,15 @@
-m_eventStringCode : 00000000 : 24, 25, 26, 27
-vehicleIdx_FTLP : 00000001 : 28
-lapTime : 00000010 : 29, 30, 31, 32
-vehicleIdx_RTMT : 00000011 : 28
-vehicleIdx_TMPT : 00000100 : 28
-vehicleIdx_RCWN : 00000101 : 28
-penaltyType : 00000110 : 28
-infringementType : 00000111 : 29
-vehicleIdx_PENA : 00001000 : 30
-otherVehicleIdx : 00001001 : 31
-time : 00001010 : 32
-lapNum : 00001011 : 33
-placesGained : 00001100 : 34
-vehicleIdx_SPTP : 00001101 : 28
-speed : 00001110 : 29, 30, 31, 32
+m_eventStringCode : 24, 25, 26, 27
+m_vehicleIdx_FTLP : 28
+m_lapTime : 29, 30, 31, 32
+m_vehicleIdx_RTMT : 28
+m_vehicleIdx_TMPT : 28
+m_vehicleIdx_RCWN : 28
+m_penaltyType : 28
+m_infringementType : 29
+m_vehicleIdx_PENA : 30
+m_otherVehicleIdx : 31
+m_time : 32
+m_lapNum : 33
+m_placesGained : 34
+m_vehicleIdx_SPTP : 28
+m_speed : 29, 30, 31, 32
