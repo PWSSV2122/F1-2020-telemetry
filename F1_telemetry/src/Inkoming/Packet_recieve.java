@@ -100,8 +100,7 @@ public class Packet_recieve {
 							Data_decode.put(Packet_names.get(File_Path[PacketId]).get(3 + i), (int) e[Packet_byte_array.get(File_Path[PacketId]).get(3 + i)[0]]);
 						}
 					}					
-				} else if (PacketId < 11) {
-					System.out.println(PacketId);
+				} else if (PacketId < 10) {
 					for (int i = 0; i < Packet_names.get(File_Path[PacketId]).size(); i++) {
 						int Data_type = Packet_byte_array.get(File_Path[PacketId]).get(i).length;
 						int[] array_places = Packet_byte_array.get(File_Path[PacketId]).get(i);
@@ -140,7 +139,7 @@ public class Packet_recieve {
 						}
 					}
 				} else {
-					System.out.println("wat de neuk");
+					System.out.println("erro code #6"); //nog te bepalen error code
 				}
 				
 				HashMap<String, Object> Needed_data = new HashMap<String, Object>();
@@ -158,12 +157,12 @@ public class Packet_recieve {
 						}
 					}
 				}
-				if (PacketId == 5) {
-					for (int i = 0; i < 22; i++) {
-						System.out.println(Needed_data.get("frontWing_" + i) + " : " + Data_decode.get("m_frontWing_" + i));
-					}
-					System.out.println("\n");
-				}
+//				if (PacketId == 5) {
+//					for (int i = 0; i < 22; i++) {
+//						System.out.println(Needed_data.get("frontWing_" + i) + " : " + Data_decode.get("m_frontWing_" + i));
+//					}
+//					System.out.println("\n");
+//				}
 
 			}
 			socket.close();
