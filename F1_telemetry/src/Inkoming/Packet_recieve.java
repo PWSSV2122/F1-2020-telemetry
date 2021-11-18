@@ -8,14 +8,21 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteOrder;
 import java.util.HashMap;
+
+import file_system.L1;
+import file_system.data_manager;
+
 import java.nio.ByteBuffer;
 
 public class Packet_recieve {
 	static boolean test2;
+	public static String[] first_frameIdentifier_name = new String[] {"Car_status", "car_telemetry", "lap_data", "motion"};
+	public static String[] first_time_name = new String[] {"car_setup", "participants", "session"};
 	public static void main(String[] args) {
 		data_decode();
 		test2 = true;
-		int test_int = 0;
+		boolean[] first_packet = new boolean[] {true, true, true, true, true, true, true};
+		int[] packetid = new int[] {7, 6, 2, 0, 4, 1, 5};
 		try {
 			DatagramSocket socket = new DatagramSocket(20777); //var
 			while (test2 == true) {
@@ -39,14 +46,30 @@ public class Packet_recieve {
 				Header.put("packetVersion", (byte) e[4]);
 				Header.put("packetId", (byte) e[5]);
 				Header.put("sessionUID", (long)((e[13] & 0xFFL) << 56) | ((e[12] & 0xFFL) << 48) | ((e[11] & 0xFFL) << 40) | ((e[10] & 0xFFL) << 32) | ((e[9] & 0xFFL) << 24) | ((e[8] & 0xFFL) << 16) | ((e[7] & 0xFFL) << 8) | ((e[6] & 0xFFL) << 0));
-				Header.put("sessionTime", (int)(((e[17] & 0xFF) << 24) | ((e[16] & 0xFF) << 16) | ((e[15] & 0xFF) << 8 ) | ((e[14] & 0xFF) << 0)));
+				Header.put("sessionTime", ByteBuffer.wrap(new byte[] {e[14], e[15], e[16], e[17]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 				Header.put("frameIdentifier", (int)(((e[21] & 0xFF) << 24) | ((e[20] & 0xFF) << 16) | ((e[19] & 0xFF) << 8) | ((e[18] & 0xFF) << 0)));
 				Header.put("playerCarIndex", (byte) e[22]);
 				Header.put("secondaryPlayerCarIndex", (byte) e[23]);
+				
+				for (int i = 0; i < 4; i++) {
+					if (first_packet[i] == true && (byte) Header.get("packetId") == (byte) packetid[i]) {
+						int frameIdentifier = (int) Header.get("frameIdentifier") - 1;
+						L1.class.getField("frameIdentifier_" + first_frameIdentifier_name[i]).set(frameIdentifier, frameIdentifier);
+						first_packet[i] = false;
+					}
+				}
+				
+				for (int i = 0; i < 3; i ++) {
+					if (first_packet[i + 4] == true && (byte) Header.get("packetId") == (byte) packetid[i + 4]) {
+						int time  = (int) System.currentTimeMillis() -500;
+						L1.class.getField("time_" + first_time_name[i]).set(time, time);
+						first_packet[i + 4] = false;
+					}
+				}
 
 				HashMap<String, Object> Data_decode = new HashMap<String, Object>();
 				byte PacketId = (byte) Header.get("packetId");
-				if (PacketId == 1) { //session packet
+				if (PacketId == 1) { //session packet 
 					for (int i = 0; i < Packet_names.get(File_Path[PacketId]).size() ; i++) {
 						byte ofset = 0;
 						if (Data_decode.get("m_numMarshalZones") != null) {
@@ -58,9 +81,9 @@ public class Packet_recieve {
 								for (int o = 0; o < (byte) Data_decode.get("m_numMarshalZones"); o++) {
 									byte ofset2 = (byte) (5 * o);
 									if (array_places.length == 1) {
-										Data_decode.put(Packet_names.get(File_Path[PacketId]).get(i) + o, (byte) e[array_places[0] + ofset]);
+										Data_decode.put(Packet_names.get(File_Path[PacketId]).get(i) + o, (byte) e[array_places[0] + ofset2]);
 									} else if (array_places.length == 4) {
-										Data_decode.put(Packet_names.get(File_Path[PacketId]).get(i) + o, ByteBuffer.wrap(new byte[] {e[array_places[0] + ofset], e[array_places[1] + ofset], e[array_places[2] + ofset], e[array_places[3] + ofset]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
+										Data_decode.put(Packet_names.get(File_Path[PacketId]).get(i) + o, ByteBuffer.wrap(new byte[] {e[array_places[0] + ofset2], e[array_places[1] + ofset2], e[array_places[2] + ofset2], e[array_places[3] + ofset2]}).order(ByteOrder.LITTLE_ENDIAN).getFloat());
 									}
 								}
 							} else {
@@ -105,11 +128,10 @@ public class Packet_recieve {
 						int Data_type = Packet_byte_array.get(File_Path[PacketId]).get(i).length;
 						int[] array_places = Packet_byte_array.get(File_Path[PacketId]).get(i);
 						if (Packet_names.get(File_Path[PacketId]).get(i).endsWith("_")) {
+							int l = 0;
 							for (int o = 0; o < 22; o++) {
+								l++;
 								int ofset = repeats[PacketId] * o;
-//								if (PacketId == 5 && i == 0) {
-//									System.out.println(ofset + 24);
-//								}
 								if (Data_type == 1) {
 									Data_decode.put(Packet_names.get(File_Path[PacketId]).get(i) + o, (byte) e[array_places[0] + ofset]);
 								} else if (Data_type == 2) {
@@ -139,7 +161,7 @@ public class Packet_recieve {
 						}
 					}
 				} else {
-					System.out.println("erro code #6"); //nog te bepalen error code
+					System.out.println("error code #6"); //nog te bepalen error code
 				}
 				
 				HashMap<String, Object> Needed_data = new HashMap<String, Object>();
@@ -149,14 +171,20 @@ public class Packet_recieve {
 						if (Data_decode.get("m_" + Needed_data_names[i] + "1") != null) {
 							for (int o = 0; o < 22; o++) {
 								Needed_data.put(Needed_data_names[i] + o, Data_decode.get("m_" + Needed_data_names[i] + o));
+								//System.out.println(Needed_data.get(Needed_data_names[i] + o));
 							}
 						}
 					} else {
 						if (Data_decode.get("m_" + Needed_data_names[i]) != null) {
 							Needed_data.put(Needed_data_names[i], Data_decode.get("m_" + Needed_data_names[i]));
+							//System.out.println(Needed_data.get(Needed_data_names[i]));
 						}
 					}
 				}
+				data_manager.data(Needed_data, (byte) Header.get("packetId"), (float) Header.get("sessionTime"), (int) Header.get("frameIdentifier"));
+				
+				//verwizinbg naar het datasysteem met needed_data meegestuurd
+				
 //				if (PacketId == 5) {
 //					for (int i = 0; i < 22; i++) {
 //						System.out.println(Needed_data.get("frontWing_" + i) + " : " + Data_decode.get("m_frontWing_" + i));
