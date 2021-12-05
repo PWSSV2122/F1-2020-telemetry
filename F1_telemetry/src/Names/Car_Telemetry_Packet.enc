@@ -10,24 +10,24 @@ m_revLightsPercent_ : 43
 m_brakesTemperature_RL_ : 44, 45
 m_brakesTemperature_RR_ : 46, 47
 m_brakesTemperature_FL_ : 48, 49
-m_brakesTemperature_FR_ : 49, 50
-m_tyresSurfaceTemperature_RL_ : 51
-m_tyresSurfaceTemperature_RR_ : 52
-m_tyresSurfaceTemperature_FL_ : 53
-m_tyresSurfaceTemperature_FR_ : 54
-m_tyresInnerTemperature_RL_ : 55
-m_tyresInnerTemperature_RR_ : 56
-m_tyresInnerTemperature_FL_ : 57
-m_tyresInnerTemperature_FR_ : 58
-m_engineTemperature : 59, 60
-m_tyresPressure_RL_ : 61, 62, 63, 64
-m_tyresPressure_RR_ : 65, 66, 67, 68
-m_tyresPressure_FL_ : 69, 70, 71, 72
-m_tyresPressure_FR_ : 73, 74, 75, 76
-m_surfaceType_RL_ : 77
-m_surfaceType_RR_ : 78
-m_surfaceType_FL_ : 79
-m_surfaceType_FR_ : 80
+m_brakesTemperature_FR_ : 50, 51
+m_tyresSurfaceTemperature_RL_ : 52
+m_tyresSurfaceTemperature_RR_ : 53
+m_tyresSurfaceTemperature_FL_ : 54
+m_tyresSurfaceTemperature_FR_ : 55
+m_tyresInnerTemperature_RL_ : 56
+m_tyresInnerTemperature_RR_ : 57
+m_tyresInnerTemperature_FL_ : 58
+m_tyresInnerTemperature_FR_ : 59
+m_engineTemperature_ : 60, 61
+m_tyresPressure_RL_ : 62, 63, 64, 65
+m_tyresPressure_RR_ : 66, 67, 68, 69
+m_tyresPressure_FL_ : 70, 71, 72, 73
+m_tyresPressure_FR_ : 74, 75, 76, 77
+m_surfaceType_RL_ : 78
+m_surfaceType_RR_ : 79
+m_surfaceType_FL_ : 80
+m_surfaceType_FR_ : 81
 m_buttonStatus : 1300, 1301, 1302, 1303
 m_mfdPanelIndex : 1304
 m_mfdPanelIndexSecondaryPlayer : 1305

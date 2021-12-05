@@ -1,5 +1,7 @@
 package file_system;
 
+import java.util.HashMap;
+
 public class L1 {
 	//packet loss detection system vars
 	public static int frameIdentifier_Car_status = 0;
@@ -117,4 +119,10 @@ public class L1 {
 	public static byte trackId = 0;
 	public static byte sessionType = 0;
 	public static byte formula = 0;
+	
+	//postion
+	public static HashMap<Byte, Integer> position = new HashMap<>();
+	
+	//delta
+	public static HashMap<Integer, Float> Delta = new HashMap<>();
 }

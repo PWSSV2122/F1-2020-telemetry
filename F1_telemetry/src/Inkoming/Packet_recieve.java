@@ -9,6 +9,7 @@ import java.net.DatagramSocket;
 import java.nio.ByteOrder;
 import java.util.HashMap;
 
+import data_compute.delta;
 import file_system.L1;
 import file_system.data_manager;
 
@@ -17,12 +18,12 @@ import java.nio.ByteBuffer;
 public class Packet_recieve {
 	static boolean test2;
 	public static String[] first_frameIdentifier_name = new String[] {"Car_status", "car_telemetry", "lap_data", "motion"};
-	public static String[] first_time_name = new String[] {"car_setup", "participants", "session"};
+	public static int Player_lap = 0;
 	public static void main(String[] args) {
 		data_decode();
 		test2 = true;
-		boolean[] first_packet = new boolean[] {true, true, true, true, true, true, true};
-		int[] packetid = new int[] {7, 6, 2, 0, 4, 1, 5};
+		boolean[] first_packet = new boolean[] {true, true, true, true};
+		int[] packetid = new int[] {7, 6, 2, 0};
 		try {
 			DatagramSocket socket = new DatagramSocket(20777); //var
 			while (test2 == true) {
@@ -56,14 +57,6 @@ public class Packet_recieve {
 						int frameIdentifier = (int) Header.get("frameIdentifier") - 1;
 						L1.class.getField("frameIdentifier_" + first_frameIdentifier_name[i]).set(frameIdentifier, frameIdentifier);
 						first_packet[i] = false;
-					}
-				}
-				
-				for (int i = 0; i < 3; i ++) {
-					if (first_packet[i + 4] == true && (byte) Header.get("packetId") == (byte) packetid[i + 4]) {
-						int time  = (int) System.currentTimeMillis() -500;
-						L1.class.getField("time_" + first_time_name[i]).set(time, time);
-						first_packet[i + 4] = false;
 					}
 				}
 
@@ -183,6 +176,23 @@ public class Packet_recieve {
 				}
 				data_manager.data(Needed_data, (byte) Header.get("packetId"), (float) Header.get("sessionTime"), (int) Header.get("frameIdentifier"));
 				
+				if (PacketId == 2) {
+					for (int i = 0; i < 22; i++) {
+						delta.speed_of_players((float) Data_decode.get("m_lapDistance_" + i), i);
+						L1.position.put((byte) Data_decode.get("m_carPosition_" + i), i);
+						//System.out.println(Data_decode.get("m_carPosition_" + i));
+					}
+					delta.delta_time();
+				} else if (PacketId == 1) {
+					delta.trackLength = (Short) Data_decode.get("m_trackLength");
+				} else if (PacketId == 6) {
+//					for (int i = 0; i < 22; i++) {
+//						System.out.println(ByteBuffer.wrap(new byte[] {e[58*i + 24], e[58*1 + 25]}).order(ByteOrder.LITTLE_ENDIAN).getShort() + " : " + Data_decode.get("m_speed_" + i));
+//					}	
+				} else if (PacketId == 4) {
+					//System.out.println(Data_decode.get("m_numActiveCars"));
+				}
+
 				//verwizinbg naar het datasysteem met needed_data meegestuurd
 				
 //				if (PacketId == 5) {

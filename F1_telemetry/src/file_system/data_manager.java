@@ -151,12 +151,12 @@ public class data_manager {
 				data_temp_save.put(m_frameIdentifier, new HashMap() {{putAll(L2_data_temp_save);}});
 					L1.class.getField(blabla).set(m_frameIdentifier, m_frameIdentifier);
 			} else if (m_frameIdentifier <= frame) {
-				System.out.println("error code #7"); //nog te bepalen error code
+				//System.out.println("error code #7"); //nog te bepalen error code
 			} else if (m_frameIdentifier >= frame + 2) {
 				L1.class.getField(blabla).set(m_frameIdentifier, m_frameIdentifier);
 				for (int i = 0; i < m_frameIdentifier - frame - 1; i++) {
 					data_temp_save.put(frame + 1 + i, null);
-					System.out.println("error code #8 : " + (frame + 1 + i) + " : " + Packet_recieve.first_frameIdentifier_name[array]); //nog te bepalen error code
+					//System.out.println("error code #8 : " + (frame + 1 + i) + " : " + Packet_recieve.first_frameIdentifier_name[array]); //nog te bepalen error code
 				}
 				data_temp_save.put(m_frameIdentifier, new HashMap() {{putAll(L2_data_temp_save);}});
 			}
