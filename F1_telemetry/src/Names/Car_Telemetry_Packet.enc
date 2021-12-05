@@ -1,0 +1,34 @@
+m_speed_ : 24, 25
+m_throttle_ : 26, 27, 28, 29
+m_steer_ : 30, 31, 32, 33
+m_brake_ : 34, 35, 36, 37
+m_clutch_ : 38
+m_gear_ : 39
+m_engineRPM_ : 40, 41
+m_drs_ : 42
+m_revLightsPercent_ : 43
+m_brakesTemperature_RL_ : 44, 45
+m_brakesTemperature_RR_ : 46, 47
+m_brakesTemperature_FL_ : 48, 49
+m_brakesTemperature_FR_ : 50, 51
+m_tyresSurfaceTemperature_RL_ : 52
+m_tyresSurfaceTemperature_RR_ : 53
+m_tyresSurfaceTemperature_FL_ : 54
+m_tyresSurfaceTemperature_FR_ : 55
+m_tyresInnerTemperature_RL_ : 56
+m_tyresInnerTemperature_RR_ : 57
+m_tyresInnerTemperature_FL_ : 58
+m_tyresInnerTemperature_FR_ : 59
+m_engineTemperature_ : 60, 61
+m_tyresPressure_RL_ : 62, 63, 64, 65
+m_tyresPressure_RR_ : 66, 67, 68, 69
+m_tyresPressure_FL_ : 70, 71, 72, 73
+m_tyresPressure_FR_ : 74, 75, 76, 77
+m_surfaceType_RL_ : 78
+m_surfaceType_RR_ : 79
+m_surfaceType_FL_ : 80
+m_surfaceType_FR_ : 81
+m_buttonStatus : 1300, 1301, 1302, 1303
+m_mfdPanelIndex : 1304
+m_mfdPanelIndexSecondaryPlayer : 1305
+m_suggestedGear : 1306

@@ -1,0 +1,36 @@
+m_tractionControl_ : 24
+m_antiLockBrakes_ : 25
+m_fuelMix_ : 26
+m_frontBrakeBias_ : 27
+m_pitLimiterStatus_ : 28
+m_fuelInTank_ : 29, 30, 31, 32
+m_fuelCapacity_ : 33, 34, 35, 36
+m_fuelRemainingLaps_ : 37, 38, 39, 40
+m_maxRPM_ : 41, 42
+m_idleRPM_ : 43, 44
+m_maxGears_ : 45
+m_drsAllowed_ : 46
+m_drsActivationDistance_ : 47, 48
+m_tyresWear_RL_ : 49
+m_tyresWear_RR_ : 50
+m_tyresWear_FL_ : 51
+m_tyresWear_FR_ : 52
+m_actualTyreCompound_ : 53
+m_visualTyreCompound_ : 54
+m_tyresAgeLaps_ : 55
+m_tyresDamage_RL_ : 56
+m_tyresDamage_RR_ : 57
+m_tyresDamage_FL_ : 58
+m_tyresDamage_FR_ : 59
+m_frontLeftWingDamage_ : 60
+m_frontRightWingDamage_ : 61
+m_rearWingDamage_ : 62
+m_drsFault_ : 63
+m_engineDamage_ : 64
+m_gearBoxDamage_ : 65
+m_vehicleFiaFlags_ : 66
+m_ersStoreEnergy_ : 67, 68, 69, 70
+m_ersDeployMode_ : 71
+m_ersHarvestedThisLapMGUK_ : 72, 73, 74, 75
+m_ersHarvestedThisLapMGUH_ : 76, 77, 78, 79
+m_ersDeployedThisLap_ : 80, 81, 82, 83
