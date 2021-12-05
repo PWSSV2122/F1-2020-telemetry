@@ -1,0 +1,27 @@
+m_lastLapTime_ : 24, 25, 26, 27
+m_currentLapTime_ : 28, 29, 30, 31
+m_sector1TimeInMS_ : 32, 33
+m_sector2TimeInMS_ : 34, 35
+m_bestLapTime_ : 36, 37, 38, 39
+m_bestLapNum_ : 40
+m_bestLapSector1TimeInMS_ : 41, 42
+m_bestLapSector2TimeInMS_ : 43, 44
+m_bestLapSector3TimeInMS_ : 45, 46
+m_bestOverallSector1TimeInMS_ : 47, 48
+m_bestOverallSector1LapNum_ : 49
+m_bestOverallSector2TimeInMS_ : 50, 51
+m_bestOverallSector2LapNum_ : 52
+m_bestOverallSector3TimeInMS_ : 53, 54
+m_bestOverallSector3LapNum_ : 55
+m_lapDistance_ : 56, 57, 58, 59
+m_totalDistance_ : 60, 61, 62, 63
+m_safetyCarDelta_ : 64, 65, 66, 67
+m_carPosition_ : 68
+m_currentLapNum_ : 69
+m_pitStatus_ : 70
+m_sector_ : 71
+m_currentLapInvalid_ : 72
+m_penalties_ : 73
+m_gridPosition_ : 74
+m_driverStatus_ : 75
+m_resultStatus_ : 76

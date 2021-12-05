@@ -1,0 +1,26 @@
+m_weather : 24
+m_trackTemperature : 25
+m_airTemperature : 26
+m_totalLaps : 27
+m_trackLength : 28, 29
+m_sessionType : 30
+m_trackId : 31
+m_formula : 32
+m_sessionTimeLeft : 33, 34
+m_sessionDuration : 35, 36
+m_pitSpeedLimit : 37
+m_gamePaused : 38
+m_isSpectating : 39
+m_spectatorCarIndex : 40
+m_sliProNativeSupport : 41
+m_numMarshalZones : 42
+m_zoneStart_ : 43, 44, 45, 46
+m_zoneFlag_ : 47
+m_safetyCarStatus : 48
+m_networkGame : 49
+m_numWeatherForecastSamples : 50
+m_sessionType_ : 51
+m_timeOffset_ : 52
+m_weather_ : 53
+m_trackTemperature_ : 54
+m_airTemperature_ : 55

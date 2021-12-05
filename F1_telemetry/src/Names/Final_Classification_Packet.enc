@@ -1,0 +1,28 @@
+m_numCars : 24
+m_position_ : 25
+m_numLaps_ : 26
+m_gridPosition_ : 27
+m_points_ : 28
+m_numPitStops_ : 29
+m_resultStatus_ : 30
+m_bestLapTime_ : 31, 32, 33, 34
+m_totalRaceTime_ : 35, 36, 37, 38, 39, 40, 41, 42
+m_penaltiesTime_ : 43
+m_numPenalties_ : 44
+m_numTyreStints_ : 45
+m_tyreStintsActual_1_ : 46
+m_tyreStintsActual_2_ : 47
+m_tyreStintsActual_3_ : 48
+m_tyreStintsActual_4_ : 49
+m_tyreStintsActual_5_ : 50
+m_tyreStintsActual_6_ : 51
+m_tyreStintsActual_7_ : 52
+m_tyreStintsActual_8_ : 53
+m_tyreStintsVisual_1_ : 54
+m_tyreStintsVisual_2_ : 55
+m_tyreStintsVisual_3_ : 56
+m_tyreStintsVisual_4_ : 57
+m_tyreStintsVisual_5_ : 58
+m_tyreStintsVisual_6_ : 59
+m_tyreStintsVisual_7_ : 60
+m_tyreStintsVisual_8_ : 61
