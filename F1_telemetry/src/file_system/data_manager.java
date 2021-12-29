@@ -97,9 +97,9 @@ public class data_manager {
 			for (int i = 0; i < data_temp_save.size(); i++) {
 				int packet_num = m_frameIdentifier - data_temp_save.size() + 1 + i;
 				if (data_temp_save.get(packet_num) == null) {
-					L2.lap_data_packet.put(packet_num, L2.lap_data_packet.get(L1.frameIdentifier_lap_data));
+					L2.lap_Data_packet.put(packet_num, L2.lap_Data_packet.get(L1.frameIdentifier_lap_data));
 				} else {
-					L2.lap_data_packet.put(packet_num, data_temp_save.get(packet_num));
+					L2.lap_Data_packet.put(packet_num, data_temp_save.get(packet_num));
 				}
 			}
 		} else if (packetID == 0) {
@@ -107,9 +107,9 @@ public class data_manager {
 			for (int i = 0; i < data_temp_save.size(); i++) {
 				int packet_num = m_frameIdentifier - data_temp_save.size() + 1 + i;
 				if (data_temp_save.get(packet_num) == null) {
-					L2.motion_packet.put(packet_num, L2.motion_packet.get(L1.frameIdentifier_motion));
+					L2.Motion_packet.put(packet_num, L2.Motion_packet.get(L1.frameIdentifier_motion));
 				} else {
-					L2.motion_packet.put(packet_num, data_temp_save.get(packet_num));
+					L2.Motion_packet.put(packet_num, data_temp_save.get(packet_num));
 				}
 			}
 		} else if (packetID == 6) {
@@ -117,9 +117,9 @@ public class data_manager {
 			for (int i = 0; i < data_temp_save.size(); i++) {
 				int packet_num = m_frameIdentifier - data_temp_save.size() + 1 + i;
 				if (data_temp_save.get(packet_num) == null) {
-					L2.Car_telemetry_packet.put(packet_num, L2.Car_telemetry_packet.get(L1.frameIdentifier_car_telemetry));
+					L2.Car_Telemetry_packet.put(packet_num, L2.Car_Telemetry_packet.get(L1.frameIdentifier_car_telemetry));
 				} else {
-					L2.Car_telemetry_packet.put(packet_num, data_temp_save.get(packet_num));
+					L2.Car_Telemetry_packet.put(packet_num, data_temp_save.get(packet_num));
 				}
 			}
 		} else if (packetID == 7) {
@@ -127,17 +127,20 @@ public class data_manager {
 			for (int i = 0; i < data_temp_save.size(); i++) {
 				int packet_num = m_frameIdentifier - data_temp_save.size() + 1 + i;
 				if (data_temp_save.get(packet_num) == null) {
-					L2.Car_status_packet.put(packet_num, L2.Car_status_packet.get(L1.frameIdentifier_Car_status));
+					L2.Car_Status_packet.put(packet_num, L2.Car_Status_packet.get(L1.frameIdentifier_Car_status));
 				} else {
-					L2.Car_status_packet.put(packet_num, data_temp_save.get(packet_num));
+					L2.Car_Status_packet.put(packet_num, data_temp_save.get(packet_num));
 				}
 			}
 		} else if (packetID == 5) {
-			L2.Car_setup_packet.put(L2.Car_setup_packet.size(), L2_data_temp_save);
+			L2_data_temp_save.put("sessionTime", sessionTime);
+			L2.Car_Setup_packet.put(L2.Car_Setup_packet.size(), L2_data_temp_save);
 		} else if (packetID == 4) {
-			L2.participants_packet.put(L2.participants_packet.size(), L2_data_temp_save);
+			L2_data_temp_save.put("sessionTime", sessionTime);
+			L2.Participants_packet.put(L2.Participants_packet.size(), L2_data_temp_save);
 		} else if (packetID == 1) {
-			L2.session_packet.put(L2.session_packet.size(), L2_data_temp_save);
+			L2_data_temp_save.put("sessionTime", sessionTime);
+			L2.Session_packet.put(L2.Session_packet.size(), L2_data_temp_save);
 		}
 		
 		
