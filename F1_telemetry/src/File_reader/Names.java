@@ -13,7 +13,7 @@ public class Names {
 	public static HashMap<String, HashMap<Integer, int[]>> Packet_byte_array = new HashMap<String, HashMap<Integer, int[]>>();;
 	public static String[] Needed_data_names = new String[74];
 	public static HashMap<String, String> Needed_data_packet = new HashMap<String, String>();
-	public static HashMap<String, Byte> Needed_data_byte = new HashMap<String, Byte>();
+	public static HashMap<String, String> Needed_data_byte = new HashMap<String, String>();
 	public static int[] repeats = new int[10];
 	public static void data_decode() {
 		String Line;
@@ -62,13 +62,7 @@ public class Names {
 				if (split.length >= 3) {
 					Needed_data_names[i] = split[0];
 					Needed_data_packet.put(split[0], split[2]);
-					byte temp = 00000000;
-					for (int o = 0; o < 8; o++) {
-						if (split[1].charAt(7 - o) == '1') {
-							temp |=  1 << o;
-						}
-					}
-					Needed_data_byte.put(split[0], temp);
+					Needed_data_byte.put(split[0], split[1]);
 					i++;
 				} else {
 					System.out.println("error code #3"); //nog te bepalen error code
