@@ -34,36 +34,40 @@ public class delta {
 	}
 	
 	public static void delta_time() {
-		L1.Delta.put(0, (float) 0);
-		System.out.println("Position " + (1) + " : " + L1.Delta.get(0));
-		for (byte i = 1; i < 22; i++) {
-			float Percentage_player1 = 0;
-			float Percentage_player2 = 0;
-			try {
-				Percentage_player1 = Float.valueOf(deciamalen_2.format(L1.lapDistance[L1.position.get((byte)i)] / trackLength * 100));
-				Percentage_player2 = Float.valueOf(deciamalen_2.format(L1.lapDistance[L1.position.get((byte)(i + 1))] / trackLength * 100));
-			} catch (Exception e){ }
-			int speed = 0;
-			int speed_points = 1;
-			float gem_speed_mps = 0;
-			for (double o = 0; o < Percentage_player1 - Percentage_player2; o = o + 0.1) {
+		if (L1.sessionType == 11 || L1.sessionType == 12) {
+			L1.Delta.put(0, (float) 0);
+			//System.out.println("Position " + (1) + " : " + L1.Delta.get(0));
+			for (byte i = 1; i < 22; i++) {
+				float Percentage_player1 = 0;
+				float Percentage_player2 = 0;
 				try {
-					speed = speed + speed_table.get(L1.position.get((byte)(i + 1))).get((float)o + Percentage_player2);
-					speed_points++;
-				} catch (Exception e) { }
+					Percentage_player1 = Float.valueOf(deciamalen_2.format(L1.lapDistance[L1.position.get((byte)i)] / trackLength * 100));
+					Percentage_player2 = Float.valueOf(deciamalen_2.format(L1.lapDistance[L1.position.get((byte)(i + 1))] / trackLength * 100));
+				} catch (Exception e){ }
+				int speed = 0;
+				int speed_points = 1;
+				float gem_speed_mps = 0;
+				for (double o = 0; o < Percentage_player1 - Percentage_player2; o = o + 0.1) {
+					try {
+						speed = speed + speed_table.get(L1.position.get((byte)(i + 1))).get((float)o + Percentage_player2);
+						speed_points++;
+					} catch (Exception e) { }
+				}
+				//System.out.println(speed_table.get(L1.position.get(i + 1)).get((float)Percentage_player2));
+				gem_speed_mps = (float) (speed / speed_points / 3.6);
+				try {
+					L1.Delta.put(i + 1, (L1.lapDistance[L1.position.get((byte)i)] - L1.lapDistance[L1.position.get((byte)(i + 1))]) / gem_speed_mps);
+				} catch (Exception e) {
+					L1.Delta.put((int) i, null);
+				}
+				//System.out.println("Position " + (i + 1) + " : " + L1.Delta.get(i+ 1));
 			}
-			//System.out.println(speed_table.get(L1.position.get(i + 1)).get((float)Percentage_player2));
-			gem_speed_mps = (float) (speed / speed_points / 3.6);
-			try {
-				L1.Delta.put(i + 1, (L1.lapDistance[L1.position.get((byte)i)] - L1.lapDistance[L1.position.get((byte)(i + 1))]) / gem_speed_mps);
-			} catch (Exception e) {
-				L1.Delta.put((int) i, null);
+		} else {
+			float fastest_lap = L1.bestLapTime[(int)L1.position.get((byte)1)];
+			L1.Delta.put(0, (float)0);
+			for (int i = 1; i < 22; i++) {
+				L1.Delta.put(i, L1.bestLapTime[L1.position.get((byte)(i))] - fastest_lap);
 			}
-			System.out.println("Position " + (i + 1) + " : " + L1.Delta.get(i+ 1));
-		}
-//		float Percentage_player1 = Float.valueOf(deciamalen_2.format(L1.lapDistance[L1.position.get((byte)19)] / trackLength * 100));
-//		float Percentage_player2 = Float.valueOf(deciamalen_2.format(L1.lapDistance[L1.position.get((byte)20)] / trackLength * 100));
-//		System.out.println(Percentage_player1 - Percentage_player2);
-//		System.out.println(L1.carPosition[L1.position.get((byte)19)] + " : " + L1.carPosition[L1.position.get((byte)20)]);
+		}	
 	}
 }
