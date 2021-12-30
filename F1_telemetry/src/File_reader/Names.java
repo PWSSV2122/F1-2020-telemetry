@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Names {
 	public static String[] File_Path = new String[] {"Motion_Packet", "Session_Packet", "Lap_Data_Packet", "Event_Packet", "Participants_Packet", "Car_Setups_Packet", "Car_Telemetry_Packet", "Car_Status_Packet", 
@@ -12,6 +14,7 @@ public class Names {
 	public static HashMap<String, HashMap<Integer, String>> Packet_names = new HashMap<String, HashMap<Integer, String>>();
 	public static HashMap<String, HashMap<Integer, int[]>> Packet_byte_array = new HashMap<String, HashMap<Integer, int[]>>();;
 	public static String[] Needed_data_names = new String[74];
+	public static String[] needed_data_packets = new String[8];
 	public static HashMap<String, String> Needed_data_packet = new HashMap<String, String>();
 	public static HashMap<String, String> Needed_data_byte = new HashMap<String, String>();
 	public static int[] repeats = new int[10];
@@ -63,6 +66,12 @@ public class Names {
 					Needed_data_names[i] = split[0];
 					Needed_data_packet.put(split[0], split[2]);
 					Needed_data_byte.put(split[0], split[1]);
+					List<String> list = Arrays.asList(needed_data_packets);
+					if (list.contains(split[2]) || split[2] == "Header") {
+						
+					} else {
+						needed_data_packets[needed_data_packets.length] = split[2];
+					}
 					i++;
 				} else {
 					System.out.println("error code #3"); //nog te bepalen error code

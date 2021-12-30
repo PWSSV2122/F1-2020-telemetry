@@ -7,10 +7,7 @@ import java.util.HashMap;
 import File_reader.Names;
 
 public class data_compressie {
-	public static void main(String[] args) {
-		encode("Car_Setup");
-	}
-	
+
 	public static void encode(String Packet) {
 		Names.data_decode();
 		String[] data_names_untrimmed = new String[80];
@@ -18,13 +15,12 @@ public class data_compressie {
 		int amount_of_names = 0;
 		int[] places = new int[80];
 		for (int i = 0; i < Names.Needed_data_packet.size(); i++) {
-			if (Names.Needed_data_packet.get(Names.Needed_data_names[i]).equals(Packet)) {
+			if (Names.Needed_data_packet.get(Names.Needed_data_names[i]).equals(Packet) || Names.Needed_data_packet.get(Names.Needed_data_names[i]).equals("Header")) {
 				data_names_untrimmed[i] = Names.Needed_data_names[i];
 				data_codes.put(data_names_untrimmed[i], Names.Needed_data_byte.get(data_names_untrimmed[i]));
 				places[amount_of_names] = i;
 				amount_of_names++;
 			}
-			//System.out.println(data_names[i]);
 		}
 		String[] data_names = new String[amount_of_names];
 		for (int i = 0; i < amount_of_names; i++) {
@@ -32,18 +28,16 @@ public class data_compressie {
 		}
 
 		HashMap<Integer, HashMap<String, Object>> compression_data = new HashMap<Integer, HashMap<String, Object>>();
-			try {
-				//System.out.println(L2.class.getField(Packet + "_packet").get(Packet + "_packet"));
-				compression_data.putAll((HashMap<Integer, HashMap<String, Object>>) L2.class.getField(Packet + "_packet").get(Packet + "_packet"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			compression_data.putAll((HashMap<Integer, HashMap<String, Object>>) L2.class.getField(Packet + "_packet").get(Packet + "_packet"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		HashMap<String, Object> last_data = new HashMap<String, Object>();
 		String output = "";
 		for (int i = 0; i < compression_data.size(); i++) {
-			//output += data_codes.get("packetid");
-			output += "00101101";
+			output += data_codes.get("packetid");
 			output += binary_num((byte) i);
 			for (int o = 0; o < data_codes.size(); o++) {
 				output += data_codes.get(data_names[0]);
