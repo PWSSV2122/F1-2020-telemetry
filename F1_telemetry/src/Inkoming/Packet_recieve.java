@@ -192,7 +192,7 @@ public class Packet_recieve {
 				} else if (PacketId == 4) {
 					//System.out.println(Data_decode.get("m_numActiveCars"));
 				} else if (PacketId == 5) {
-					System.out.println(Header.get("frameIdentifier"));
+					//System.out.println(Header.get("frameIdentifier"));
 				}
 
 				//verwizinbg naar het datasysteem met needed_data meegestuurd

@@ -13,20 +13,27 @@ public class data_compressie {
 	
 	public static void encode(String Packet) {
 		Names.data_decode();
-		String[] data_names = new String[50];
+		String[] data_names_untrimmed = new String[80];
 		HashMap<String, String> data_codes = new HashMap<String, String>();
+		int amount_of_names = 0;
+		int[] places = new int[80];
 		for (int i = 0; i < Names.Needed_data_packet.size(); i++) {
 			if (Names.Needed_data_packet.get(Names.Needed_data_names[i]).equals(Packet)) {
-				data_names[i] = Names.Needed_data_names[i];
-				data_codes.put(data_names[i], Names.Needed_data_byte.get(data_names[i]));
+				data_names_untrimmed[i] = Names.Needed_data_names[i];
+				data_codes.put(data_names_untrimmed[i], Names.Needed_data_byte.get(data_names_untrimmed[i]));
+				places[amount_of_names] = i;
+				amount_of_names++;
 			}
+			//System.out.println(data_names[i]);
 		}
-		L2.Car_Setup_packet.put(1, null);	//temp
-		L2.Car_Setup_packet.put(2, null);	//temp
-		L2.Car_Setup_packet.put(3, null);	//temp
-		
+		String[] data_names = new String[amount_of_names];
+		for (int i = 0; i < amount_of_names; i++) {
+			data_names[i] = data_names_untrimmed[places[i]];
+		}
+
 		HashMap<Integer, HashMap<String, Object>> compression_data = new HashMap<Integer, HashMap<String, Object>>();
 			try {
+				//System.out.println(L2.class.getField(Packet + "_packet").get(Packet + "_packet"));
 				compression_data.putAll((HashMap<Integer, HashMap<String, Object>>) L2.class.getField(Packet + "_packet").get(Packet + "_packet"));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -35,12 +42,21 @@ public class data_compressie {
 		HashMap<String, Object> last_data = new HashMap<String, Object>();
 		String output = "";
 		for (int i = 0; i < compression_data.size(); i++) {
-			output += data_codes.get("packetid");
+			//output += data_codes.get("packetid");
+			output += "00101101";
 			output += binary_num((byte) i);
-			for (int o = 0; o < data_codes.size(); i++) {
+			for (int o = 0; o < data_codes.size(); o++) {
 				output += data_codes.get(data_names[0]);
 				if (data_names[o].endsWith("_")) {
-					Object data = compression_data.get(i).get(data_names[o]);
+					Object[] data_temp = new Object[22];
+					System.out.println(i + " : " + o);
+					if (i == 11) {
+						System.out.println(compression_data.get(i));
+					}
+					for (int p = 0; p < 22; p++) {
+						data_temp[p] = compression_data.get(i).get(data_names[o] + p);
+					}
+					Object data = data_temp;
 					if (data instanceof byte[]) {
 						byte[] data_byte = (byte[])data;
 						byte[] data_byte_compaire = new byte[22];
@@ -149,7 +165,8 @@ public class data_compressie {
 		        if (c == '1') {
 		            data[i >> 3] |= 0x80 >> (i & 0x7);
 		        } else if (c != '0') {
-		            throw new IllegalArgumentException("Invalid char in binary string");
+		        	System.out.println(output);
+		            throw new IllegalArgumentException("Invalid char in binary string : " + c + " : should be 1 or 0");
 		        }
 		    }
 		}
