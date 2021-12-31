@@ -12,16 +12,21 @@ import java.util.HashMap;
 import File_reader.Names;
 
 public class data_decoder {
+	public static void main(String[] args) {
+		decode("temp");
+	}
+	
 	static public void decode(String save) {
 		Names.data_decode();
 		HashMap <String, HashMap<Integer, HashMap<String, Object>>> decoded_data = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
 		for (int i = 0; i < Names.needed_data_packets.length; i++) {
+			System.out.println("1");
 			String[] data_names = new String[80];
 			HashMap<String, Byte> data_codes_string = new HashMap<String, Byte>();
 			HashMap<Byte, String> data_codes_byte = new HashMap<Byte, String>();
 			for (int o = 0; o < Names.Needed_data_packet.size(); o++) {
 				if (Names.Needed_data_packet.get(Names.Needed_data_names[o]).equals(Names.needed_data_packets[i]) || Names.Needed_data_packet.get(Names.Needed_data_names[o]).equals("Header")) {
-					data_names[data_names.length] = Names.Needed_data_names[o];
+					data_names[o] = Names.Needed_data_names[o];
 					
 					byte[] data = null;
 					if (Names.Needed_data_byte.get(data_names[o]).length() % 8 != 0) {
@@ -37,7 +42,7 @@ public class data_decoder {
 					        }
 					    }
 					}
-					data_codes_string.put(data_names[data_names.length - 1], data[0]);
+					data_codes_string.put(data_names[o], data[0]);
 					data_codes_byte.put(data[0], data_names[data_names.length - 1]);
 				}
 			}
@@ -48,17 +53,23 @@ public class data_decoder {
 				int packetid = 0;
 				byte[] data = Files.readAllBytes(path);
 				for (int o = 0; o < data.length; o++) {
-					if (data[o] == (byte) data_codes_string.get("packetid")) {
+					if (data[o] == data_codes_string.get("packetid")) {
 						if (data[o + 1] == 0) {	
 						} else {
 							Temp_packets.put(packetid, Temp_packet);
 							Temp_packet.clear();
 						}
 						packetid = data[o + 1];
-						o++;
+						o++; //veranderd naar 4 bytes
 					} else {
 						String data_name = data_codes_byte.get(data[o]);
-						int data_type = Names.Packet_byte_array.get(Names.needed_data_packets[o]).get("m_" + data_name).length;
+						System.out.println(Names.needed_data_packets[i] + "_Packet");
+						System.out.println("m_" + data_name);
+						System.out.println(data_name);
+						System.out.println(data_codes_byte.get(data[o]));
+						System.out.println(data[o]);
+						System.out.println(o);
+						int data_type = Names.Packet_byte_array.get(Names.needed_data_packets[i] + "_Packet").get("m_" + data_name).length;
 						if (data_name.endsWith("_")) {
 							for (int p = 0; p < 22; p++) {
 								if (data_codes_byte.containsKey(data[o + 1 + (data_type + 1) * p])) {
@@ -69,6 +80,7 @@ public class data_decoder {
 										decode[l] = data[o + 2 + l + p * (data_type + 1)];
 									}
 									Temp_packet.put(data_name + data[o + 1 + (data_type)], decode(decode));
+									o = o + data_type + 1;
 								}
 							}
 						} else {
@@ -77,13 +89,19 @@ public class data_decoder {
 								decode[l] = data[o + 2 + l];
 							}
 							Temp_packet.put(data_name, decode(decode));
+							o = o + data_type;
 						}
 					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			decoded_data.put(Names.needed_data_packets[i], Temp_packets);
+			Temp_packets.clear();
+			System.out.println(decoded_data);
 		}
+		System.out.println("done");
+		System.out.println(decoded_data);
 	}
 	static private Object decode(byte[] decode) {
 		Object data_return = null;

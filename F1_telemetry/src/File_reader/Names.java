@@ -60,6 +60,7 @@ public class Names {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("src/Names/" + File_Path[10] + ".enc"));
 			int i = 0;
+			int o = 0;
 			while ((Line = reader.readLine()) != null) {
 				String[] split = Line.split(" : ", 3);
 				if (split.length >= 3) {
@@ -67,10 +68,11 @@ public class Names {
 					Needed_data_packet.put(split[0], split[2]);
 					Needed_data_byte.put(split[0], split[1]);
 					List<String> list = Arrays.asList(needed_data_packets);
-					if (list.contains(split[2]) || split[2] == "Header") {
+					if (list.contains(split[2]) || split[2].equals("Header")) {
 						
 					} else {
-						needed_data_packets[needed_data_packets.length] = split[2];
+						needed_data_packets[o] = split[2];
+						o++;
 					}
 					i++;
 				} else {

@@ -38,21 +38,19 @@ public class data_compressie {
 		String output = "";
 		for (int i = 0; i < compression_data.size(); i++) {
 			output += data_codes.get("packetid");
-			output += binary_num((byte) i);
+			output += binary_data(ByteBuffer.allocate(4).putInt(i).array());
 			for (int o = 0; o < data_codes.size(); o++) {
-				output += data_codes.get(data_names[0]);
-				if (data_names[o].endsWith("_")) {
-					Object[] data_temp = new Object[22];
-					System.out.println(i + " : " + o);
-					if (i == 11) {
-						System.out.println(compression_data.get(i));
-					}
-					for (int p = 0; p < 22; p++) {
-						data_temp[p] = compression_data.get(i).get(data_names[o] + p);
-					}
-					Object data = data_temp;
-					if (data instanceof byte[]) {
-						byte[] data_byte = (byte[])data;
+				output += data_codes.get(data_names[o]);
+				if (data_names[o].equals("packetid") || data_names[o].equals("sessionTime")) {
+					output = output.substring(0, output.length() - 8);
+				} else if (data_names[o].endsWith("_")) {
+					Object data = compression_data.get(i).get(data_names[o] + 1);
+					if (data.getClass().equals(Byte.class)) {
+						System.out.println("byte");
+						byte[] data_byte = new byte[22];
+						for (int p = 0; p < 22; p++) {
+							data_byte[p] = (byte) compression_data.get(i).get(data_names[o] + p);
+						}
 						byte[] data_byte_compaire = new byte[22];
 						try {
 							data_byte_compaire = (byte[]) last_data.get(data_names[o]);
@@ -62,6 +60,7 @@ public class data_compressie {
 						int change = 0;
 						for (int p = 0; p < 22; p++) {
 							if (data_byte[p] == data_byte_compaire[p]) {
+								System.out.println(":(" + " : " + p);
 							} else {
 								output += binary_num((byte) p);
 								output += binary_data(new byte[] {data_byte[p]});
@@ -69,11 +68,13 @@ public class data_compressie {
 							}
 						}
 						if(change == 0) {
+							System.out.println(data_names[o] + " no change");
 							output = output.substring(0, output.length() - 8);
 						} else if(change > 0) {
 							last_data.put(data_names[o], data_byte);
 						}
-					} else if (data instanceof float[]) {
+					} else if (data.getClass().equals(Float.class)) {
+						System.out.println("float");
 						float[] data_float = (float[])data;
 						float[] data_float_compaire = new float[22];
 						try {
@@ -84,6 +85,7 @@ public class data_compressie {
 						int change = 0;
 						for (int p = 0; p < 22; p++) {
 							if (data_float[p] == data_float_compaire[p]) {
+								System.out.println(":(" + " : " + p);
 							} else {
 								output += binary_num((byte) p);
 								output += binary_data(ByteBuffer.allocate(4).putFloat(data_float[p]).array());
@@ -91,11 +93,13 @@ public class data_compressie {
 							}
 						}
 						if (change == 0) {
+							System.out.println(data_names[o] + " no change");
 							output = output.substring(0, output.length() - 8);
 						} else if (change > 0) {
 							last_data.put(data_names[o], data_float);
 						}
-					} else if (data instanceof short[]) {
+					} else if (data.getClass().equals(Short.class)) {
+						System.out.println("short");
 						short[] data_short = (short[])data;
 						short[] data_short_compaire = new short[22];
 						int change = 0;
@@ -106,6 +110,7 @@ public class data_compressie {
 						}
 						for (int p = 0; p < 22; p++) {
 							if (data_short[p] == data_short_compaire[p]) {
+								System.out.println(":(" + " : " + p);
 							} else {
 								output += binary_num((byte) p);
 								output += binary_data(ByteBuffer.allocate(2).putShort(data_short[p]).array());
@@ -113,11 +118,13 @@ public class data_compressie {
 							}
 						}
 						if (change == 0) {
+							System.out.println(data_names[o] + " no change");
 							output = output.substring(0, output.length() - 8);
 						} else if (change > 0) {
 							last_data.put(data_names[o], data_short);
 						}	
-					} else if (data instanceof String[]) {
+					} else if (data.getClass().equals(String.class)) {
+						System.out.println("String");
 						String[] data_String = (String[])data;
 						String[] data_String_compaire = new String[22];
 						int change = 0;
@@ -128,6 +135,7 @@ public class data_compressie {
 						}
 						for (int p = 0; p < 22; p++) {
 							if (data_String[p] == data_String_compaire[p]) {
+								System.out.println(":(" + " : " + p);
 							} else {
 								output += binary_num((byte) p);
 								output += binary_data(ByteBuffer.allocate(10).put(data_String[p].getBytes()).array());
@@ -135,12 +143,14 @@ public class data_compressie {
 							}
 						}
 						if (change == 0) {
+							System.out.println(data_names[o] + " no change");
 							output = output.substring(0, output.length() - 8);
 						} else if (change > 0) {
 							last_data.put(data_names[o], data_String);
 						}		
 					}
 				} else {
+					System.out.println(data_names[o]);
 					byte[] temp = (byte[])compression_data.get(i).get(data_names[o]);
 					for (int p = 0; p < temp.length; p++) {
 						output += String.format("%8s", Integer.toBinaryString(temp[p] & 0xFF).replace(' ', '0'));	
@@ -172,20 +182,20 @@ public class data_compressie {
 	}
 	static private String binary_num(byte o) {
 		String temp = "";
-		for (int i = 0; i < 8 - String.format(Integer.toBinaryString(o)).length(); o++) {
+		for (int i = 0; i < 8 - String.format("%8s", Integer.toBinaryString(o & 0xFF)).replace(' ', '0').length(); o++) {
 			temp += "0";
 		}
-		temp += String.format(Integer.toBinaryString(o));
+		temp += String.format("%8s", Integer.toBinaryString(o & 0xFF)).replace(' ', '0');
 		return temp;
 	}
 	
 	static private String binary_data(byte[] data) {
 		String temp = "";
 		for (int i = 0; i < data.length; i++) {
-			for (int o = 0; o < 8 - String.format(Integer.toBinaryString(data[i])).length(); o++) {
+			for (int o = 0; o < 8 - String.format("%8s", Integer.toBinaryString(data[i] & 0xFF)).replace(' ', '0').length(); o++) {
 				temp += "0";
 			}
-			temp += String.format(Integer.toBinaryString(data[i]));
+			temp += String.format("%8s", Integer.toBinaryString(data[i] & 0xFF)).replace(' ', '0');
 		}
 		return temp;
 	}
