@@ -159,17 +159,14 @@ public class Packet_recieve {
 				HashMap<String, Object> Needed_data = new HashMap<String, Object>();
 				for (int i = 0; i < Needed_data_names.length; i++) {
 					if (Needed_data_names[i].endsWith("_")) {
-						//System.out.println("1");
 						if (Data_decode.get("m_" + Needed_data_names[i] + "1") != null) {
 							for (int o = 0; o < 22; o++) {
 								Needed_data.put(Needed_data_names[i] + o, Data_decode.get("m_" + Needed_data_names[i] + o));
-								//System.out.println(Needed_data.get(Needed_data_names[i] + o));
 							}
 						}
 					} else {
 						if (Data_decode.get("m_" + Needed_data_names[i]) != null) {
 							Needed_data.put(Needed_data_names[i], Data_decode.get("m_" + Needed_data_names[i]));
-							//System.out.println(Needed_data.get(Needed_data_names[i]));
 						}
 					}
 				}
@@ -179,30 +176,11 @@ public class Packet_recieve {
 					for (int i = 0; i < 22; i++) {
 						delta.speed_of_players((float) Data_decode.get("m_lapDistance_" + i), i);
 						L1.position.put((byte) Data_decode.get("m_carPosition_" + i), i);
-						//System.out.println(Data_decode.get("m_carPosition_" + i));
 					}
 					delta.delta_time();
 				} else if (PacketId == 1) {
 					delta.trackLength = (Short) Data_decode.get("m_trackLength");
-				} else if (PacketId == 6) {
-//					for (int i = 0; i < 22; i++) {
-//						System.out.println(ByteBuffer.wrap(new byte[] {e[58*i + 24], e[58*1 + 25]}).order(ByteOrder.LITTLE_ENDIAN).getShort() + " : " + Data_decode.get("m_speed_" + i));
-//					}	
-				} else if (PacketId == 4) {
-					//System.out.println(Data_decode.get("m_numActiveCars"));
-				} else if (PacketId == 5) {
-					//System.out.println(Header.get("frameIdentifier"));
 				}
-
-				//verwizinbg naar het datasysteem met needed_data meegestuurd
-				
-//				if (PacketId == 5) {
-//					for (int i = 0; i < 22; i++) {
-//						System.out.println(Needed_data.get("frontWing_" + i) + " : " + Data_decode.get("m_frontWing_" + i));
-//					}
-//					System.out.println("\n");
-//				}
-
 			}
 			socket.close();
 		} catch (Exception e) {

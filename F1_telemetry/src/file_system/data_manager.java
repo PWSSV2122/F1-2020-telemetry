@@ -104,15 +104,10 @@ public class data_manager {
 					L2.Lap_Data_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-			//System.out.println(L2.lap_Data_packet.size() + " : " + m_frameIdentifier);
-			if (L2.Lap_Data_packet.size() % 100 == 0) {
-				System.out.println(L2.Lap_Data_packet.size());
-			}
-			if (L2.Lap_Data_packet.size() == 200) {
-				int start = (int) System.currentTimeMillis();
+			if (L2.Lap_Data_packet.size() == 2000) {
 				data_compressie.encode("Lap_Data");
-				int end = (int)System.currentTimeMillis();
-				System.out.println("Done" + " : " + (end - start));
+				L2.Lap_Data_packet.clear();
+				L1.Lap_Data = L1.Lap_Data + 2000;
 			}
 		} else if (packetID == 0) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(3, m_frameIdentifier, L2_data_temp_save);
@@ -124,6 +119,11 @@ public class data_manager {
 					L2.Motion_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
+			if (L2.Motion_packet.size() == 2000) {
+				data_compressie.encode("Motion");
+				L2.Motion_packet.clear();
+				L1.Motion = L1.Motion + 2000;
+			}
 		} else if (packetID == 6) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(1, m_frameIdentifier, L2_data_temp_save);
 			for (int i = 0; i < data_temp_save.size(); i++) {
@@ -133,6 +133,11 @@ public class data_manager {
 				} else {
 					L2.Car_Telemetry_packet.put(packet_num, data_temp_save.get(i));
 				}
+			}
+			if (L2.Car_Telemetry_packet.size() == 2000) {
+				data_compressie.encode("Car_Telemetry");
+				L2.Car_Telemetry_packet.clear();
+				L1.Car_Telemetry = L1.Car_Telemetry + 2000;
 			}
 		} else if (packetID == 7) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(0, m_frameIdentifier, L2_data_temp_save);;
@@ -144,15 +149,35 @@ public class data_manager {
 					L2.Car_Status_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
+			if (L2.Car_Status_packet.size() == 2000) {
+				data_compressie.encode("Car_Status");
+				L2.Car_Status_packet.clear();
+				L1.Car_Status = L1.Car_Status + 2000;
+			}
 		} else if (packetID == 5) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Car_Setup_packet.put(L2.Car_Setup_packet.size() + 1, L2_data_temp_save);
+			if (L2.Car_Setup_packet.size() == 400) {
+				data_compressie.encode("Car_Setups");
+				L2.Car_Setup_packet.clear();
+				L1.Car_Setups = L1.Car_Setups + 400;
+			}
 		} else if (packetID == 4) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Participants_packet.put(L2.Participants_packet.size() + 1, L2_data_temp_save);
+			if (L2.Participants_packet.size() == 400) {
+				data_compressie.encode("Participants");
+				L2.Participants_packet.clear();
+				L1.Participants = L1.Participants + 400;
+			}
 		} else if (packetID == 1) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Session_packet.put(L2.Session_packet.size() + 1, L2_data_temp_save);
+			if (L2.Session_packet.size() == 400) {
+				data_compressie.encode("Session");
+				L2.Session_packet.clear();
+				L1.Session = L1.Session + 400;
+			}
 		}
 		
 		

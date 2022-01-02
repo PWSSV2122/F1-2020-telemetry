@@ -3,6 +3,15 @@ package file_system;
 import java.util.HashMap;
 
 public class L1 {
+	//compression data
+	public static int Lap_Data = 0;
+	public static int Motion = 0;
+	public static int Car_Telemetry = 0;
+	public static int Car_Status = 0;
+	public static int Car_Setups = 0;
+	public static int Participants = 0;
+	public static int Session = 0;
+	
 	//packet loss detection system vars
 	public static int frameIdentifier_Car_status = 0;
 	public static int frameIdentifier_car_telemetry = 0;

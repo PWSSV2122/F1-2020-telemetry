@@ -1,4 +1,4 @@
-package file_system;
+package decode;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -13,10 +13,10 @@ import File_reader.Names;
 
 public class data_decoder {
 	public static void main(String[] args) {
-		decode("temp");
+		decode("temp", new int[] {10, 10, 10, 10, 10, 10, 10});
 	}
 	
-	static public void decode(String save) {
+	static public HashMap <String, HashMap<Integer, HashMap<String, Object>>> decode(String save, int[] tot_packet) {
 		Names.data_decode();
 		HashMap <String, HashMap<Integer, HashMap<String, Object>>> decoded_data = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
 		for (int i = 0; i < Names.needed_data_packets.length - 1; i++) {
@@ -46,7 +46,6 @@ public class data_decoder {
 				}
 			}
 			HashMap<String, Integer> key = new HashMap<String, Integer>();
-			System.out.println(Names.needed_data_packets[i] + "_Packet");
 			for (int o = 0 ; o < Names.Packet_names.get(Names.needed_data_packets[i] + "_Packet").size(); o++) {
 				key.put(Names.Packet_names.get(Names.needed_data_packets[i] + "_Packet").get(o), o);
 			}
@@ -65,6 +64,9 @@ public class data_decoder {
 						}
 						packetid = ByteBuffer.wrap(new byte[] {data[o + 1] , data[o + 2], data[o + 3], data[o + 4]}).order(ByteOrder.BIG_ENDIAN).getInt();
 						o = o + 4;
+						if (packetid == tot_packet[i]) {
+							o = data.length;
+						}
 					} else {
 						String data_name = data_codes_byte.get(data[o]);
 						int int_key = key.get("m_" + data_name);
@@ -98,7 +100,7 @@ public class data_decoder {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("done");
+		return decoded_data;
 	}
 	static private Object decode(byte[] decode) {
 		Object data_return = null;
