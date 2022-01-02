@@ -19,8 +19,7 @@ public class data_decoder {
 	static public void decode(String save) {
 		Names.data_decode();
 		HashMap <String, HashMap<Integer, HashMap<String, Object>>> decoded_data = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
-		for (int i = 0; i < Names.needed_data_packets.length; i++) {
-			System.out.println("1");
+		for (int i = 0; i < Names.needed_data_packets.length - 1; i++) {
 			String[] data_names = new String[80];
 			HashMap<String, Byte> data_codes_string = new HashMap<String, Byte>();
 			HashMap<Byte, String> data_codes_byte = new HashMap<Byte, String>();
@@ -43,8 +42,13 @@ public class data_decoder {
 					    }
 					}
 					data_codes_string.put(data_names[o], data[0]);
-					data_codes_byte.put(data[0], data_names[data_names.length - 1]);
+					data_codes_byte.put(data[0], data_names[o]);
 				}
+			}
+			HashMap<String, Integer> key = new HashMap<String, Integer>();
+			System.out.println(Names.needed_data_packets[i] + "_Packet");
+			for (int o = 0 ; o < Names.Packet_names.get(Names.needed_data_packets[i] + "_Packet").size(); o++) {
+				key.put(Names.Packet_names.get(Names.needed_data_packets[i] + "_Packet").get(o), o);
 			}
 			Path path = Paths.get("src/Saves/" + save + "/" + Names.needed_data_packets[i] + ".dec");
 			HashMap<Integer, HashMap<String, Object>> Temp_packets = new HashMap<Integer, HashMap<String, Object>>();
@@ -54,32 +58,27 @@ public class data_decoder {
 				byte[] data = Files.readAllBytes(path);
 				for (int o = 0; o < data.length; o++) {
 					if (data[o] == data_codes_string.get("packetid")) {
-						if (data[o + 1] == 0) {	
+						if (ByteBuffer.wrap(new byte[] {data[o + 1] , data[o + 2], data[o + 3], data[o + 4]}).order(ByteOrder.BIG_ENDIAN).getInt() == 0) {
 						} else {
 							Temp_packets.put(packetid, Temp_packet);
 							Temp_packet.clear();
 						}
-						packetid = data[o + 1];
-						o++; //veranderd naar 4 bytes
+						packetid = ByteBuffer.wrap(new byte[] {data[o + 1] , data[o + 2], data[o + 3], data[o + 4]}).order(ByteOrder.BIG_ENDIAN).getInt();
+						o = o + 4;
 					} else {
 						String data_name = data_codes_byte.get(data[o]);
-						System.out.println(Names.needed_data_packets[i] + "_Packet");
-						System.out.println("m_" + data_name);
-						System.out.println(data_name);
-						System.out.println(data_codes_byte.get(data[o]));
-						System.out.println(data[o]);
-						System.out.println(o);
-						int data_type = Names.Packet_byte_array.get(Names.needed_data_packets[i] + "_Packet").get("m_" + data_name).length;
+						int int_key = key.get("m_" + data_name);
+						int data_type = Names.Packet_byte_array.get(Names.needed_data_packets[i] + "_Packet").get(int_key).length;
 						if (data_name.endsWith("_")) {
 							for (int p = 0; p < 22; p++) {
-								if (data_codes_byte.containsKey(data[o + 1 + (data_type + 1) * p])) {
-									
+								if (data_codes_byte.containsKey(data[o + 1])) {
+									p = 22; 
 								} else {
 									byte[] decode = new byte[data_type];
-									for (int l = 0; l < data_type; i++) {
-										decode[l] = data[o + 2 + l + p * (data_type + 1)];
+									for (int l = 0; l < data_type; l++) {
+										decode[l] = data[o + 2 + l];
 									}
-									Temp_packet.put(data_name + data[o + 1 + (data_type)], decode(decode));
+									Temp_packet.put(data_name + data[o + 1], decode(decode));
 									o = o + data_type + 1;
 								}
 							}
@@ -93,15 +92,13 @@ public class data_decoder {
 						}
 					}
 				}
+				decoded_data.put(Names.needed_data_packets[i], new HashMap<Integer, HashMap<String, Object>>(Temp_packets));
+				Temp_packets.clear();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			decoded_data.put(Names.needed_data_packets[i], Temp_packets);
-			Temp_packets.clear();
-			System.out.println(decoded_data);
 		}
 		System.out.println("done");
-		System.out.println(decoded_data);
 	}
 	static private Object decode(byte[] decode) {
 		Object data_return = null;
