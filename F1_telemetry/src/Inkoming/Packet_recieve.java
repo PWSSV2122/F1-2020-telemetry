@@ -122,9 +122,7 @@ public class Packet_recieve {
 						int Data_type = Packet_byte_array.get(File_Path[PacketId]).get(i).length;
 						int[] array_places = Packet_byte_array.get(File_Path[PacketId]).get(i);
 						if (Packet_names.get(File_Path[PacketId]).get(i).endsWith("_")) {
-							int l = 0;
 							for (int o = 0; o < 22; o++) {
-								l++;
 								int ofset = repeats[PacketId] * o;
 								if (Data_type == 1) {
 									Data_decode.put(Packet_names.get(File_Path[PacketId]).get(i) + o, (byte) e[array_places[0] + ofset]);

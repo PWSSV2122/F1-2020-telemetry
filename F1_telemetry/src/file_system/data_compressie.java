@@ -8,6 +8,7 @@ import File_reader.Names;
 
 public class data_compressie {
 
+	@SuppressWarnings("unchecked")
 	public static void encode(String Packet) {
 		Names.data_decode();
 		String[] data_names_untrimmed = new String[80];

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import Inkoming.Packet_recieve;
@@ -15,6 +14,7 @@ public class data_manager {
 		data(test, (byte)4, (float)0, (int)100);
 	}
 	
+	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	public static void data(HashMap<String, Object> temp_save, byte packetID, float sessionTime, int m_frameIdentifier){
 		HashMap<String, HashMap<Integer, String>> Names = new HashMap<String, HashMap<Integer, String>>();
 		try {
@@ -157,6 +157,7 @@ public class data_manager {
 		
 		
 	}
+	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	private static HashMap<Integer, HashMap<String, Object>> dropped_Packet(int array, int m_frameIdentifier, HashMap<String, Object> L2_data_temp_save) {
 		HashMap<Integer, HashMap<String, Object>> data_temp_save = new HashMap<Integer, HashMap<String, Object>>();
 		try {
