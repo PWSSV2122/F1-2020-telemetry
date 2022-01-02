@@ -66,7 +66,11 @@ public class delta {
 			float fastest_lap = L1.bestLapTime[(int)L1.position.get((byte)1)];
 			L1.Delta.put(0, (float)0);
 			for (int i = 1; i < 22; i++) {
-				L1.Delta.put(i, L1.bestLapTime[L1.position.get((byte)(i))] - fastest_lap);
+				try {
+					L1.Delta.put(i, L1.bestLapTime[L1.position.get((byte)(i))] - fastest_lap);
+				} catch (Exception e) {
+					L1.Delta.put(i, null);
+				}
 			}
 		}	
 	}

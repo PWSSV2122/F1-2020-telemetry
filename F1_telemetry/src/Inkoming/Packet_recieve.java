@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import data_compute.delta;
@@ -136,7 +137,7 @@ public class Packet_recieve {
 									for (int p = 0; p < 48; p++) {
 										byte_temp_save[p] = e[array_places[p] + ofset];
 									}
-									Data_decode.put(Packet_names.get(File_Path[PacketId]).get(i) + o, new String(byte_temp_save));
+									Data_decode.put(Packet_names.get(File_Path[PacketId]).get(i) + o, new String(byte_temp_save, StandardCharsets.UTF_8));
 								} else {
 									System.out.println("error code #4"); //nog te bepalen error code
 								}
@@ -192,7 +193,7 @@ public class Packet_recieve {
 				} else if (PacketId == 4) {
 					//System.out.println(Data_decode.get("m_numActiveCars"));
 				} else if (PacketId == 5) {
-					System.out.println(Header.get("frameIdentifier"));
+					//System.out.println(Header.get("frameIdentifier"));
 				}
 
 				//verwizinbg naar het datasysteem met needed_data meegestuurd

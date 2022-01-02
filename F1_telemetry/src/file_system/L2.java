@@ -13,7 +13,7 @@ public class L2 {
 	public static HashMap<Integer, HashMap<String, Object>> Car_Telemetry_packet = new HashMap<Integer, HashMap<String, Object>>();
 	
 	//lap data packet
-	public static HashMap<Integer, HashMap<String, Object>> lap_Data_packet = new HashMap<Integer, HashMap<String, Object>>();
+	public static HashMap<Integer, HashMap<String, Object>> Lap_Data_packet = new HashMap<Integer, HashMap<String, Object>>();
 	
 	//motion packet
 	public static HashMap<Integer, HashMap<String, Object>> Motion_packet = new HashMap<Integer, HashMap<String, Object>>();
