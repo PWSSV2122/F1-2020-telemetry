@@ -1,5 +1,5 @@
 package application;
 
-public class home_screen {
+public class program_exit {
 
 }

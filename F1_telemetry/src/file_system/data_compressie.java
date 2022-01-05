@@ -8,6 +8,7 @@ import File_reader.Names;
 
 public class data_compressie {
 
+	@SuppressWarnings("unchecked")
 	public static void encode(String Packet) {
 		Names.data_decode();
 		String[] data_names_untrimmed = new String[80];
@@ -48,7 +49,11 @@ public class data_compressie {
 		String output = "";
 		for (int i = 0; i < compression_data.size(); i++) {
 			output += data_codes.get("packetid");
-			output += binary_data(ByteBuffer.allocate(4).putInt(i).array());
+			try {
+				output += binary_data(ByteBuffer.allocate(4).putInt(i + L1.class.getField(Packet).getInt(Packet)).array());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			for (int o = 0; o < data_codes.size(); o++) {
 				output += data_codes.get(data_names[o]);
 				if (data_names[o].equals("packetid") || data_names[o].equals("sessionTime")) {
@@ -181,7 +186,7 @@ public class data_compressie {
 		        }
 		    }
 		}
-		try (FileOutputStream write = new FileOutputStream("src/saves/temp/" + Packet + ".dec")) {
+		try (FileOutputStream write = new FileOutputStream("src/saves/temp/" + Packet + ".dec", true)) {
 			write.write(data);
 		} catch (Exception e) {
 			e.printStackTrace();
