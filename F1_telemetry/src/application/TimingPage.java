@@ -1,18 +1,26 @@
 package application;
 
+import java.util.Map;
+
+import file_system.L1;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class TimingPage {
 	public static Scene TimingPage_scene() {
@@ -112,6 +120,38 @@ public class TimingPage {
 		ImageView imageView = new ImageView("images/menubar_img.png"); 
 		imageView.setFitWidth(111);
 		imageView.fitHeightProperty().bind(TimingPage.heightProperty());
+		
+		VBox Content = new VBox();
+		
+		Text Timings = new Text("Timings");
+		Timings.setTranslateX(10);
+		Timings.setTranslateY(10);
+		Timings.setStyle("-fx-font: 24 arial;");
+		Content.getChildren().add(Timings);
+		
+		Rectangle H_line_Content = new Rectangle();
+		H_line_Content.setHeight(1);
+		H_line_Content.setWidth(1520);
+		H_line_Content.setStroke(Color.RED);
+		H_line_Content.setTranslateY(11);
+		Content.getChildren().add(H_line_Content);
+		
+		TableView Tabel = new TableView();
+		Tabel.getStyleClass().add("application/css/TimingPageTabel");
+		//Tabel.setGridLinesVisible(true);
+		Tabel.setTranslateY(12);
+		Tabel.setTranslateX(1);
+		Content.getChildren().add(Tabel);
+		
+		String[] Colom_names = new String[] {"Position", "Name", "Current Lap", "S1", "S2", "S3", "Last Lap", "Tyres", "In Pits", "Penalties", "Delta Car In Front"};
+		for (int i = 0; i < 11; i++) {
+			Text Colom_names_text = new Text(Colom_names[i]);
+			Colom_names_text.setStyle("-fx-font: 24 arial;");
+			TableColumn<Map, String> test = new TableColumn<>(Colom_names[i]);
+			test.setCellValueFactory(new MapValueFactory<>(Colom_names[i]));
+			Tabel.getColumns().add(test);
+		}
+		
 				
 		top_level.setTop(top_box);
 		top_box.getChildren().addAll(top_pane, H_line);
@@ -125,8 +165,8 @@ public class TimingPage {
 		left_scroll.setContent(left_box2);
 		left_box2.getChildren().addAll(menubar_buttons);
 		
-		//top_level.setCenter(center_pane);
-		//center_pane.getChildren().addAll(background_menu, center_background);
+		top_level.setCenter(center_pane);
+		center_pane.getChildren().addAll(background_menu, center_background, Content);
 		
 	    left_box2.setOnScroll(new EventHandler<ScrollEvent>() {
 	        @Override
@@ -142,6 +182,7 @@ public class TimingPage {
 	   Main_menu.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
+		   H_line_Content.setWidth((double) newVal - 130);
 	   });
 
 	   Main_menu.window.heightProperty().addListener((obs, oldVal, newVal) -> {
