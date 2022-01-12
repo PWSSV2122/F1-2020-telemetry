@@ -1,6 +1,9 @@
 package application;
 	
+import File_reader.Names;
+import Inkoming.Packet_recieve;
 import application.SetupPage.Brakes;
+import contentUpdate.ContentUpdate;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -218,6 +221,19 @@ public class Main_menu extends Application{
 	   });
 
 	   //Write_encoded.Names("src/Names/Motion_Packet.enc");
+	   Packet_recieve.recieve_on = true;
+	   new Thread(new Runnable() {
+		    public void run() {
+		    	Names.data_decode();
+		    	Packet_recieve.recieve_class();
+		    }
+		}).start();
+	   
+	   new Thread(new Runnable() {
+		    public void run() {
+		    	ContentUpdate.Update();
+		    }
+		}).start();
 	   
 	   TrackPage_scene = TrackPage.TrackPage_scene();
 	   SetupPage_Brakes_scene = Brakes.Brakes_scene();

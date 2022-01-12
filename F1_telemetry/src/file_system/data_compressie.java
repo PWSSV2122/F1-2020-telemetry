@@ -8,8 +8,7 @@ import File_reader.Names;
 
 public class data_compressie {
 
-	@SuppressWarnings("unchecked")
-	public static void encode(String Packet) {
+	public static void encode(String Packet, HashMap<Integer, HashMap<String, Object>> compression_data) {
 		Names.data_decode();
 		String[] data_names_untrimmed = new String[80];
 		HashMap<String, String> data_codes = new HashMap<String, String>();
@@ -26,13 +25,6 @@ public class data_compressie {
 		String[] data_names = new String[amount_of_names];
 		for (int i = 0; i < amount_of_names; i++) {
 			data_names[i] = data_names_untrimmed[places[i]];
-		}
-
-		HashMap<Integer, HashMap<String, Object>> compression_data = new HashMap<Integer, HashMap<String, Object>>();
-		try {
-			compression_data.putAll((HashMap<Integer, HashMap<String, Object>>) L2.class.getField(Packet + "_packet").get(Packet + "_packet"));
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		
 		HashMap<String, Object> last_data = new HashMap<String, Object>();
@@ -161,13 +153,14 @@ public class data_compressie {
 							last_data.put(data_names[o], data_String);
 						}		
 					}
-				} else {
-					System.out.println(data_names[o]);
-					byte[] temp = (byte[])compression_data.get(i).get(data_names[o]);
-					for (int p = 0; p < temp.length; p++) {
-						output += String.format("%8s", Integer.toBinaryString(temp[p] & 0xFF).replace(' ', '0'));	
-					}
-				}
+				} //else {
+//					System.out.println(data_names[o]);
+//					byte[] temp = (byte[])compression_data.get(i).get(data_names[o]);
+//					for (int p = 0; p < temp.length; p++) {
+//						output += String.format("%8s", Integer.toBinaryString(temp[p] & 0xFF).replace(' ', '0'));	
+//					}
+//				}
+				// needs some work
 			}
 		}
 		

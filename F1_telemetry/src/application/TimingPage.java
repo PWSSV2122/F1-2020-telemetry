@@ -1,9 +1,7 @@
 package application;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import application.TimingPage.Tabel_object;
 import file_system.L1;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -14,12 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -29,6 +25,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class TimingPage {
+	
+	public static TableView<Tabel_object> Tabel = new TableView<Tabel_object>();
+	
 	public static Scene TimingPage_scene() {
 		Scene TimingPage;
 		
@@ -142,7 +141,6 @@ public class TimingPage {
 		H_line_Content.setTranslateY(11);
 		Content.getChildren().add(H_line_Content);
 		
-		TableView<Tabel_object> Tabel = new TableView<Tabel_object>();
 		Tabel.getStylesheets().add("application/css/TimingPageTabel.css");
 		Tabel.setPrefHeight(2000);
 		Tabel.setTranslateY(12);
@@ -229,7 +227,7 @@ public class TimingPage {
 		return TimingPage;
 		
 	}
-	static private String MsTo_min_sec_ms(long time, int format) {
+	public static String MsTo_min_sec_ms(long time, int format) {
 		long Minutes = TimeUnit.MILLISECONDS.toMinutes(time);
 		long Seconds = TimeUnit.MILLISECONDS.toSeconds(time) % 60;
 		long Miliseconds = time - Minutes * 60000- Seconds * 1000;
@@ -241,7 +239,7 @@ public class TimingPage {
 		return String.valueOf(Minutes) + ":" + String.valueOf(Seconds) + ":" + String.valueOf(Miliseconds);
 	}
 	
-	static private String Tyre(byte actualTyreCompound) {
+	public static String Tyre(byte actualTyreCompound) {
 		if (actualTyreCompound == 9) {
 			return "dry";
 		} else if (actualTyreCompound == 10) {
@@ -275,7 +273,7 @@ public class TimingPage {
 		}
 	}
 	
-	static private String pit(byte pitStatus) {
+	public static String pit(byte pitStatus) {
 		if (pitStatus == 0) {
 			return null;
 		} else if (pitStatus == 1) {
@@ -298,7 +296,7 @@ public class TimingPage {
         private final SimpleObjectProperty<String> Penalties;
         private final SimpleObjectProperty<String> Delta_Car_In_Front;
 
-        private Tabel_object(String Position, String Name, String Current_Lap, String S1, String S2, String S3, String Last_Lap, String Tyres, String In_Pits, String Penalties, String Delta_Car_In_Front) {
+        public Tabel_object(String Position, String Name, String Current_Lap, String S1, String S2, String S3, String Last_Lap, String Tyres, String In_Pits, String Penalties, String Delta_Car_In_Front) {
             this.Position = new SimpleObjectProperty<>(Position);
             this.Name = new SimpleObjectProperty<>(Name);
             this.Current_Lap = new SimpleObjectProperty<>(Current_Lap);
