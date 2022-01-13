@@ -17,17 +17,16 @@ import file_system.data_manager;
 import java.nio.ByteBuffer;
 
 public class Packet_recieve {
-	static boolean test2;
+	public static boolean recieve_on;
 	public static String[] first_frameIdentifier_name = new String[] {"Car_status", "car_telemetry", "lap_data", "motion"};
 	public static int Player_lap = 0;
-	public static void main(String[] args) {
+	public static void recieve_class() {
 		data_decode();
-		test2 = true;
 		boolean[] first_packet = new boolean[] {true, true, true, true};
 		int[] packetid = new int[] {7, 6, 2, 0};
 		try {
 			DatagramSocket socket = new DatagramSocket(20777); //var
-			while (test2 == true) {
+			while (recieve_on == true) {
 				byte[] test = new byte[2000];
 				DatagramPacket response = new DatagramPacket(test, test.length);
 				socket.receive(response);

@@ -1,11 +1,8 @@
 package file_system;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 
+import File_reader.Names;
 import Inkoming.Packet_recieve;
 
 public class data_manager {
@@ -16,48 +13,29 @@ public class data_manager {
 	
 	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	public static void data(HashMap<String, Object> temp_save, byte packetID, float sessionTime, int m_frameIdentifier){
-		HashMap<String, HashMap<Integer, String>> Names = new HashMap<String, HashMap<Integer, String>>();
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader("src/Names/Needed_data.enc"));
-			int i = 0;
-			boolean first = true; 
-			String Line;
-			String name = null;
-			HashMap<Integer, String> temp_save1 = new HashMap<Integer, String>();
-			while ((Line = reader.readLine()) != null) {
-				String[] split = Line.split(" : ", 3);
-				if (split.length >= 3) {
-					if (split[2].equals(name)) {
-					} else if (first == true){						
-						name = split[2];
-						first = false;
-					} else {
-						Names.put(name, new HashMap() {{putAll(temp_save1);}});
-						temp_save1.clear();
-						i = 0;
-						name = split[2];
-					}
-					temp_save1.put(i, split[0]);
-					i++;
-				} else {
-					System.out.println("error code #3"); //nog te bepalen error code
-				}
+		String[] PacketID_name = new String[] {"Motion", "Session", "Lap_Data", "Event", "Participants", "Car_Setup", "Car_Telemetry", "Car_Status", "Final_Classificationt", "Lobby_Info", "Needed"};
+		String[] data_names_untrimmed = new String[80];
+		HashMap<String, String> data_codes = new HashMap<String, String>();
+		int amount_of_names = 0;
+		int[] places = new int[80];
+		for (int i = 0; i < Names.Needed_data_packet.size(); i++) {
+			if (Names.Needed_data_packet.get(Names.Needed_data_names[i]).equals(PacketID_name[packetID])) {
+				data_names_untrimmed[i] = Names.Needed_data_names[i];
+				data_codes.put(data_names_untrimmed[i], Names.Needed_data_byte.get(data_names_untrimmed[i]));
+				places[amount_of_names] = i;
+				amount_of_names++;
 			}
-			Names.put(name, new HashMap() {{putAll(temp_save1);}});
-			temp_save1.clear();
-			reader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		}
+		String[] data_names = new String[amount_of_names];
+		for (int i = 0; i < amount_of_names; i++) {
+			data_names[i] = data_names_untrimmed[places[i]];
 		}
 		
-		String[] PacketID_name = new String[] {"Motion", "Session", "Lap_Data", "Event", "Participants", "Car_Setup", "Car_Telemetry", "Car_Status", "Final_Classificationt", "Lobby_Info", "Needed"};
 		HashMap<String, Object> L2_data_temp_save = new HashMap<String, Object>();
 		try {
-			for (int i = 0; i < Names.get(PacketID_name[packetID]).size(); i++) {
-				if (Names.get(PacketID_name[packetID]).get(i).endsWith("_")) {
-					String Name_l1 = Names.get(PacketID_name[packetID]).get(i).substring(0, Names.get(PacketID_name[packetID]).get(i).length() - 1);
+			for (int i = 0; i < data_names.length; i++) {
+				if (data_names[i].endsWith("_")) {
+					String Name_l1 = data_names[i].substring(0, data_names[i].length() - 1);
 					Object L1 = L1.class.getField(Name_l1).get(1);
 					for (int o = 0 ; o < 22; o++) {
 						if (L1 instanceof byte[]) {
@@ -83,7 +61,7 @@ public class data_manager {
 						}
 					}
 				} else {
-					String Name_l1 = Names.get(PacketID_name[packetID]).get(i);
+					String Name_l1 = data_names[i];
 					byte L1 = (byte) L1.class.getField(Name_l1).get(1);
 					L2_data_temp_save.put(Name_l1, L1);
 					L1.class.getField(Name_l1).set(L1, temp_save.get(Name_l1));
@@ -97,17 +75,22 @@ public class data_manager {
 			for (int i = 0; i < data_temp_save.size(); i++) {
 				int packet_num = L2.Lap_Data_packet.size();
 				if (data_temp_save.get(i) == null) {
-					System.out.println(":(");
+					//System.out.println(":(");
 					L2.Lap_Data_packet.put(packet_num, L2.Lap_Data_packet.get(L2.Lap_Data_packet.size() - 1));
-					System.out.println(L2.Lap_Data_packet.get(packet_num));
+					//System.out.println(L2.Lap_Data_packet.get(packet_num));
 				} else {
 					L2.Lap_Data_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
 			if (L2.Lap_Data_packet.size() == 2000) {
-				data_compressie.encode("Lap_Data");
-				L2.Lap_Data_packet.clear();
-				L1.Lap_Data = L1.Lap_Data + 2000;
+				   new Thread(new Runnable() {
+					    public void run() {
+							data_compressie.encode("Lap_Data", L2.Lap_Data_packet);
+							L1.Lap_Data = L1.Lap_Data + 2000;
+							System.out.println("Done : Lap_Data");
+					    }
+					}).start();
+				   L2.Lap_Data_packet.clear();
 			}
 		} else if (packetID == 0) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(3, m_frameIdentifier, L2_data_temp_save);
@@ -120,9 +103,14 @@ public class data_manager {
 				}
 			}
 			if (L2.Motion_packet.size() == 2000) {
-				data_compressie.encode("Motion");
+				new Thread(new Runnable() {
+				    public void run() {
+				    	data_compressie.encode("Motion", L2.Motion_packet);
+						L1.Motion = L1.Motion + 2000;
+						System.out.println("Done : Motion");
+				    }
+				}).start();
 				L2.Motion_packet.clear();
-				L1.Motion = L1.Motion + 2000;
 			}
 		} else if (packetID == 6) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(1, m_frameIdentifier, L2_data_temp_save);
@@ -135,9 +123,14 @@ public class data_manager {
 				}
 			}
 			if (L2.Car_Telemetry_packet.size() == 2000) {
-				data_compressie.encode("Car_Telemetry");
+				new Thread(new Runnable() {
+				    public void run() {
+				    	data_compressie.encode("Car_Telemetry", L2.Car_Telemetry_packet);
+						L1.Car_Telemetry = L1.Car_Telemetry + 2000;
+						System.out.println("Done : Car_Telemetry");
+				    }
+				}).start();
 				L2.Car_Telemetry_packet.clear();
-				L1.Car_Telemetry = L1.Car_Telemetry + 2000;
 			}
 		} else if (packetID == 7) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(0, m_frameIdentifier, L2_data_temp_save);;
@@ -150,33 +143,53 @@ public class data_manager {
 				}
 			}
 			if (L2.Car_Status_packet.size() == 2000) {
-				data_compressie.encode("Car_Status");
+				new Thread(new Runnable() {
+				    public void run() {
+				    	data_compressie.encode("Car_Status", L2.Car_Status_packet);
+						L1.Car_Status = L1.Car_Status + 2000;
+						System.out.println("Done : Car_Status");
+				    }
+				}).start();
 				L2.Car_Status_packet.clear();
-				L1.Car_Status = L1.Car_Status + 2000;
 			}
 		} else if (packetID == 5) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Car_Setup_packet.put(L2.Car_Setup_packet.size() + 1, L2_data_temp_save);
 			if (L2.Car_Setup_packet.size() == 400) {
-				data_compressie.encode("Car_Setups");
+				new Thread(new Runnable() {
+				    public void run() {
+				    	data_compressie.encode("Car_Setups", L2.Car_Setup_packet);
+						L1.Car_Setups = L1.Car_Setups + 400;
+						System.out.println("Done : Car_Setups");
+				    }
+				}).start();
 				L2.Car_Setup_packet.clear();
-				L1.Car_Setups = L1.Car_Setups + 400;
 			}
 		} else if (packetID == 4) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Participants_packet.put(L2.Participants_packet.size() + 1, L2_data_temp_save);
 			if (L2.Participants_packet.size() == 400) {
-				data_compressie.encode("Participants");
+				new Thread(new Runnable() {
+				    public void run() {
+				    	data_compressie.encode("Participants", L2.Participants_packet);
+						L1.Participants = L1.Participants + 400;
+						System.out.println("Done : Participants");
+				    }
+				}).start();
 				L2.Participants_packet.clear();
-				L1.Participants = L1.Participants + 400;
 			}
 		} else if (packetID == 1) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Session_packet.put(L2.Session_packet.size() + 1, L2_data_temp_save);
 			if (L2.Session_packet.size() == 400) {
-				data_compressie.encode("Session");
+				new Thread(new Runnable() {
+				    public void run() {
+				    	data_compressie.encode("Session", L2.Session_packet);
+						L1.Session = L1.Session + 400;
+						System.out.println("Done : Session");
+				    }
+				}).start();
 				L2.Session_packet.clear();
-				L1.Session = L1.Session + 400;
 			}
 		}
 		
