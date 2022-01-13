@@ -1,5 +1,5 @@
 package File_reader;
 
-public class Read {
+public class settings {
 
 }

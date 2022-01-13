@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import Inkoming.Packet_recieve;
@@ -15,6 +14,7 @@ public class data_manager {
 		data(test, (byte)4, (float)0, (int)100);
 	}
 	
+	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	public static void data(HashMap<String, Object> temp_save, byte packetID, float sessionTime, int m_frameIdentifier){
 		HashMap<String, HashMap<Integer, String>> Names = new HashMap<String, HashMap<Integer, String>>();
 		try {
@@ -95,70 +95,116 @@ public class data_manager {
 		if (packetID == 2) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(2, m_frameIdentifier, L2_data_temp_save);
 			for (int i = 0; i < data_temp_save.size(); i++) {
-				int packet_num = m_frameIdentifier - data_temp_save.size() + 1 + i;
-				if (data_temp_save.get(packet_num) == null) {
-					L2.lap_data_packet.put(packet_num, L2.lap_data_packet.get(L1.frameIdentifier_lap_data));
+				int packet_num = L2.Lap_Data_packet.size();
+				if (data_temp_save.get(i) == null) {
+					System.out.println(":(");
+					L2.Lap_Data_packet.put(packet_num, L2.Lap_Data_packet.get(L2.Lap_Data_packet.size() - 1));
+					System.out.println(L2.Lap_Data_packet.get(packet_num));
 				} else {
-					L2.lap_data_packet.put(packet_num, data_temp_save.get(packet_num));
+					L2.Lap_Data_packet.put(packet_num, data_temp_save.get(i));
 				}
+			}
+			if (L2.Lap_Data_packet.size() == 2000) {
+				data_compressie.encode("Lap_Data");
+				L2.Lap_Data_packet.clear();
+				L1.Lap_Data = L1.Lap_Data + 2000;
 			}
 		} else if (packetID == 0) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(3, m_frameIdentifier, L2_data_temp_save);
 			for (int i = 0; i < data_temp_save.size(); i++) {
-				int packet_num = m_frameIdentifier - data_temp_save.size() + 1 + i;
-				if (data_temp_save.get(packet_num) == null) {
-					L2.motion_packet.put(packet_num, L2.motion_packet.get(L1.frameIdentifier_motion));
+				int packet_num = L2.Motion_packet.size() + 1;
+				if (data_temp_save.get(i) == null) {
+					L2.Motion_packet.put(packet_num, L2.Motion_packet.get(L2.Motion_packet.size() - 1));
 				} else {
-					L2.motion_packet.put(packet_num, data_temp_save.get(packet_num));
+					L2.Motion_packet.put(packet_num, data_temp_save.get(i));
 				}
+			}
+			if (L2.Motion_packet.size() == 2000) {
+				data_compressie.encode("Motion");
+				L2.Motion_packet.clear();
+				L1.Motion = L1.Motion + 2000;
 			}
 		} else if (packetID == 6) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(1, m_frameIdentifier, L2_data_temp_save);
 			for (int i = 0; i < data_temp_save.size(); i++) {
-				int packet_num = m_frameIdentifier - data_temp_save.size() + 1 + i;
-				if (data_temp_save.get(packet_num) == null) {
-					L2.Car_telemetry_packet.put(packet_num, L2.Car_telemetry_packet.get(L1.frameIdentifier_car_telemetry));
+				int packet_num = L2.Car_Telemetry_packet.size() + 1;
+				if (data_temp_save.get(i) == null) {
+					L2.Car_Telemetry_packet.put(packet_num, L2.Car_Telemetry_packet.get(L2.Car_Telemetry_packet.size() - 1));
 				} else {
-					L2.Car_telemetry_packet.put(packet_num, data_temp_save.get(packet_num));
+					L2.Car_Telemetry_packet.put(packet_num, data_temp_save.get(i));
 				}
+			}
+			if (L2.Car_Telemetry_packet.size() == 2000) {
+				data_compressie.encode("Car_Telemetry");
+				L2.Car_Telemetry_packet.clear();
+				L1.Car_Telemetry = L1.Car_Telemetry + 2000;
 			}
 		} else if (packetID == 7) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(0, m_frameIdentifier, L2_data_temp_save);;
 			for (int i = 0; i < data_temp_save.size(); i++) {
-				int packet_num = m_frameIdentifier - data_temp_save.size() + 1 + i;
-				if (data_temp_save.get(packet_num) == null) {
-					L2.Car_status_packet.put(packet_num, L2.Car_status_packet.get(L1.frameIdentifier_Car_status));
+				int packet_num = L2.Car_Status_packet.size() + 1;
+				if (data_temp_save.get(i) == null) {
+					L2.Car_Status_packet.put(packet_num, L2.Car_Status_packet.get(L2.Car_Status_packet.size() - 1));
 				} else {
-					L2.Car_status_packet.put(packet_num, data_temp_save.get(packet_num));
+					L2.Car_Status_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
+			if (L2.Car_Status_packet.size() == 2000) {
+				data_compressie.encode("Car_Status");
+				L2.Car_Status_packet.clear();
+				L1.Car_Status = L1.Car_Status + 2000;
+			}
 		} else if (packetID == 5) {
-			L2.Car_setup_packet.put(L2.Car_setup_packet.size(), L2_data_temp_save);
+			L2_data_temp_save.put("sessionTime", sessionTime);
+			L2.Car_Setup_packet.put(L2.Car_Setup_packet.size() + 1, L2_data_temp_save);
+			if (L2.Car_Setup_packet.size() == 400) {
+				data_compressie.encode("Car_Setups");
+				L2.Car_Setup_packet.clear();
+				L1.Car_Setups = L1.Car_Setups + 400;
+			}
 		} else if (packetID == 4) {
-			L2.participants_packet.put(L2.participants_packet.size(), L2_data_temp_save);
+			L2_data_temp_save.put("sessionTime", sessionTime);
+			L2.Participants_packet.put(L2.Participants_packet.size() + 1, L2_data_temp_save);
+			if (L2.Participants_packet.size() == 400) {
+				data_compressie.encode("Participants");
+				L2.Participants_packet.clear();
+				L1.Participants = L1.Participants + 400;
+			}
 		} else if (packetID == 1) {
-			L2.session_packet.put(L2.session_packet.size(), L2_data_temp_save);
+			L2_data_temp_save.put("sessionTime", sessionTime);
+			L2.Session_packet.put(L2.Session_packet.size() + 1, L2_data_temp_save);
+			if (L2.Session_packet.size() == 400) {
+				data_compressie.encode("Session");
+				L2.Session_packet.clear();
+				L1.Session = L1.Session + 400;
+			}
 		}
 		
 		
 	}
+	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	private static HashMap<Integer, HashMap<String, Object>> dropped_Packet(int array, int m_frameIdentifier, HashMap<String, Object> L2_data_temp_save) {
 		HashMap<Integer, HashMap<String, Object>> data_temp_save = new HashMap<Integer, HashMap<String, Object>>();
 		try {
 			String blabla = "frameIdentifier_" + Packet_recieve.first_frameIdentifier_name[array];
 			int frame = (int) L1.class.getField(blabla).get(1);
 			if (m_frameIdentifier - 1 == frame) {
-				data_temp_save.put(m_frameIdentifier, new HashMap() {{putAll(L2_data_temp_save);}});
+				data_temp_save.put(0, new HashMap() {{putAll(L2_data_temp_save);}});
 					L1.class.getField(blabla).set(m_frameIdentifier, m_frameIdentifier);
 			} else if (m_frameIdentifier <= frame) {
 				//System.out.println("error code #7"); //nog te bepalen error code
 			} else if (m_frameIdentifier >= frame + 2) {
 				L1.class.getField(blabla).set(m_frameIdentifier, m_frameIdentifier);
+				int o = 0;
 				for (int i = 0; i < m_frameIdentifier - frame - 1; i++) {
-					data_temp_save.put(frame + 1 + i, null);
+					data_temp_save.put(o, null);
+					o++;
 					//System.out.println("error code #8 : " + (frame + 1 + i) + " : " + Packet_recieve.first_frameIdentifier_name[array]); //nog te bepalen error code
+					if (Packet_recieve.first_frameIdentifier_name[array] == "lap_data") {
+						System.out.println(L2.Lap_Data_packet.size());
+					}
 				}
-				data_temp_save.put(m_frameIdentifier, new HashMap() {{putAll(L2_data_temp_save);}});
+				data_temp_save.put(o + 1, new HashMap() {{putAll(L2_data_temp_save);}});
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
