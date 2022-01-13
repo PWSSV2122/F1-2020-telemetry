@@ -51,11 +51,11 @@ public class data_compressie {
 				if (data_names[o].equals("packetid") || data_names[o].equals("sessionTime")) {
 					output = output.substring(0, output.length() - 8);
 				} else if (data_names[o].endsWith("_")) {
-					Object data = compression_data.get(i).get(data_names[o] + 1);
+					Object data = compression_data.get(i+1).get(data_names[o] + 1);
 					if (data.getClass().equals(Byte.class)) {
 						byte[] data_byte = new byte[22];
 						for (int p = 0; p < 22; p++) {
-							data_byte[p] = (byte) compression_data.get(i).get(data_names[o] + p);
+							data_byte[p] = (byte) compression_data.get(i + 1).get(data_names[o] + p);
 						}
 						byte[] data_byte_compaire = new byte[22];
 						try {
@@ -80,7 +80,7 @@ public class data_compressie {
 					} else if (data.getClass().equals(Float.class)) {
 						float[] data_float = new float[22];
 						for (int p = 0; p < 22; p++) {
-							data_float[p] = (float) compression_data.get(i).get(data_names[o] + p);
+							data_float[p] = (float) compression_data.get(i + 1).get(data_names[o] + p);
 						}
 						float[] data_float_compaire = new float[22];
 						try {
@@ -105,7 +105,7 @@ public class data_compressie {
 					} else if (data.getClass().equals(Short.class)) {
 						short[] data_short = new short[22];
 						for (int p = 0; p < 22; p++) {
-							data_short[p] = (short) compression_data.get(i).get(data_names[o] + p);
+							data_short[p] = (short) compression_data.get(i + 1).get(data_names[o] + p);
 						}
 						short[] data_short_compaire = new short[22];
 						int change = 0;
@@ -130,7 +130,7 @@ public class data_compressie {
 					} else if (data.getClass().equals(String.class)) {
 						String[] data_String = new String[22];
 						for (int p = 0; p < 22; p++) {
-							data_String[p] = (String) compression_data.get(i).get(data_names[o] + p);
+							data_String[p] = (String) compression_data.get(i + 1).get(data_names[o] + p);
 						}
 						String[] data_String_compaire = new String[22];
 						int change = 0;
@@ -184,6 +184,8 @@ public class data_compressie {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//System.out.println(data.length);
+		//System.out.println(compression_data.size());
 	}
 	static private String binary_num(byte o) {
 		String temp = "";
