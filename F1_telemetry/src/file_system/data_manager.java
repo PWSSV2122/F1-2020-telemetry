@@ -1,6 +1,7 @@
 package file_system;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import File_reader.Names;
 import Inkoming.Packet_recieve;
@@ -72,8 +73,9 @@ public class data_manager {
 		}
 		if (packetID == 2) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(2, m_frameIdentifier, L2_data_temp_save);
+			//System.out.println(data_temp_save.size());
 			for (int i = 0; i < data_temp_save.size(); i++) {
-				int packet_num = L2.Lap_Data_packet.size();
+				int packet_num = L2.Lap_Data_packet.size() + 1;
 				if (data_temp_save.get(i) == null) {
 					//System.out.println(":(");
 					L2.Lap_Data_packet.put(packet_num, L2.Lap_Data_packet.get(L2.Lap_Data_packet.size() - 1));
@@ -82,12 +84,13 @@ public class data_manager {
 					L2.Lap_Data_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-			if (L2.Lap_Data_packet.size() == 2000) {
+			if (L2.Lap_Data_packet.size() >= 2000) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Lap_Data_packet);
 				   new Thread(new Runnable() {
 					    public void run() {
-							data_compressie.encode("Lap_Data", L2.Lap_Data_packet);
-							L1.Lap_Data = L1.Lap_Data + 2000;
-							System.out.println("Done : Lap_Data");
+							data_compressie.encode("Lap_Data", encode_data);
+							L1.Lap_Data = L1.Lap_Data + L2.Lap_Data_packet.size();
 					    }
 					}).start();
 				   L2.Lap_Data_packet.clear();
@@ -102,12 +105,13 @@ public class data_manager {
 					L2.Motion_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-			if (L2.Motion_packet.size() == 2000) {
+			if (L2.Motion_packet.size() >= 2000) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Motion_packet);
 				new Thread(new Runnable() {
 				    public void run() {
-				    	data_compressie.encode("Motion", L2.Motion_packet);
-						L1.Motion = L1.Motion + 2000;
-						System.out.println("Done : Motion");
+				    	data_compressie.encode("Motion", encode_data);
+						L1.Motion = L1.Motion + encode_data.size();
 				    }
 				}).start();
 				L2.Motion_packet.clear();
@@ -122,12 +126,13 @@ public class data_manager {
 					L2.Car_Telemetry_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-			if (L2.Car_Telemetry_packet.size() == 2000) {
+			if (L2.Car_Telemetry_packet.size() >= 2000) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Car_Telemetry_packet);
 				new Thread(new Runnable() {
 				    public void run() {
-				    	data_compressie.encode("Car_Telemetry", L2.Car_Telemetry_packet);
-						L1.Car_Telemetry = L1.Car_Telemetry + 2000;
-						System.out.println("Done : Car_Telemetry");
+				    	data_compressie.encode("Car_Telemetry", encode_data);
+						L1.Car_Telemetry = L1.Car_Telemetry + encode_data.size();
 				    }
 				}).start();
 				L2.Car_Telemetry_packet.clear();
@@ -142,12 +147,13 @@ public class data_manager {
 					L2.Car_Status_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-			if (L2.Car_Status_packet.size() == 2000) {
+			if (L2.Car_Status_packet.size() >= 2000) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Car_Status_packet);
 				new Thread(new Runnable() {
 				    public void run() {
 				    	data_compressie.encode("Car_Status", L2.Car_Status_packet);
-						L1.Car_Status = L1.Car_Status + 2000;
-						System.out.println("Done : Car_Status");
+						L1.Car_Status = L1.Car_Status + encode_data.size();
 				    }
 				}).start();
 				L2.Car_Status_packet.clear();
@@ -155,12 +161,13 @@ public class data_manager {
 		} else if (packetID == 5) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Car_Setup_packet.put(L2.Car_Setup_packet.size() + 1, L2_data_temp_save);
-			if (L2.Car_Setup_packet.size() == 400) {
+			if (L2.Car_Setup_packet.size() >= 400) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Car_Setup_packet);
 				new Thread(new Runnable() {
 				    public void run() {
-				    	data_compressie.encode("Car_Setups", L2.Car_Setup_packet);
-						L1.Car_Setups = L1.Car_Setups + 400;
-						System.out.println("Done : Car_Setups");
+				    	data_compressie.encode("Car_Setups", encode_data);
+						L1.Car_Setups = L1.Car_Setups + encode_data.size();
 				    }
 				}).start();
 				L2.Car_Setup_packet.clear();
@@ -168,12 +175,13 @@ public class data_manager {
 		} else if (packetID == 4) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Participants_packet.put(L2.Participants_packet.size() + 1, L2_data_temp_save);
-			if (L2.Participants_packet.size() == 400) {
+			if (L2.Participants_packet.size() >= 400) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Participants_packet);
 				new Thread(new Runnable() {
 				    public void run() {
-				    	data_compressie.encode("Participants", L2.Participants_packet);
-						L1.Participants = L1.Participants + 400;
-						System.out.println("Done : Participants");
+				    	data_compressie.encode("Participants", encode_data);
+						L1.Participants = L1.Participants + encode_data.size();
 				    }
 				}).start();
 				L2.Participants_packet.clear();
@@ -181,12 +189,13 @@ public class data_manager {
 		} else if (packetID == 1) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Session_packet.put(L2.Session_packet.size() + 1, L2_data_temp_save);
-			if (L2.Session_packet.size() == 400) {
+			if (L2.Session_packet.size() >= 400) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Session_packet);
 				new Thread(new Runnable() {
 				    public void run() {
-				    	data_compressie.encode("Session", L2.Session_packet);
-						L1.Session = L1.Session + 400;
-						System.out.println("Done : Session");
+				    	data_compressie.encode("Session", encode_data);
+						L1.Session = L1.Session + encode_data.size();
 				    }
 				}).start();
 				L2.Session_packet.clear();
