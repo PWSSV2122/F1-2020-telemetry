@@ -1,14 +1,16 @@
 .button{
     -fx-border-color: transparent;
     -fx-background-color: transparent;
+    -fx-border-color: RED;
+    -fx-border-width: 2;
 }
 
 .button:pressed {
-	-fx-border-color: black;
+	-fx-border-color: RED;
     -fx-border-width: 2;
 }
 
 .button:hover {
-	-fx-border-color: RED;
+	-fx-border-color: black;
     -fx-border-width: 2;
 }
