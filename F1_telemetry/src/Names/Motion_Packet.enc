@@ -26,12 +26,12 @@ m_suspensionVelocity_FL : 1368, 1369, 1370, 1371
 m_suspensionVelocity_FR : 1372, 1373, 1374, 1375
 m_suspensionAcceleration_RL : 1376, 1377, 1378, 1379
 m_suspensionAcceleration_RR : 1380, 1381, 1382, 1383
-m_suspensionAcceleration_FR : 1384, 1385, 1386, 1387
-m_suspensionAcceleration_FL : 1388, 1389, 1390, 1391
+m_suspensionAcceleration_FL : 1384, 1385, 1386, 1387
+m_suspensionAcceleration_FR : 1388, 1389, 1390, 1391
 m_wheelSpeed_RL : 1392, 1393, 1394, 1395
 m_wheelSpeed_RR : 1396, 1397, 1398, 1399
-m_wheelSpeed_FR : 1400, 1401, 1402, 1403
-m_wheelSpeed_FL : 1404, 1405, 1406, 1407
+m_wheelSpeed_FL : 1400, 1401, 1402, 1403
+m_wheelSpeed_FR : 1404, 1405, 1406, 1407
 m_wheelSlip_RL : 1408, 1409, 1410, 1411
 m_wheelSlip_RR : 1412, 1413, 1414, 1415
 m_wheelSlip_FL : 1416, 1417, 1418, 1419
