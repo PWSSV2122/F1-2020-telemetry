@@ -2,10 +2,8 @@ package application;
 
 import java.util.concurrent.TimeUnit;
 
-import file_system.L1;
+import contentUpdate.ContentUpdate;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -66,7 +64,8 @@ public class TimingPage {
 		logo_image.setFitHeight(70);
 		logo.getStylesheets().add("application/css/menu_button.css");
 		logo.setOnAction(e -> {Main_menu.window.setScene(Main_menu.Main_menu);
-			Main_menu.window.setTitle("F1 Tracker : Main Menu");});
+			Main_menu.window.setTitle("F1 Tracker : Main Menu");
+			ContentUpdate.TimingPage_refresh = false;});
 		
 		Button Settings = new Button();
 		ImageView Settings_image = new ImageView("images/settings.png");
@@ -89,15 +88,25 @@ public class TimingPage {
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
 		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");});
+			Main_menu.window.setTitle("F1 Tracker : Track Page");
+			ContentUpdate.TimingPage_refresh = false;
+			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");});
+			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+			ContentUpdate.TimingPage_refresh = false;
+			ContentUpdate.SetupBrakes_refresh = true;});
 		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");});
+			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+			ContentUpdate.TimingPage_refresh = false;
+			ContentUpdate.Comparison_refresh = true;});
 		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");});
+			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+			ContentUpdate.TimingPage_refresh = false;
+			ContentUpdate.Graph_refresh = true;});
 		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");});
+			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
+			ContentUpdate.TimingPage_refresh = false;
+			ContentUpdate.LapTime_refresh = true;});
 		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
 			Main_menu.window.setTitle("F1 Tracker : Timing Page");});
 		
@@ -153,34 +162,6 @@ public class TimingPage {
 			test.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>(Colom_names[i].replace(" ", "_")));
 			Tabel.getColumns().addAll(test);
 		}
-		
-//		final ObservableList<Tabel_object> data =
-//		        FXCollections.observableArrayList();
-//		for (int i = 0; i < 22; i++) {
-//			long S3 = Math.round((L1.currentLapTime[i] * 1000) - (L1.sector1TimeInMS[i] * 1000) - (L1.sector2TimeInMS[i] * 1000));
-//			String position = "0";
-//			if (String.valueOf(L1.position.get((byte)i)) != "null") {
-//				position = String.valueOf(L1.position.get((byte)i));
-//			}
-//			String delta = "0:000";
-//			if (String.valueOf(L1.Delta.get(i)) != "null") {
-//				delta = String.valueOf(L1.Delta.get(i));
-//			}
-//			data.add( new Tabel_object(
-//					"P" + position,													//position
-//					L1.name[i],														//player name
-//					MsTo_min_sec_ms(Math.round(L1.currentLapTime[i] * 1000), 0),	//current time
-//					MsTo_min_sec_ms(Math.round(L1.sector1TimeInMS[i] * 1000), 1),	//current S1 time
-//					MsTo_min_sec_ms(Math.round(L1.sector2TimeInMS[i] * 1000), 1),	//current S2 time
-//					MsTo_min_sec_ms(Math.round(S3), 1),								//current S3 time
-//					MsTo_min_sec_ms(Math.round(L1.lastLapTime[i] * 1000), 0),		//last lap time
-//					Tyre(L1.actualTyreCompound[i]),									//witch tyre
-//					pit(L1.pitStatus[i]),											//pit status
-//					String.valueOf(L1.penalties[i]),								//penalties
-//					"+" + delta));													//delta
-//		}
-//		Tabel.setItems(data);
-		
 				
 		top_level.setTop(top_box);
 		top_box.getChildren().addAll(top_pane, H_line);

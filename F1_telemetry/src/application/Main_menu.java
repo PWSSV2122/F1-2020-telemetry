@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
+import data_compute.Historical_lap_data;
 
 public class Main_menu extends Application{
 	public static double[] test = new double[] {1650, 1000};
@@ -93,17 +94,23 @@ public class Main_menu extends Application{
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
 		menubar_buttons[0].setOnAction(e -> {window.setScene(TrackPage_scene);
-			window.setTitle("F1 Tracker : Track Page");});
+			window.setTitle("F1 Tracker : Track Page");
+			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {window.setScene(SetupPage_Brakes_scene);
-			window.setTitle("F1 Tracker : Setup Page Brakes");});
-		menubar_buttons[2].setOnAction(e -> {window.setScene(ComparisonPage_scene);
-			window.setTitle("F1 Tracker : Comparison Page");});
-		menubar_buttons[3].setOnAction(e -> {window.setScene(GraphPage_scene);
-			window.setTitle("F1 Tracker : Graph Page");});
-		menubar_buttons[4].setOnAction(e -> {window.setScene(LapTimePage_scene);
-			window.setTitle("F1 Tracker : Lap Time Page");});
-		menubar_buttons[5].setOnAction(e -> {window.setScene(TimingPage_scene);
-			window.setTitle("F1 Tracker : Timing Page");});
+			window.setTitle("F1 Tracker : Setup Page Brakes");
+			ContentUpdate.SetupBrakes_refresh = true;});
+		menubar_buttons[3].setOnAction(e -> {window.setScene(ComparisonPage_scene);
+			window.setTitle("F1 Tracker : Comparison Page");
+			ContentUpdate.Comparison_refresh = true;});
+		menubar_buttons[4].setOnAction(e -> {window.setScene(GraphPage_scene);
+			window.setTitle("F1 Tracker : Graph Page");
+			ContentUpdate.Graph_refresh = true;});
+		menubar_buttons[5].setOnAction(e -> {window.setScene(LapTimePage_scene);
+			window.setTitle("F1 Tracker : Lap Time Page");
+			ContentUpdate.LapTime_refresh = true;});
+		menubar_buttons[2].setOnAction(e -> {window.setScene(TimingPage_scene);
+			window.setTitle("F1 Tracker : Timing Page");
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
 		left_background.setWidth(111);
@@ -151,17 +158,23 @@ public class Main_menu extends Application{
 		}
 		
 		Content_buttons[0].setOnAction(e -> {window.setScene(TrackPage_scene);
-			window.setTitle("F1 Tracker : Track Page");});
+			window.setTitle("F1 Tracker : Track Page");
+			ContentUpdate.Track_refresh = true;});
 		Content_buttons[1].setOnAction(e -> {window.setScene(SetupPage_Brakes_scene);
-			window.setTitle("F1 Tracker : Setup Page Brakes");});
+			window.setTitle("F1 Tracker : Setup Page Brakes");
+			ContentUpdate.SetupBrakes_refresh = true;});
 		Content_buttons[3].setOnAction(e -> {window.setScene(ComparisonPage_scene);
-			window.setTitle("F1 Tracker : Comparison Page");});
+			window.setTitle("F1 Tracker : Comparison Page");
+			ContentUpdate.Comparison_refresh = true;});
 		Content_buttons[4].setOnAction(e -> {window.setScene(GraphPage_scene);
-			window.setTitle("F1 Tracker : Graph Page");});
+			window.setTitle("F1 Tracker : Graph Page");
+			ContentUpdate.Graph_refresh = true;});
 		Content_buttons[5].setOnAction(e -> {window.setScene(LapTimePage_scene);
-			window.setTitle("F1 Tracker : Lap Time Page");});
+			window.setTitle("F1 Tracker : Lap Time Page");
+			ContentUpdate.LapTime_refresh = true;});
 		Content_buttons[2].setOnAction(e -> {window.setScene(TimingPage_scene);
-			window.setTitle("F1 Tracker : Timing Page");});
+			window.setTitle("F1 Tracker : Timing Page");
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Box box1 = new Box();
 		box1.setHeight(120);
@@ -233,6 +246,12 @@ public class Main_menu extends Application{
 	   new Thread(new Runnable() {
 		    public void run() {
 		    	ContentUpdate.Update();
+		    }
+		}).start();
+	   
+	   new Thread(new Runnable() {
+		    public void run() {
+		    	Historical_lap_data.S1_and_S2();
 		    }
 		}).start();
 	   

@@ -4,8 +4,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import application.LapTimePage;
 import application.TimingPage;
-import application.TimingPage.Tabel_object;
+import data_compute.Historical_lap_data;
 import data_compute.delta;
 import file_system.L1;
 import javafx.collections.FXCollections;
@@ -14,15 +15,20 @@ import javafx.scene.control.skin.TableColumnHeader;
 
 public class ContentUpdate {
 	protected static final TableColumnHeader columnHeader = null;
-	public static boolean TimingPage_refresh = true;
+	public static boolean TimingPage_refresh = false;
+	public static boolean LapTime_refresh = false;
+	public static boolean Graph_refresh = false;
+	public static boolean Comparison_refresh = false;
+	public static boolean SetupBrakes_refresh = false;
+	public static boolean Track_refresh = false;
 	static int delta_refresh = 0;
+	public static int TimingPage_car = 0;
 	
 	public static void Update() {
 		Runnable updateClass = new Runnable() {
 		    public void run() {
 		        if (TimingPage_refresh == true) {
-		        	final ObservableList<Tabel_object> data =
-		    		        FXCollections.observableArrayList();
+		        	final ObservableList<TimingPage.Tabel_object> data = FXCollections.observableArrayList();
 	    			for(int i = 0; i < L1.numActiveCars; i++) {
 	    				L1.car_positions.put((byte) (L1.carPosition[i] - 1), (byte)i);
 	    			}
@@ -61,7 +67,7 @@ public class ContentUpdate {
 		    			if (String.valueOf(L1.Delta.get(position_index)) != "null") {
 		    				delta = String.valueOf(L1.Delta.get(i));
 		    			}
-		    			data.add( new Tabel_object(
+		    			data.add( new TimingPage.Tabel_object(
 		    					"P" + String.valueOf(i + 1),															//position
 		    					L1.name[position_index],																//player name
 		    					TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[position_index] * 1000), 0),	//current time
@@ -78,11 +84,39 @@ public class ContentUpdate {
 		    		TimingPage.Tabel.setItems(data);
 		    		TimingPage.Tabel.refresh();
 		    		//System.out.println(TimingPage.MsTo_min_sec_ms(Math.round(L1.lastLapTime[0] * 1000), 0));
+		        } else if (LapTime_refresh == true) {
+		        	try {
+			        	final ObservableList<LapTimePage.Tabel_object> data = FXCollections.observableArrayList();
+			        	for (int i = Historical_lap_data.starting_lap ; i < Historical_lap_data.lap_num[TimingPage_car]; i++) {
+			        		data.add(new LapTimePage.Tabel_object(
+			        				String.valueOf(i),
+			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.Lap_Times.get(TimingPage_car).get(i + Historical_lap_data.starting_lap + 1)), 0),
+			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.S1_Times.get(TimingPage_car).get(i + Historical_lap_data.starting_lap + 1)), 1),
+			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.S2_Times.get(TimingPage_car).get(i + Historical_lap_data.starting_lap + 1)), 1),
+			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.S3_Times.get(TimingPage_car).get(i + Historical_lap_data.starting_lap + 1)), 1)));
+			        	}
+			        	LapTimePage.Tabel.getItems().clear();
+			        	LapTimePage.Tabel.setItems(data);
+			        	LapTimePage.Tabel.refresh();
+			        	System.out.println("lap times updated");	
+		        	} catch (Exception e) {
+		        		e.printStackTrace();
+		        	}
 		        }
 		    }
 		};
+		ScheduledExecutorService content_update = Executors.newScheduledThreadPool(1);
+		content_update.scheduleAtFixedRate(updateClass, 0, 700, TimeUnit.MILLISECONDS);
+	}
+	
+	public static void dropdown_update() {
+	    String temp = LapTimePage.people.getValue();
+	    LapTimePage.people.getItems().clear();
+	    for (int i = 0; i < L1.numActiveCars; i++) {
+	    	LapTimePage.people.getItems().add(L1.name[i]);
 
-		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-		executor.scheduleAtFixedRate(updateClass, 0, 700, TimeUnit.MILLISECONDS);
+	    }
+	    LapTimePage.people.setValue(temp);
+	    System.out.println("update");
 	}
 }

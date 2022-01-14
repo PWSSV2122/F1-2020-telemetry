@@ -134,4 +134,10 @@ public class L1 {
 	
 	//delta
 	public static HashMap<Integer, String> Delta = new HashMap<>();
+	
+	//historical lap times
+	public static HashMap<Integer, HashMap<Integer, Float>> Lap_Times = new HashMap<Integer, HashMap<Integer, Float>>();
+	public static HashMap<Integer, HashMap<Integer, Float>> S1_Times = new HashMap<Integer, HashMap<Integer, Float>>();
+	public static HashMap<Integer, HashMap<Integer, Float>> S2_Times = new HashMap<Integer, HashMap<Integer, Float>>();
+	public static HashMap<Integer, HashMap<Integer, Float>> S3_Times = new HashMap<Integer, HashMap<Integer, Float>>();
 }

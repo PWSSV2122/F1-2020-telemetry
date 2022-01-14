@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import data_compute.Historical_lap_data;
 import data_compute.delta;
 import file_system.L1;
 import file_system.data_manager;
@@ -177,6 +178,10 @@ public class Packet_recieve {
 				if (PacketId == 2) {
 					for (int i = 0; i < 22; i++) {
 						delta.speed_of_players((float) Data_decode.get("m_lapDistance_" + i), i);
+						if (Historical_lap_data.lap_num[i] != (byte)Data_decode.get("m_currentLapNum_" + i) && (byte) Data_decode.get("m_currentLapNum_" + i) != (byte)0) {
+							Historical_lap_data.Lap_and_S3((byte) Data_decode.get("m_currentLapNum_" + i), i);
+						}
+						Historical_lap_data.lap_num[i] = (byte) Data_decode.get("m_currentLapNum_" + i);
 					}
 				} else if (PacketId == 1) {
 					delta.trackLength = (Short) Data_decode.get("m_trackLength");
