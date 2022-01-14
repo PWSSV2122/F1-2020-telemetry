@@ -130,8 +130,8 @@ public class L1 {
 	public static byte formula = 0;
 	
 	//postion
-	public static HashMap<Byte, Integer> position = new HashMap<>();
+	public static HashMap<Byte, Byte> car_positions = new HashMap<>();
 	
 	//delta
-	public static HashMap<Integer, Float> Delta = new HashMap<>();
+	public static HashMap<Integer, String> Delta = new HashMap<>();
 }

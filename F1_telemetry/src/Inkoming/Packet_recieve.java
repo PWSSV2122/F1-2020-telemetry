@@ -9,6 +9,8 @@ import java.net.DatagramSocket;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import data_compute.delta;
 import file_system.L1;
@@ -20,6 +22,7 @@ public class Packet_recieve {
 	public static boolean recieve_on;
 	public static String[] first_frameIdentifier_name = new String[] {"Car_status", "car_telemetry", "lap_data", "motion"};
 	public static int Player_lap = 0;
+	public static ExecutorService service = Executors.newFixedThreadPool(4);
 	public static void recieve_class() {
 		data_decode();
 		boolean[] first_packet = new boolean[] {true, true, true, true};
@@ -174,9 +177,7 @@ public class Packet_recieve {
 				if (PacketId == 2) {
 					for (int i = 0; i < 22; i++) {
 						delta.speed_of_players((float) Data_decode.get("m_lapDistance_" + i), i);
-						L1.position.put((byte) Data_decode.get("m_carPosition_" + i), i);
 					}
-					delta.delta_time();
 				} else if (PacketId == 1) {
 					delta.trackLength = (Short) Data_decode.get("m_trackLength");
 				}

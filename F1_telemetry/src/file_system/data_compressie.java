@@ -10,7 +10,6 @@ import File_reader.Names;
 public class data_compressie {
 
 	public static void encode(String Packet, HashMap<Integer, HashMap<String, Object>> compression_data) {
-		int time_start = (int) System.currentTimeMillis();
 		String[] data_names_untrimmed = new String[80];
 		HashMap<String, String> data_codes = new HashMap<String, String>();
 		int amount_of_names = 0;
@@ -51,9 +50,6 @@ public class data_compressie {
 			data_names[i] = data_names_temp[i];
 		}
 		
-		int time_end = (int) System.currentTimeMillis();
-		System.out.println("name vars : " + (time_end - time_start));
-		time_start = (int) System.currentTimeMillis();
 		String output = "";
 		for (int i = 0; i < compression_data.size(); i++) {
 			output += data_codes.get("packetid");
@@ -67,13 +63,11 @@ public class data_compressie {
 					Object data = compression_data.get(i+1).get(data_names[o] + 1);
 					if (data.getClass().equals(Byte.class)) {
 						byte[] data_byte = new byte[22];
-						for (int p = 0; p < 22; p++) {
-							data_byte[p] = (byte) compression_data.get(i + 1).get(data_names[o] + p);
-						}
 						byte[] data_byte_compaire = (byte[]) last_data.get(data_names[o]);
 						
 						int change = 0;
 						for (int p = 0; p < 22; p++) {
+							data_byte[p] = (byte) compression_data.get(i + 1).get(data_names[o] + p);
 							if (i != 0 && data_byte[p] == data_byte_compaire[p]) {
 							} else {
 								output += binary_num((byte) p);
@@ -87,13 +81,11 @@ public class data_compressie {
 						}
 					} else if (data.getClass().equals(Float.class)) {
 						float[] data_float = new float[22];
-						for (int p = 0; p < 22; p++) {
-							data_float[p] = (float) compression_data.get(i + 1).get(data_names[o] + p);
-						}
 						float[] data_float_compaire = (float[]) last_data.get(data_names[o]);
 					
 						int change = 0;
 						for (int p = 0; p < 22; p++) {
+							data_float[p] = (float) compression_data.get(i + 1).get(data_names[o] + p);
 							if (i != 0 && data_float[p] == data_float_compaire[p]) {
 							} else {
 								output += binary_num((byte) p);
@@ -107,13 +99,11 @@ public class data_compressie {
 						}
 					} else if (data.getClass().equals(Short.class)) {
 						short[] data_short = new short[22];
+						short[] data_short_compaire = (short[]) last_data.get(data_names[o]);
+						
+						int change = 0;
 						for (int p = 0; p < 22; p++) {
 							data_short[p] = (short) compression_data.get(i + 1).get(data_names[o] + p);
-						}
-						short[] data_short_compaire = (short[]) last_data.get(data_names[o]);
-						int change = 0;
-						
-						for (int p = 0; p < 22; p++) {
 							if (i != 0 && data_short[p] == data_short_compaire[p]) {
 							} else {
 								output += binary_num((byte) p);
@@ -127,13 +117,11 @@ public class data_compressie {
 						}	
 					} else if (data.getClass().equals(String.class)) {
 						String[] data_String = new String[22];
+						String[] data_String_compaire = (String[]) last_data.get(data_names[o]);
+						
+						int change = 0;
 						for (int p = 0; p < 22; p++) {
 							data_String[p] = (String) compression_data.get(i + 1).get(data_names[o] + p);
-						}
-						String[] data_String_compaire = (String[]) last_data.get(data_names[o]);
-						int change = 0;
-						
-						for (int p = 0; p < 22; p++) {
 							if (i != 0 && data_String[p] == data_String_compaire[p]) {
 							} else {
 								output += binary_num((byte) p);
@@ -156,9 +144,6 @@ public class data_compressie {
 				// needs some work
 			}
 		}
-		time_end = (int) System.currentTimeMillis();
-		System.out.println("encode : " + (time_end - time_start));
-		time_start = (int) System.currentTimeMillis();
 		
 		byte[] data = null;
 		if (output.length() % 8 != 0) {
@@ -182,25 +167,27 @@ public class data_compressie {
 		}
 		//System.out.println(data.length);
 		//System.out.println(compression_data.size());
-		time_end = (int) System.currentTimeMillis();
-		System.out.println("to file : " + (time_end - time_start));
 	}
 	static private String binary_num(byte o) {
-		String temp = "";
-		for (int i = 0; i < 8 - String.format("%8s", Integer.toBinaryString(o & 0xFF)).replace(' ', '0').length(); o++) {
-			temp += "0";
+		StringBuilder sb = new StringBuilder("00000000");
+		for (int bit = 0; bit < 8; bit++) {
+			if (((o >> bit) & 1) > 0) {
+				sb.setCharAt(7 - bit, '1');
+			}
 		}
-		temp += String.format("%8s", Integer.toBinaryString(o & 0xFF)).replace(' ', '0');
-		return temp;
+		return sb.toString();
 	}
 	
 	static private String binary_data(byte[] data) {
 		String temp = "";
 		for (int i = 0; i < data.length; i++) {
-			for (int o = 0; o < 8 - String.format("%8s", Integer.toBinaryString(data[i] & 0xFF)).replace(' ', '0').length(); o++) {
-				temp += "0";
+			StringBuilder sb = new StringBuilder("00000000");
+			for (int bit = 0; bit < 8; bit++) {
+				if (((data[i] >> bit) & 1) > 0) {
+					sb.setCharAt(7 - bit, '1');
+				}
 			}
-			temp += String.format("%8s", Integer.toBinaryString(data[i] & 0xFF)).replace(' ', '0');
+			temp += sb.toString();
 		}
 		return temp;
 	}

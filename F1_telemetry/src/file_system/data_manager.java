@@ -84,17 +84,20 @@ public class data_manager {
 					L2.Lap_Data_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-//			if (L2.Lap_Data_packet.size() >= 60) {
-//				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
-//				encode_data.putAll(L2.Lap_Data_packet);
-//				   new Thread(new Runnable() {
-//					    public void run() {
-//							data_compressie.encode("Lap_Data", encode_data);
-//							L1.Lap_Data = L1.Lap_Data + L2.Lap_Data_packet.size();
-//					    }
-//					}).start();
-//				   L2.Lap_Data_packet.clear();
-//			}
+			if (L2.Lap_Data_packet.size() >= 10) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Lap_Data_packet);
+				Packet_recieve.service.submit(new Runnable() {
+					    public void run() {
+							int time_start = (int) System.currentTimeMillis();
+							data_compressie.encode("Lap_Data", encode_data);
+							L1.Lap_Data = L1.Lap_Data + L2.Lap_Data_packet.size();
+							int time_end = (int) System.currentTimeMillis();
+							System.out.println("encode : " + (time_end - time_start));
+					    }
+					});
+				   L2.Lap_Data_packet.clear();
+			}
 		} else if (packetID == 0) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(3, m_frameIdentifier, L2_data_temp_save);
 			for (int i = 0; i < data_temp_save.size(); i++) {
@@ -105,17 +108,20 @@ public class data_manager {
 					L2.Motion_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-//			if (L2.Motion_packet.size() >= 60) {
-//				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
-//				encode_data.putAll(L2.Motion_packet);
-//				new Thread(new Runnable() {
-//				    public void run() {
-//				    	data_compressie.encode("Motion", encode_data);
-//						L1.Motion = L1.Motion + encode_data.size();
-//				    }
-//				}).start();
-//				L2.Motion_packet.clear();
-//			}
+			if (L2.Motion_packet.size() >= 10) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Motion_packet);
+				Packet_recieve.service.submit(new Runnable() {
+				    public void run() {
+				    	int time_start = (int) System.currentTimeMillis();
+				    	data_compressie.encode("Motion", encode_data);
+						L1.Motion = L1.Motion + encode_data.size();
+						int time_end = (int) System.currentTimeMillis();
+						System.out.println("encode : " + (time_end - time_start));
+				    }
+				});
+				L2.Motion_packet.clear();
+			}
 		} else if (packetID == 6) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(1, m_frameIdentifier, L2_data_temp_save);
 			for (int i = 0; i < data_temp_save.size(); i++) {
@@ -126,17 +132,20 @@ public class data_manager {
 					L2.Car_Telemetry_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-//			if (L2.Car_Telemetry_packet.size() >= 60) {
-//				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
-//				encode_data.putAll(L2.Car_Telemetry_packet);
-//				new Thread(new Runnable() {
-//				    public void run() {
-//				    	data_compressie.encode("Car_Telemetry", encode_data);
-//						L1.Car_Telemetry = L1.Car_Telemetry + encode_data.size();
-//				    }
-//				}).start();
-//				L2.Car_Telemetry_packet.clear();
-//			}
+			if (L2.Car_Telemetry_packet.size() >= 10) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Car_Telemetry_packet);
+				Packet_recieve.service.submit(new Runnable() {
+				    public void run() {
+				    	int time_start = (int) System.currentTimeMillis();
+				    	data_compressie.encode("Car_Telemetry", encode_data);
+						L1.Car_Telemetry = L1.Car_Telemetry + encode_data.size();
+						int time_end = (int) System.currentTimeMillis();
+						System.out.println("encode : " + (time_end - time_start));
+				    }
+				});
+				L2.Car_Telemetry_packet.clear();
+			}
 		} else if (packetID == 7) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(0, m_frameIdentifier, L2_data_temp_save);;
 			for (int i = 0; i < data_temp_save.size(); i++) {
@@ -147,17 +156,20 @@ public class data_manager {
 					L2.Car_Status_packet.put(packet_num, data_temp_save.get(i));
 				}
 			}
-//			if (L2.Car_Status_packet.size() >= 60) {
-//				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
-//				encode_data.putAll(L2.Car_Status_packet);
-//				new Thread(new Runnable() {
-//				    public void run() {
-//				    	data_compressie.encode("Car_Status", L2.Car_Status_packet);
-//						L1.Car_Status = L1.Car_Status + encode_data.size();
-//				    }
-//				}).start();
-//				L2.Car_Status_packet.clear();
-//			}
+			if (L2.Car_Status_packet.size() >= 10) {
+				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
+				encode_data.putAll(L2.Car_Status_packet);
+				Packet_recieve.service.submit(new Runnable() {
+				    public void run() {
+				    	int time_start = (int) System.currentTimeMillis();
+				    	data_compressie.encode("Car_Status", L2.Car_Status_packet);
+						L1.Car_Status = L1.Car_Status + encode_data.size();
+						int time_end = (int) System.currentTimeMillis();
+						System.out.println("encode : " + (time_end - time_start));
+				    }
+				});
+				L2.Car_Status_packet.clear();
+			}
 		} else if (packetID == 5) {
 			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Car_Setup_packet.put(L2.Car_Setup_packet.size() + 1, L2_data_temp_save);

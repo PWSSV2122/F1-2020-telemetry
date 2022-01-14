@@ -154,32 +154,32 @@ public class TimingPage {
 			Tabel.getColumns().addAll(test);
 		}
 		
-		final ObservableList<Tabel_object> data =
-		        FXCollections.observableArrayList();
-		for (int i = 0; i < 22; i++) {
-			long S3 = Math.round((L1.currentLapTime[i] * 1000) - (L1.sector1TimeInMS[i] * 1000) - (L1.sector2TimeInMS[i] * 1000));
-			String position = "0";
-			if (String.valueOf(L1.position.get((byte)i)) != "null") {
-				position = String.valueOf(L1.position.get((byte)i));
-			}
-			String delta = "0:000";
-			if (String.valueOf(L1.Delta.get(i)) != "null") {
-				delta = String.valueOf(L1.Delta.get(i));
-			}
-			data.add( new Tabel_object(
-					"P" + position,													//position
-					L1.name[i],														//player name
-					MsTo_min_sec_ms(Math.round(L1.currentLapTime[i] * 1000), 0),	//current time
-					MsTo_min_sec_ms(Math.round(L1.sector1TimeInMS[i] * 1000), 1),	//current S1 time
-					MsTo_min_sec_ms(Math.round(L1.sector2TimeInMS[i] * 1000), 1),	//current S2 time
-					MsTo_min_sec_ms(Math.round(S3), 1),								//current S3 time
-					MsTo_min_sec_ms(Math.round(L1.lastLapTime[i] * 1000), 0),		//last lap time
-					Tyre(L1.actualTyreCompound[i]),									//witch tyre
-					pit(L1.pitStatus[i]),											//pit status
-					String.valueOf(L1.penalties[i]),								//penalties
-					"+" + delta));													//delta
-		}
-		Tabel.setItems(data);
+//		final ObservableList<Tabel_object> data =
+//		        FXCollections.observableArrayList();
+//		for (int i = 0; i < 22; i++) {
+//			long S3 = Math.round((L1.currentLapTime[i] * 1000) - (L1.sector1TimeInMS[i] * 1000) - (L1.sector2TimeInMS[i] * 1000));
+//			String position = "0";
+//			if (String.valueOf(L1.position.get((byte)i)) != "null") {
+//				position = String.valueOf(L1.position.get((byte)i));
+//			}
+//			String delta = "0:000";
+//			if (String.valueOf(L1.Delta.get(i)) != "null") {
+//				delta = String.valueOf(L1.Delta.get(i));
+//			}
+//			data.add( new Tabel_object(
+//					"P" + position,													//position
+//					L1.name[i],														//player name
+//					MsTo_min_sec_ms(Math.round(L1.currentLapTime[i] * 1000), 0),	//current time
+//					MsTo_min_sec_ms(Math.round(L1.sector1TimeInMS[i] * 1000), 1),	//current S1 time
+//					MsTo_min_sec_ms(Math.round(L1.sector2TimeInMS[i] * 1000), 1),	//current S2 time
+//					MsTo_min_sec_ms(Math.round(S3), 1),								//current S3 time
+//					MsTo_min_sec_ms(Math.round(L1.lastLapTime[i] * 1000), 0),		//last lap time
+//					Tyre(L1.actualTyreCompound[i]),									//witch tyre
+//					pit(L1.pitStatus[i]),											//pit status
+//					String.valueOf(L1.penalties[i]),								//penalties
+//					"+" + delta));													//delta
+//		}
+//		Tabel.setItems(data);
 		
 				
 		top_level.setTop(top_box);

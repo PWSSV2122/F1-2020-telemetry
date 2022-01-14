@@ -1,12 +1,12 @@
 package contentUpdate;
 
-import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import application.TimingPage;
 import application.TimingPage.Tabel_object;
+import data_compute.delta;
 import file_system.L1;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +15,7 @@ import javafx.scene.control.skin.TableColumnHeader;
 public class ContentUpdate {
 	protected static final TableColumnHeader columnHeader = null;
 	public static boolean TimingPage_refresh = true;
+	static int delta_refresh = 0;
 	
 	public static void Update() {
 		Runnable updateClass = new Runnable() {
@@ -22,15 +23,14 @@ public class ContentUpdate {
 		        if (TimingPage_refresh == true) {
 		        	final ObservableList<Tabel_object> data =
 		    		        FXCollections.observableArrayList();
-	    			HashMap<Byte, Byte> car_positions = new HashMap<>();
 	    			for(int i = 0; i < L1.numActiveCars; i++) {
-	    				car_positions.put((byte) (L1.carPosition[i] - 1), (byte)i);
+	    				L1.car_positions.put((byte) (L1.carPosition[i] - 1), (byte)i);
 	    			}
 
 		    		for (int i = 0; i < L1.numActiveCars; i++) {	
 		    			int position_index = 0;
 		    			try {
-		    				position_index = car_positions.get((byte)i);
+		    				position_index = L1.car_positions.get((byte)i);
 		    			} catch (Exception e) {
 		    			}
 		    			String[] Sector = new String[3];
@@ -55,10 +55,11 @@ public class ContentUpdate {
 		    					Sector[2] = TimingPage.MsTo_min_sec_ms(Math.round(Math.round(((L1.currentLapTime[position_index] * 1000) - (L1.sector1TimeInMS[position_index]) - (L1.sector2TimeInMS[position_index])))), 1);
 		    				}
 		    			}
+		    			delta.delta_time();
 
 		    			String delta = "0:000";
 		    			if (String.valueOf(L1.Delta.get(position_index)) != "null") {
-		    				delta = String.valueOf(L1.Delta.get(position_index));
+		    				delta = String.valueOf(L1.Delta.get(i));
 		    			}
 		    			data.add( new Tabel_object(
 		    					"P" + String.valueOf(i + 1),															//position
@@ -82,6 +83,6 @@ public class ContentUpdate {
 		};
 
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-		executor.scheduleAtFixedRate(updateClass, 0, 250, TimeUnit.MILLISECONDS);
+		executor.scheduleAtFixedRate(updateClass, 0, 700, TimeUnit.MILLISECONDS);
 	}
 }
