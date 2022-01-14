@@ -33,6 +33,7 @@ public class Main_menu extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) {
+		Names.data_decode();
 		window = primaryStage;
 			
 		BorderPane top_level = new BorderPane();

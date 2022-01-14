@@ -231,12 +231,25 @@ public class TimingPage {
 		long Minutes = TimeUnit.MILLISECONDS.toMinutes(time);
 		long Seconds = TimeUnit.MILLISECONDS.toSeconds(time) % 60;
 		long Miliseconds = time - Minutes * 60000- Seconds * 1000;
+		String time_string = "";
+		if (Seconds <= 9) {
+			time_string += "0" + String.valueOf(Seconds);
+		} else {
+			time_string += String.valueOf(Seconds);
+		}
+		if (Miliseconds <= 9) {
+			time_string += ":00" + String.valueOf(Miliseconds);
+		} else if (Miliseconds <= 99) {
+			time_string += ":0" + String.valueOf(Miliseconds);
+		} else {
+			time_string += ":" + String.valueOf(Miliseconds);
+		}
 		if (format == 1) {
 			if (Minutes == 0) {
-				return String.valueOf(Seconds) + ":" + String.valueOf(Miliseconds);
+				return time_string;
 			}
 		}
-		return String.valueOf(Minutes) + ":" + String.valueOf(Seconds) + ":" + String.valueOf(Miliseconds);
+		return String.valueOf(Minutes) + ":" + time_string;
 	}
 	
 	public static String Tyre(byte actualTyreCompound) {
