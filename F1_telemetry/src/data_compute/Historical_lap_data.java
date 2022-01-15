@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import application.TimingPage;
 import file_system.L1;
 
 public class Historical_lap_data {
@@ -19,8 +20,18 @@ public class Historical_lap_data {
 		    	for (int i = 0; i < 22; i++) {
 		    		if (L1.sector2TimeInMS[0] == 0) {
 			    	} else {
-			    		L1.S1_Times.put(null, null);
-			    		L1.S2_Times.put(null, null);
+			    		HashMap<Integer, Short> temp = new HashMap<Integer, Short>();
+			    		temp.putAll(L1.S1_Times.get(i));
+			    		temp.put((int)lap_num[i], L1.sector1TimeInMS[i]);
+			    		L1.S1_Times.put(i, temp);
+			    		
+			    		HashMap<Integer, Short> temp2 = new HashMap<Integer, Short>();
+			    		temp2.putAll(L1.S2_Times.get(i));
+			    		temp2.put((int)lap_num[i], L1.sector2TimeInMS[i]);
+			    		L1.S2_Times.put(i, temp2);
+			    		
+			    		System.out.println(L1.S2_Times.get(i) + " : " + i);
+			    		System.out.println(starting_lap);
 			    	}
 		    	}
 		    }
@@ -37,16 +48,17 @@ public class Historical_lap_data {
 			System.out.println(starting_lap);
 		}
 		try {
-			float S3 = L1.lastLapTime[car] * 1000 - L1.S1_Times.get(car).get(lap - 1) - L1.S2_Times.get(car).get(lap - 1);
-			HashMap<Integer, Float> temp = new HashMap<Integer, Float>();
+			String S3 = TimingPage.MsTo_min_sec_ms(Math.round(((L1.currentLapTime[car] * 1000) - (L1.sector1TimeInMS[car]) - (L1.sector2TimeInMS[car]))), 1);
+			HashMap<Integer, String> temp = new HashMap<Integer, String>();
 			temp.put(lap - 1, S3);
 			L1.S3_Times.put(car, temp);
 			
-			temp.clear();
-			temp.put(lap - 1, L1.lastLapTime[car]);
-			L1.Lap_Times.put(car, temp);
+			HashMap<Integer, Float> temp2 = new HashMap<Integer, Float>();
+			temp2.put(lap - 1, L1.lastLapTime[car]);
+			L1.Lap_Times.put(car, temp2);
 		} catch (Exception e) {
 			
 		}
+		System.out.println(L1.Lap_Times.get(car));
 	}
 }

@@ -243,10 +243,10 @@ public class LapTimePage {
             this.S2 = new SimpleObjectProperty<>(S2);
             this.S3 = new SimpleObjectProperty<>(S3);
         }
-        public String getPosition() {
+        public String getLap() {
             return Lap.get();
         }        
-        public String getName() {
+        public String getTime() {
             return Time.get();
         }               
         public String getS1() {

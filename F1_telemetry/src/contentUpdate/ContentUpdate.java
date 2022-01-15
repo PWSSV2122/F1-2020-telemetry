@@ -87,18 +87,49 @@ public class ContentUpdate {
 		        } else if (LapTime_refresh == true) {
 		        	try {
 			        	final ObservableList<LapTimePage.Tabel_object> data = FXCollections.observableArrayList();
+			        	String[] Sector = new String[3];
+			        	if (L1.sector1TimeInMS[TimingPage_car] == 0) {
+			    			Sector[0] = TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[TimingPage_car] * 1000), 1);
+			    			Sector[1] = "00:000";
+			    			Sector[2] = "00:000";
+			    		} else if (L1.sector2TimeInMS[TimingPage_car] == 0) {
+			    			Sector[0] = TimingPage.MsTo_min_sec_ms(Math.round(L1.sector1TimeInMS[TimingPage_car]), 1);
+			    			if ((L1.currentLapTime[TimingPage_car] * 1000) - L1.sector1TimeInMS[TimingPage_car] < 0) {
+			    				Sector[1] = "error";
+			    			} else {
+			    				Sector[1] = TimingPage.MsTo_min_sec_ms(Math.round(((L1.currentLapTime[TimingPage_car] * 1000) - L1.sector1TimeInMS[TimingPage_car])), 0);
+			    			}
+			    			Sector[2] = "00:000";
+			    		} else {
+			    			Sector[0] = TimingPage.MsTo_min_sec_ms(Math.round(L1.sector1TimeInMS[TimingPage_car]), 1);
+			    			Sector[1] = TimingPage.MsTo_min_sec_ms(Math.round(L1.sector2TimeInMS[TimingPage_car]), 1);
+			    			if ((L1.currentLapTime[TimingPage_car] * 1000) - (L1.sector1TimeInMS[TimingPage_car]) - (L1.sector2TimeInMS[TimingPage_car]) < 0) {
+			    				Sector[2] = "error";
+			    			} else {
+			    				Sector[2] = TimingPage.MsTo_min_sec_ms(Math.round(((L1.currentLapTime[TimingPage_car] * 1000) - (L1.sector1TimeInMS[TimingPage_car]) - (L1.sector2TimeInMS[TimingPage_car]))), 1);
+			    			}
+			    		}
+			        	//String test = TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[TimingPage_car] * 1000), 0);
+		        		//System.out.println(TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[TimingPage_car] * 1000), 0));
+			        	data.add(new LapTimePage.Tabel_object(
+		        				String.valueOf(Historical_lap_data.lap_num[TimingPage_car]),
+		        				TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[TimingPage_car] * 1000), 0),	//lap time
+		        				Sector[0],
+		        				Sector[1],
+		        				Sector[2])); //s3 time
+			        	LapTimePage.Tabel.getItems().clear();
+			        	LapTimePage.Tabel.setItems(data);
 			        	for (int i = Historical_lap_data.starting_lap ; i < Historical_lap_data.lap_num[TimingPage_car]; i++) {
 			        		data.add(new LapTimePage.Tabel_object(
 			        				String.valueOf(i),
-			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.Lap_Times.get(TimingPage_car).get(i + Historical_lap_data.starting_lap + 1)), 0),
-			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.S1_Times.get(TimingPage_car).get(i + Historical_lap_data.starting_lap + 1)), 1),
-			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.S2_Times.get(TimingPage_car).get(i + Historical_lap_data.starting_lap + 1)), 1),
-			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.S3_Times.get(TimingPage_car).get(i + Historical_lap_data.starting_lap + 1)), 1)));
+			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.Lap_Times.get(TimingPage_car).get(i) * 1000), 0),	//lap time
+			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.S1_Times.get(TimingPage_car).get(i)), 1),	//s1 time
+			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.S2_Times.get(TimingPage_car).get(i)), 1),	//s2 time
+			        				L1.S3_Times.get(TimingPage_car).get(i))); //s3 time
 			        	}
-			        	LapTimePage.Tabel.getItems().clear();
-			        	LapTimePage.Tabel.setItems(data);
-			        	LapTimePage.Tabel.refresh();
-			        	System.out.println("lap times updated");	
+//			        	LapTimePage.Tabel.setItems(data);
+//			        	LapTimePage.Tabel.refresh();
+			        	//System.out.println("lap times updated");	
 		        	} catch (Exception e) {
 		        		e.printStackTrace();
 		        	}
@@ -118,5 +149,12 @@ public class ContentUpdate {
 	    }
 	    LapTimePage.people.setValue(temp);
 	    System.out.println("update");
+	}
+	
+	private static String[] SectorTimes(int car) {
+		
+		
+		return null;
+		
 	}
 }

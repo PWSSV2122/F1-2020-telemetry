@@ -137,7 +137,7 @@ public class L1 {
 	
 	//historical lap times
 	public static HashMap<Integer, HashMap<Integer, Float>> Lap_Times = new HashMap<Integer, HashMap<Integer, Float>>();
-	public static HashMap<Integer, HashMap<Integer, Float>> S1_Times = new HashMap<Integer, HashMap<Integer, Float>>();
-	public static HashMap<Integer, HashMap<Integer, Float>> S2_Times = new HashMap<Integer, HashMap<Integer, Float>>();
-	public static HashMap<Integer, HashMap<Integer, Float>> S3_Times = new HashMap<Integer, HashMap<Integer, Float>>();
+	public static HashMap<Integer, HashMap<Integer, Short>> S1_Times = new HashMap<Integer, HashMap<Integer, Short>>();
+	public static HashMap<Integer, HashMap<Integer, Short>> S2_Times = new HashMap<Integer, HashMap<Integer, Short>>();
+	public static HashMap<Integer, HashMap<Integer, String>> S3_Times = new HashMap<Integer, HashMap<Integer, String>>();
 }
