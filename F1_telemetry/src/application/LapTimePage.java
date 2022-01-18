@@ -26,6 +26,7 @@ public class LapTimePage {
 	
 	public static TableView<Tabel_object> Tabel = new TableView<Tabel_object>();
 	public static ComboBox<String> people = new ComboBox<String>();
+	public static TableColumn<Tabel_object, String> Lap = new TableColumn<Tabel_object, String>("Lap");
 	
 	public static Scene LapTimePage_scene() {
 		Scene LapTimePage;
@@ -176,7 +177,11 @@ public class LapTimePage {
 		Tabel.setTranslateX(1);
 		Content.getChildren().add(Tabel);
 		
-		String[] Colom_names = new String[] {"Lap", "Time", "S1", "S2", "S3"};
+		Lap.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>("Lap".replace(" ", "_")));
+		Tabel.getColumns().add(Lap);
+		Lap.setSortType(TableColumn.SortType.DESCENDING);
+		
+		String[] Colom_names = new String[] {"Time", "S1", "S2", "S3"};
 		for (int i = 0; i < Colom_names.length; i++) {
 			TableColumn<Tabel_object, String> test = new TableColumn<Tabel_object, String>(Colom_names[i]);
 			test.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>(Colom_names[i].replace(" ", "_")));
