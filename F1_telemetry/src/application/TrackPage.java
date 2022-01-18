@@ -1,9 +1,14 @@
 package application;
 
+import application.LapTimePage.Tabel_object;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
@@ -112,6 +117,25 @@ public class TrackPage {
 		ImageView imageView = new ImageView("images/menubar_img.png"); 
 		imageView.setFitWidth(111);
 		imageView.fitHeightProperty().bind(TrackPage.heightProperty());
+		
+		HBox content_top = new HBox();
+		
+		ImageView Track = new ImageView("images/Tracks/" + "Japan" + ".png");
+		Track.setFitHeight(300);
+		Track.setPreserveRatio(true);
+		content_top.getChildren().add(Track);
+		
+		TableView<Tabel_object> players = new TableView<Tabel_object>();
+		players.getStylesheets().add("application/css/TrackPage.css");
+		content_top.getChildren().add(players);
+		
+		String[] Colom_names = new String[] {"", "Player"};
+		for (int i = 0; i < Colom_names.length; i++) {
+			TableColumn<Tabel_object, String> test = new TableColumn<Tabel_object, String>(Colom_names[i]);
+			test.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>(Colom_names[i].replace(" ", "_")));
+			players.getColumns().addAll(test);
+		}
+		
 				
 		top_level.setTop(top_box);
 		top_box.getChildren().addAll(top_pane, H_line);
@@ -125,8 +149,8 @@ public class TrackPage {
 		left_scroll.setContent(left_box2);
 		left_box2.getChildren().addAll(menubar_buttons);
 		
-		//top_level.setCenter(center_pane);
-		//center_pane.getChildren().addAll(background_menu, center_background);
+		top_level.setCenter(center_pane);
+		center_pane.getChildren().addAll(background_menu, center_background, content_top);
 		
 	    left_box2.setOnScroll(new EventHandler<ScrollEvent>() {
 	        @Override
@@ -142,10 +166,12 @@ public class TrackPage {
 	   Main_menu.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
+		   players.setPrefWidth((double)newVal - 130 / 4);
 	   });
 
 	   Main_menu.window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
+	       players.setPrefHeight((double)newVal - 165);
 	   });
 	   
 	   
@@ -155,4 +181,21 @@ public class TrackPage {
 		return TrackPage;
 		
 	}
+	
+	public static class Tabel_object {
+        private final SimpleObjectProperty<String> Img;
+        private final SimpleObjectProperty<String> Name;
+
+        public Tabel_object(String Img, String Name) {
+            this.Img = new SimpleObjectProperty<>(Img);
+            this.Name = new SimpleObjectProperty<>(Name);
+        }
+        public String getImg() {
+            return Img.get();
+        }        
+        public String getName() {
+            return Name.get();
+        }               
+       
+    }
 }

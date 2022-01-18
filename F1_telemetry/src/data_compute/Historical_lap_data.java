@@ -20,15 +20,8 @@ public class Historical_lap_data {
 		    	for (int i = 0; i < 22; i++) {
 		    		if (L1.sector2TimeInMS[0] == 0) {
 			    	} else {
-			    		HashMap<Integer, Short> temp = new HashMap<Integer, Short>();
-			    		temp.putAll(L1.S1_Times.get(i));
-			    		temp.put((int)lap_num[i], L1.sector1TimeInMS[i]);
-			    		L1.S1_Times.put(i, temp);
-			    		
-			    		HashMap<Integer, Short> temp2 = new HashMap<Integer, Short>();
-			    		temp2.putAll(L1.S2_Times.get(i));
-			    		temp2.put((int)lap_num[i], L1.sector2TimeInMS[i]);
-			    		L1.S2_Times.put(i, temp2);
+			    		L1.S1_Times.get(i).put((int) lap_num[i], L1.sector1TimeInMS[i]);
+			    		L1.S2_Times.get(i).put((int) lap_num[i], L1.sector2TimeInMS[i]);
 			    		
 			    		System.out.println(L1.S2_Times.get(i) + " : " + i);
 			    		System.out.println(starting_lap);
