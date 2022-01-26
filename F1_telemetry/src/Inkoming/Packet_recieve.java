@@ -176,6 +176,9 @@ public class Packet_recieve {
 				data_manager.data(Needed_data, (byte) Header.get("packetId"), (float) Header.get("sessionTime"), (int) Header.get("frameIdentifier"));
 				
 				if (PacketId == 2) {
+					for(int i = 0; i < L1.numActiveCars; i++) {
+	    				L1.car_positions.put((byte) (L1.carPosition[i] - 1), (byte)i);
+	    			}
 					for (int i = 0; i < 22; i++) {
 						delta.speed_of_players((float) Data_decode.get("m_lapDistance_" + i), i);
 						if (Historical_lap_data.lap_num[i] != (byte)Data_decode.get("m_currentLapNum_" + i) && (byte) Data_decode.get("m_currentLapNum_" + i) != (byte)0) {

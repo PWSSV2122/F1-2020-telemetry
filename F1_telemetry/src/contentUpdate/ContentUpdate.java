@@ -1,23 +1,21 @@
 package contentUpdate;
 
-import java.security.KeyStore.Entry.Attribute;
-import java.util.Comparator;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import application.LapTimePage;
-import application.LapTimePage.Tabel_object;
 import application.TimingPage;
+import application.TrackPage;
 import data_compute.Historical_lap_data;
 import data_compute.delta;
 import file_system.L1;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.skin.TableColumnHeader;
-import javafx.util.Callback;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class ContentUpdate {
 	protected static final TableColumnHeader columnHeader = null;
@@ -35,9 +33,6 @@ public class ContentUpdate {
 		    public void run() {
 		        if (TimingPage_refresh == true) {
 		        	final ObservableList<TimingPage.Tabel_object> data = FXCollections.observableArrayList();
-	    			for(int i = 0; i < L1.numActiveCars; i++) {
-	    				L1.car_positions.put((byte) (L1.carPosition[i] - 1), (byte)i);
-	    			}
 
 		    		for (int i = 0; i < L1.numActiveCars; i++) {	
 		    			int position_index = 0;
@@ -45,28 +40,8 @@ public class ContentUpdate {
 		    				position_index = L1.car_positions.get((byte)i);
 		    			} catch (Exception e) {
 		    			}
-		    			String[] Sector = new String[3];
-		    			if (L1.sector1TimeInMS[position_index] == 0) {
-		    				Sector[0] = TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[position_index] * 1000), 0);
-		    				Sector[1] = "00:000";
-		    				Sector[2] = "00:000";
-		    			} else if (L1.sector2TimeInMS[position_index] == 0) {
-		    				Sector[0] = TimingPage.MsTo_min_sec_ms(Math.round(L1.sector1TimeInMS[position_index]), 1);
-		    				if ((L1.currentLapTime[position_index] * 1000) - L1.sector1TimeInMS[position_index] < 0) {
-		    					Sector[1] = "error";
-		    				} else {
-		    					Sector[1] = TimingPage.MsTo_min_sec_ms(Math.round(((L1.currentLapTime[position_index] * 1000) - L1.sector1TimeInMS[position_index])), 0);
-		    				}
-		    				Sector[2] = "00:000";
-		    			} else {
-		    				Sector[0] = TimingPage.MsTo_min_sec_ms(Math.round(L1.sector1TimeInMS[position_index]), 1);
-		    				Sector[1] = TimingPage.MsTo_min_sec_ms(Math.round(L1.sector2TimeInMS[position_index]), 1);
-		    				if ((L1.currentLapTime[position_index] * 1000) - (L1.sector1TimeInMS[position_index]) - (L1.sector2TimeInMS[position_index]) < 0) {
-		    					Sector[2] = "error";
-		    				} else {
-		    					Sector[2] = TimingPage.MsTo_min_sec_ms(Math.round(Math.round(((L1.currentLapTime[position_index] * 1000) - (L1.sector1TimeInMS[position_index]) - (L1.sector2TimeInMS[position_index])))), 1);
-		    				}
-		    			}
+		    			String[] Sector = SectorTimes(position_index);
+
 		    			delta.delta_time();
 
 		    			String delta = "0:000";
@@ -89,34 +64,10 @@ public class ContentUpdate {
 		    		TimingPage.Tabel.getItems().clear();
 		    		TimingPage.Tabel.setItems(data);
 		    		TimingPage.Tabel.refresh();
-		    		//System.out.println(TimingPage.MsTo_min_sec_ms(Math.round(L1.lastLapTime[0] * 1000), 0));
 		        } else if (LapTime_refresh == true) {
 		        	try {
 			        	final ObservableList<LapTimePage.Tabel_object> data = FXCollections.observableArrayList();
-			        	String[] Sector = new String[3];
-			        	if (L1.sector1TimeInMS[TimingPage_car] == 0) {
-			    			Sector[0] = TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[TimingPage_car] * 1000), 1);
-			    			Sector[1] = "00:000";
-			    			Sector[2] = "00:000";
-			    		} else if (L1.sector2TimeInMS[TimingPage_car] == 0) {
-			    			Sector[0] = TimingPage.MsTo_min_sec_ms(L1.sector1TimeInMS[TimingPage_car], 1);
-			    			if ((L1.currentLapTime[TimingPage_car] * 1000) - L1.sector1TimeInMS[TimingPage_car] < 0) {
-			    				Sector[1] = "error";
-			    			} else {
-			    				Sector[1] = TimingPage.MsTo_min_sec_ms(Math.round(((L1.currentLapTime[TimingPage_car] * 1000) - L1.sector1TimeInMS[TimingPage_car])), 0);
-			    			}
-			    			Sector[2] = "00:000";
-			    		} else {
-			    			Sector[0] = TimingPage.MsTo_min_sec_ms(L1.sector1TimeInMS[TimingPage_car], 1);
-			    			Sector[1] = TimingPage.MsTo_min_sec_ms(L1.sector2TimeInMS[TimingPage_car], 1);
-			    			if ((L1.currentLapTime[TimingPage_car] * 1000) - (L1.sector1TimeInMS[TimingPage_car]) - (L1.sector2TimeInMS[TimingPage_car]) < 0) {
-			    				Sector[2] = "error";
-			    			} else {
-			    				Sector[2] = TimingPage.MsTo_min_sec_ms(Math.round(((L1.currentLapTime[TimingPage_car] * 1000) - (L1.sector1TimeInMS[TimingPage_car]) - (L1.sector2TimeInMS[TimingPage_car]))), 1);
-			    			}
-			    		}
-			        	//String test = TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[TimingPage_car] * 1000), 0);
-		        		//System.out.println(TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[TimingPage_car] * 1000), 0));
+			        	String[] Sector = SectorTimes(TimingPage_car);
 			        	data.add(new LapTimePage.Tabel_object(
 		        				String.valueOf(Historical_lap_data.lap_num[TimingPage_car]),
 		        				TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[TimingPage_car] * 1000), 0),	//lap time
@@ -128,7 +79,6 @@ public class ContentUpdate {
 			        	LapTimePage.Tabel.setItems(data);
 			        	
 			        	for (int i = Historical_lap_data.starting_lap; i < Historical_lap_data.lap_num[TimingPage_car]; i++) {
-			        		System.out.println(i);
 			        		data.add(new LapTimePage.Tabel_object(
 			        				String.valueOf(Historical_lap_data.lap_num[TimingPage_car] - i),
 			        				TimingPage.MsTo_min_sec_ms(Math.round(L1.Lap_Times.get(TimingPage_car).get(Historical_lap_data.lap_num[TimingPage_car] - i) * 1000), 0),	//lap time
@@ -139,17 +89,67 @@ public class ContentUpdate {
 			        	}
 
 			        	LapTimePage.Lap.setSortType(TableColumn.SortType.ASCENDING);
-//			        	LapTimePage.Tabel.setItems(data);
-//			        	LapTimePage.Tabel.refresh();
-			        	//System.out.println("lap times updated");	
 		        	} catch (Exception e) {
 		        		e.printStackTrace();
 		        	}
+		        } else if (Track_refresh == true) {
+		        	System.out.println(":) : " + L1.numActiveCars);
+		        	final ObservableList<TrackPage.Tabel_object> data = FXCollections.observableArrayList();
+		        	try {
+		        		for (int i = 0; i < L1.numActiveCars; i++) {
+		        			int position_index = 0;
+			    			try {
+			    				position_index = L1.car_positions.get((byte)i);
+			    			} catch (Exception e) {
+			    				e.printStackTrace();
+			    			}
+			    			ImageView Icon = new ImageView("images/Track_icons/" + (i + 1) + ".png");
+			    			Icon.setFitHeight(20);
+			    			Icon.setFitWidth(20);
+		        			data.add(new TrackPage.Tabel_object(
+		        					Icon,
+			        				L1.name[position_index]));
+		        		}
+		        		TrackPage.players.getItems().clear();
+		        		TrackPage.players.setItems(data);
+		        		TrackPage.Track.setImage(new Image("images/Tracks/" + L1.trackId + ".png"));
+		        	} catch (Exception e) {
+		        		e.printStackTrace();
+		        	}
+		        	for (int i = 0; i < 22; i++) {
+		        		if (i >= L1.numActiveCars) {
+		        			TrackPage.Track_Players[i].setVisible(false);
+		        		} else {
+		        			TrackPage.Track_Players[i].setVisible(true);
+		        		}
+		        		
+		    		}
+		        	for (int i = 0; i < L1.numActiveCars; i++) {
+		    			System.out.println("X: " + L1.worldPositionX[i] + " : " + "Y: " + L1.worldPositionY[i]);
+		    			TrackPage.Track_Players[i].setX(L1.worldPositionX[i] + 200);
+		    			TrackPage.Track_Players[i].setY(L1.worldPositionY[i] - 100);
+		    			System.out.println("Done " + "X: " + L1.worldPositionX[i] + " : " + "Y: " + L1.worldPositionY[i]);
+		    		}
 		        }
+		    }
+		};
+		
+		Runnable TrackMap = new Runnable() {
+		    public void run() {
+		    	if (LapTime_refresh == true) {
+		    		for (int i = 0; i < L1.numActiveCars; i++) {
+		    			System.out.println("X: " + L1.worldPositionX[i] + " : " + "Y: " + L1.worldPositionY[i]);
+		    			TrackPage.Track_Players[i].setTranslateX(L1.worldPositionX[i] + 10);
+		    			TrackPage.Track_Players[i].setTranslateY(L1.worldPositionY[i] + 100);
+		    		}
+		    	}
 		    }
 		};
 		ScheduledExecutorService content_update = Executors.newScheduledThreadPool(1);
 		content_update.scheduleAtFixedRate(updateClass, 0, 700, TimeUnit.MILLISECONDS);
+		
+		ScheduledExecutorService TrackMap_update = Executors.newScheduledThreadPool(1);
+		TrackMap_update.scheduleAtFixedRate(TrackMap, 0, 100, TimeUnit.MILLISECONDS);
 	}
 	
 	public static void dropdown_update() {
@@ -164,9 +164,30 @@ public class ContentUpdate {
 	}
 	
 	private static String[] SectorTimes(int car) {
+		String[] Sector = new String[3];
+    	if (L1.sector1TimeInMS[car] == 0) {
+			Sector[0] = TimingPage.MsTo_min_sec_ms(Math.round(L1.currentLapTime[car] * 1000), 1);
+			Sector[1] = "00:000";
+			Sector[2] = "00:000";
+		} else if (L1.sector2TimeInMS[car] == 0) {
+			Sector[0] = TimingPage.MsTo_min_sec_ms(L1.sector1TimeInMS[car], 1);
+			if ((L1.currentLapTime[car] * 1000) - L1.sector1TimeInMS[car] < 0) {
+				Sector[1] = "error";
+			} else {
+				Sector[1] = TimingPage.MsTo_min_sec_ms(Math.round(((L1.currentLapTime[car] * 1000) - L1.sector1TimeInMS[car])), 0);
+			}
+			Sector[2] = "00:000";
+		} else {
+			Sector[0] = TimingPage.MsTo_min_sec_ms(L1.sector1TimeInMS[car], 1);
+			Sector[1] = TimingPage.MsTo_min_sec_ms(L1.sector2TimeInMS[car], 1);
+			if ((L1.currentLapTime[car] * 1000) - (L1.sector1TimeInMS[car]) - (L1.sector2TimeInMS[car]) < 0) {
+				Sector[2] = "error";
+			} else {
+				Sector[2] = TimingPage.MsTo_min_sec_ms(Math.round(((L1.currentLapTime[car] * 1000) - (L1.sector1TimeInMS[car]) - (L1.sector2TimeInMS[car]))), 1);
+			}
+		}
 		
-		
-		return null;
+		return Sector;
 		
 	}
 }

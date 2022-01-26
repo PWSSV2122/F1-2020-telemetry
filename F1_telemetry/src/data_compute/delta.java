@@ -17,18 +17,6 @@ public class delta {
 		HashMap<Integer, Short> temp_save = new HashMap<Integer, Short>();
 		temp_save.put((int) lapDistance, L1.speed[car]);
 		speed_table.put(car, temp_save);
-//		for (double i = 0; i < 0.1; i = i + 0.1) {
-//			String output = "";
-//			output += lap_percentage;
-//			output += " : ";
-//			try {
-//				output += speed_table.get(car).get(lap_percentage);
-//			} catch (Exception e) {
-//				output += "null";
-//			}
-//			output += " : " + lap_percentage + " : " + car + " : " + L1.speed[car];
-//			System.out.println(output);
-//		}
 	}
 	
 	static DecimalFormat df = new DecimalFormat();
