@@ -158,8 +158,6 @@ public class LapTimePage {
 					ContentUpdate.TimingPage_car = i;
 				}
 			}
-			System.out.println(ContentUpdate.TimingPage_car);
-			System.out.println(L1.name[ContentUpdate.TimingPage_car]);
 		});
 		content_bar.getChildren().add(people);
 		Content.getChildren().add(content_bar);

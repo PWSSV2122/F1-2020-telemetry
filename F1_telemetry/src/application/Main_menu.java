@@ -3,6 +3,10 @@ package application;
 import File_reader.Names;
 import Inkoming.Packet_recieve;
 import application.SetupPage.Brakes;
+import application.SetupPage.Suspension;
+import application.SetupPage.Suspension_Geometry;
+import application.SetupPage.Transmission;
+import application.SetupPage.Tyres;
 import contentUpdate.ContentUpdate;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -28,7 +32,7 @@ public class Main_menu extends Application{
 	public static double[] test = new double[] {1650, 1000};
 	
 	public static Stage window;
-	public static Scene Main_menu, ComparisonPage_scene, TrackPage_scene, SetupPage_Brakes_scene, GraphPage_scene, LapTimePage_scene, TimingPage_scene;
+	public static Scene Main_menu, ComparisonPage_scene, TrackPage_scene, GraphPage_scene, LapTimePage_scene, TimingPage_scene, SetupPage_Brakes_scene, SetupPage_Suspension_Geometry_scene, SetupPage_Suspension_scene, SetupPage_Transmission_scene, SetupPage_Tyres_scene;
 	
 	Button button1;
 	
@@ -256,11 +260,16 @@ public class Main_menu extends Application{
 		}).start();
 	   
 	   TrackPage_scene = TrackPage.TrackPage_scene();
-	   SetupPage_Brakes_scene = Brakes.Brakes_scene();
 	   ComparisonPage_scene = ComparisonPage.ComparisonPage_scene();
 	   GraphPage_scene = GraphPage.GraphPage_scene();
 	   LapTimePage_scene = LapTimePage.LapTimePage_scene();
 	   TimingPage_scene = TimingPage.TimingPage_scene();
+	   
+	   SetupPage_Brakes_scene = Brakes.Brakes_scene();
+	   SetupPage_Suspension_Geometry_scene = Suspension_Geometry.Suspension_Geometry_scene();
+	   SetupPage_Suspension_scene = Suspension.Suspension_scene();
+	   SetupPage_Transmission_scene = Transmission.Transmission_scene();
+	   SetupPage_Tyres_scene = Tyres.Tyres_scene();
 		
 		try {
 			//window.setY(257.0);

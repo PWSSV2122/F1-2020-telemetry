@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Tyres {
-	public static Scene Brakes_scene() {
+	public static Scene Tyres_scene() {
 		Scene Tyres;
 		
 		BorderPane top_level = new BorderPane();
