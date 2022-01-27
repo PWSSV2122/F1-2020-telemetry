@@ -257,6 +257,12 @@ public class Main_menu extends Application{
 	   
 	   new Thread(new Runnable() {
 		    public void run() {
+		    	SetupUpdate.Setup_update();;
+		    }
+		}).start();
+	   
+	   new Thread(new Runnable() {
+		    public void run() {
 		    	Historical_lap_data.S1_and_S2();
 		    }
 		}).start();

@@ -13,7 +13,7 @@ public class data_manager {
 	}
 	
 	public static void data(HashMap<String, Object> temp_save, byte packetID, float sessionTime, int m_frameIdentifier){
-		String[] PacketID_name = new String[] {"Motion", "Session", "Lap_Data", "Event", "Participants", "Car_Setup", "Car_Telemetry", "Car_Status", "Final_Classificationt", "Lobby_Info", "Needed"};
+		String[] PacketID_name = new String[] {"Motion", "Session", "Lap_Data", "Event", "Participants", "Car_Setups", "Car_Telemetry", "Car_Status", "Final_Classificationt", "Lobby_Info", "Needed"};
 		String[] data_names_untrimmed = new String[80];
 		HashMap<String, String> data_codes = new HashMap<String, String>();
 		int amount_of_names = 0;

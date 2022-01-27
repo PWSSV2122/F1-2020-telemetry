@@ -168,7 +168,7 @@ public class Tyres {
 		for (int i = 0; i < SetupUpdate.paginas.length; i++) {
 			Pagina.getItems().add(SetupUpdate.paginas[i]);
 		}
-		Pagina.setValue(SetupUpdate.paginas[1]);
+		Pagina.setValue(SetupUpdate.paginas[4]);
 		Pagina.setOnAction(e -> {
 			if (NoChange == false) {
 				NoChange = true;
@@ -199,7 +199,7 @@ public class Tyres {
 					Main_menu.window.setTitle("F1 Tracker : Aerodynamics Tyres");
 				}
 			}
-			Pagina.setValue(SetupUpdate.paginas[1]);
+			Pagina.setValue(SetupUpdate.paginas[4]);
 			NoChange = false;
 		});
 		
