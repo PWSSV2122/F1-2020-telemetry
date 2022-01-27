@@ -140,4 +140,7 @@ public class L1 {
 	public static HashMap<Integer, HashMap<Integer, Short>> S1_Times = new HashMap<Integer, HashMap<Integer, Short>>();
 	public static HashMap<Integer, HashMap<Integer, Short>> S2_Times = new HashMap<Integer, HashMap<Integer, Short>>();
 	public static HashMap<Integer, HashMap<Integer, String>> S3_Times = new HashMap<Integer, HashMap<Integer, String>>();
+	
+	//historcial graph data
+	public static HashMap<Integer, HashMap<Float, HashMap<String, Object>>> Graph_data = new HashMap<Integer, HashMap<Float, HashMap<String, Object>>>();
 }

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import data_compute.Historical_graph_data;
 import data_compute.Historical_lap_data;
 import data_compute.delta;
 import file_system.L1;
@@ -186,8 +187,11 @@ public class Packet_recieve {
 						}
 						Historical_lap_data.lap_num[i] = (byte) Data_decode.get("m_currentLapNum_" + i);
 					}
+					Historical_graph_data.percentage();
 				} else if (PacketId == 1) {
 					delta.trackLength = (Short) Data_decode.get("m_trackLength");
+				} else if (PacketId == 7) {
+					Historical_graph_data.data();
 				}
 			}
 			socket.close();

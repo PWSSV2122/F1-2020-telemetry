@@ -1,8 +1,17 @@
 package application;
 
+import contentUpdate.ContentUpdate;
+import contentUpdate.SetupUpdate;
+import file_system.L1;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
@@ -13,8 +22,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class GraphPage {
+	
+	public static ComboBox<String> people = new ComboBox<String>();
+	static int counter = 0;
+	
 	public static Scene GraphPage_scene() {
 		Scene GraphPage;
 		
@@ -112,6 +126,140 @@ public class GraphPage {
 		ImageView imageView = new ImageView("images/menubar_img.png"); 
 		imageView.setFitWidth(111);
 		imageView.fitHeightProperty().bind(GraphPage.heightProperty());
+		
+		HBox Items = new HBox();
+		Text Graph_Text = new Text("Graph");
+		Graph_Text.setTranslateX(10);
+		Graph_Text.setTranslateY(6);
+		Graph_Text.setStyle("-fx-font: 24 arial;");
+		
+		people.setTranslateX(30);
+		people.setTranslateY(6);
+		people.setPrefWidth(150);
+		people.setOnMouseClicked(e -> {
+			SetupUpdate.dropdown_update();
+		});
+		people.setOnAction(e -> {
+			String name = people.getValue();
+			for (int i = 0; i < L1.name.length; i++) {
+				if (L1.name[i] == name) {
+					SetupUpdate.setup_car = i;
+				}
+			}
+		});
+		
+		Rectangle[] Deviders = new Rectangle[] {new Rectangle(), new Rectangle()};
+		int[] translate = new int[] {20, 40};
+		for (int i = 0; i < Deviders.length; i++) {
+			Deviders[i].setTranslateX(translate[i]);
+			Deviders[i].setHeight(35);
+			Deviders[i].setWidth(1);
+			Deviders[i].setStroke(Color.RED);
+			Deviders[i].setFill(Color.RED);
+		}
+		Items.getChildren().addAll(Graph_Text, Deviders[0], people, Deviders[1]);
+		
+		Rectangle menu_items_underline = new Rectangle();
+		menu_items_underline.setWidth(Main_menu.test[0] - 115);
+		menu_items_underline.setHeight(1);
+		menu_items_underline.setStroke(Color.RED);
+		menu_items_underline.setFill(Color.RED);
+		
+		HBox Selection = new HBox();
+		Selection.setVisible(false);
+		Rectangle spacer_selection = new Rectangle();
+		spacer_selection.setHeight(1);
+		spacer_selection.setWidth(1220);
+		spacer_selection.setVisible(false);
+		
+		StackPane Selection_checkbox = new StackPane();
+		Rectangle Selection_background = new Rectangle();
+		Selection_background.setHeight(1000 - 82);
+		Selection_background.setWidth(250);
+		Selection_background.setStroke(Color.rgb(128, 128, 128, 0.9));
+		Selection_background.setFill(Color.rgb(128, 128, 128, 0.9));
+		
+		Button Selectionmenu_popdown = new Button();
+		Selectionmenu_popdown.getStylesheets().add("application/css/menu_button.css");
+		ImageView Selectionmenu_image_popdown = new ImageView("images/ArrowRight.png");
+		Selectionmenu_image_popdown.setPreserveRatio(true);
+		Selectionmenu_image_popdown.setFitWidth(45);
+		Selectionmenu_popdown.setGraphic(Selectionmenu_image_popdown);
+		Selectionmenu_popdown.setTranslateY(380);
+		
+		VBox CheckBox_stack = new VBox();
+		CheckBox_stack.setTranslateX(10);
+		CheckBox_stack.setTranslateY(220);
+		CheckBox[] CheckBox = new CheckBox[24];
+		String[] Names = new String[] {"Tyre wear Left Rear", "Tyre wear Right Rear", "Tyre wear Left Front", "Tyre wear Right Front", "Throttle Input", "Brake Input",
+				"Speed", "Steering Input", "Fuel Mix", "Fuel In Tank", "Ers Storage", "Ers Mode", "Gear", "Brake Temprature Left Rear", "Brake Temprature Right Rear",
+				"Brake Temprature Left Front", "Brake Temprature Right Front", "Tyre Temprature Left Rear", "Tyre Temprature Rigth Rear", "Tyre Temprature Left Front",
+				"Tyre Temprature Right Front", "Roll", "Pitch", "Yaw"};
+		for (int i = 0; i < Names.length; i++) {
+			CheckBox[i] = new CheckBox(Names[i]);
+			CheckBox[i].getStylesheets().add("application/css/CheckBox.css");
+			CheckBox_stack.getChildren().add(CheckBox[i]);
+			CheckBox[i].setOnAction(e -> {
+				ContentUpdate.Graph_selection[counter] = CheckBox[counter].isSelected();
+			});
+			counter++;
+		}
+		Selection_checkbox.getChildren().addAll(Selection_background, CheckBox_stack);
+		Selection.getChildren().addAll(spacer_selection, Selectionmenu_popdown, Selection_checkbox);
+		
+		HBox Graph = new HBox();
+		Button Selectionmenu_popup = new Button();
+		Selectionmenu_popup.getStylesheets().add("application/css/menu_button.css");
+		ImageView Selectionmenu_image_popup = new ImageView("images/ArrowLeft.png");
+		Selectionmenu_image_popup.setPreserveRatio(true);
+		Selectionmenu_image_popup.setFitWidth(45);
+		Selectionmenu_popup.setGraphic(Selectionmenu_image_popup);
+		Selectionmenu_popup.setOnAction(e -> {
+			Selection.setVisible(true);
+			Selectionmenu_popup.setVisible(false);
+		});
+		Selectionmenu_popdown.setOnAction(e -> {
+			Selection.setVisible(false);
+			Selectionmenu_popup.setVisible(true);
+		});
+		Selectionmenu_popup.setTranslateX(0);
+		Selectionmenu_popup.setTranslateY(380);
+		
+		final NumberAxis xAxis = new NumberAxis(0, 100, 1);
+        final NumberAxis yAxis = new NumberAxis(0, 100, 2);
+        final LineChart<Number,Number> lineChart = new LineChart<Number,Number>(xAxis,yAxis);
+        lineChart.setCreateSymbols(false);
+        lineChart.getXAxis().setTickLabelsVisible(false);
+        lineChart.getXAxis().setOpacity(0);
+        lineChart.getYAxis().setTickLabelsVisible(false);
+        lineChart.getYAxis().setOpacity(0);
+        lineChart.setPrefWidth(1540);
+        lineChart.setMinHeight(870);
+        lineChart.setMaxHeight(870);
+        lineChart.setTranslateX(-20);
+        lineChart.setTranslateY(-8);
+        lineChart.getStylesheets().add("application/css/Graph.css");
+        
+        XYChart.Series series = new XYChart.Series(); 
+        series.setName("No of schools in an year"); 
+                
+        series.getData().add(new XYChart.Data(1, 15)); 
+        series.getData().add(new XYChart.Data(10, 30)); 
+        series.getData().add(new XYChart.Data(20, 60)); 
+        series.getData().add(new XYChart.Data(30, 120)); 
+        series.getData().add(new XYChart.Data(40, 240)); 
+        series.getData().add(new XYChart.Data(50, 300));
+        lineChart.getData().add(series);
+
+		Graph.getChildren().addAll(lineChart, Selectionmenu_popup);
+		
+		
+		StackPane Graph_and_selection = new StackPane();
+		Graph_and_selection.getChildren().addAll(Graph, Selection);
+		
+		VBox content = new VBox();
+		content.getChildren().addAll(Items, menu_items_underline, Graph_and_selection);
+		
 				
 		top_level.setTop(top_box);
 		top_box.getChildren().addAll(top_pane, H_line);
@@ -125,8 +273,8 @@ public class GraphPage {
 		left_scroll.setContent(left_box2);
 		left_box2.getChildren().addAll(menubar_buttons);
 		
-		//top_level.setCenter(center_pane);
-		//center_pane.getChildren().addAll(background_menu, center_background);
+		top_level.setCenter(center_pane);
+		center_pane.getChildren().addAll(background_menu, center_background, content);
 		
 	    left_box2.setOnScroll(new EventHandler<ScrollEvent>() {
 	        @Override

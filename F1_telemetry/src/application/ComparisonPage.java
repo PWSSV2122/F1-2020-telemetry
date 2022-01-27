@@ -3,6 +3,8 @@ package application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
@@ -15,6 +17,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class ComparisonPage {
+	
+	public static ComboBox<String> people = new ComboBox<String>();
+	
 	public static Scene ComparisonPage_scene() {
 		Scene ComparisonPage;
 		
@@ -125,8 +130,8 @@ public class ComparisonPage {
 		left_scroll.setContent(left_box2);
 		left_box2.getChildren().addAll(menubar_buttons);
 		
-		//top_level.setCenter(center_pane);
-		//center_pane.getChildren().addAll(background_menu, center_background);
+		top_level.setCenter(center_pane);
+		center_pane.getChildren().addAll(background_menu, center_background);
 		
 	    left_box2.setOnScroll(new EventHandler<ScrollEvent>() {
 	        @Override

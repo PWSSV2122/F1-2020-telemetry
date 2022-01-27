@@ -4,6 +4,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import application.GraphPage;
+import application.ComparisonPage;
 import application.LapTimePage;
 import application.TimingPage;
 import application.TrackPage;
@@ -24,6 +26,9 @@ public class ContentUpdate {
 	public static boolean Graph_refresh = false;
 	public static boolean Comparison_refresh = false;
 	public static boolean Track_refresh = false;
+	
+	public static boolean[] Graph_selection = new boolean[24];
+	
 	static int delta_refresh = 0;
 	public static int TimingPage_car = 0;
 	
@@ -152,14 +157,28 @@ public class ContentUpdate {
 	}
 	
 	public static void dropdown_update() {
-	    String temp = LapTimePage.people.getValue();
-	    LapTimePage.people.getItems().clear();
-	    for (int i = 0; i < L1.numActiveCars; i++) {
-	    	LapTimePage.people.getItems().add(L1.name[i]);
-
-	    }
-	    LapTimePage.people.setValue(temp);
-	    System.out.println("update");
+		if (LapTime_refresh == true) {
+			String temp = LapTimePage.people.getValue();
+		    LapTimePage.people.getItems().clear();
+		    for (int i = 0; i < L1.numActiveCars; i++) {
+		    	LapTimePage.people.getItems().add(L1.name[i]);
+		    }
+		    LapTimePage.people.setValue(temp);
+		} else if (Graph_refresh == true) {
+			String temp = GraphPage.people.getValue();
+			GraphPage.people.getItems().clear();
+		    for (int i = 0; i < L1.numActiveCars; i++) {
+		    	GraphPage.people.getItems().add(L1.name[i]);
+		    }
+		    GraphPage.people.setValue(temp);
+		} else if (Comparison_refresh) {
+			String temp = ComparisonPage.people.getValue();
+			ComparisonPage.people.getItems().clear();
+		    for (int i = 0; i < L1.numActiveCars; i++) {
+		    	ComparisonPage.people.getItems().add(L1.name[i]);
+		    }
+		    ComparisonPage.people.setValue(temp);
+		}
 	}
 	
 	private static String[] SectorTimes(int car) {
