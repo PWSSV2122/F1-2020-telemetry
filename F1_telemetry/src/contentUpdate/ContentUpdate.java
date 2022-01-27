@@ -23,7 +23,6 @@ public class ContentUpdate {
 	public static boolean LapTime_refresh = false;
 	public static boolean Graph_refresh = false;
 	public static boolean Comparison_refresh = false;
-	public static boolean SetupBrakes_refresh = false;
 	public static boolean Track_refresh = false;
 	static int delta_refresh = 0;
 	public static int TimingPage_car = 0;

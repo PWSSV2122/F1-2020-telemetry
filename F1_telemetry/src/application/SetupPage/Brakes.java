@@ -1,7 +1,5 @@
 package application.SetupPage;
 
-import java.util.concurrent.TimeUnit;
-
 import application.Main_menu;
 import application.settings;
 import contentUpdate.ContentUpdate;
@@ -21,7 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -29,6 +26,12 @@ public class Brakes {
 	
 	public static ComboBox<String> people = new ComboBox<String>();
 	public static Boolean NoChange = false;
+	
+	public static Text Pressure_waarde = new Text(null);
+	public static ProgressBar Pressure_bar = new ProgressBar(0);
+	
+	public static Text Bias_waarde = new Text(null);
+	public static ProgressBar Bias_bar = new ProgressBar(0);
 	
 	public static Scene Brakes_scene() {
 		Scene Brakes;
@@ -91,17 +94,29 @@ public class Brakes {
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
 		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");});
+			Main_menu.window.setTitle("F1 Tracker : Track Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");});
+			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+			SetupUpdate.Brakes_Boolean = false;
+			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");});
+			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Comparison_refresh = true;});
 		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");});
+			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = true;});
 		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");});
+			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.LapTime_refresh = true;});
 		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");});
+			Main_menu.window.setTitle("F1 Tracker : Timing Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
 		left_background.setWidth(111);
@@ -167,11 +182,15 @@ public class Brakes {
 				} else if (Pagina.getValue() == SetupUpdate.paginas[3]) {
 					Main_menu.window.setScene(Main_menu.SetupPage_Transmission_scene);
 					SetupUpdate.Transmission_Boolean = true;
-					Main_menu.window.setTitle("F1 Tracker : Setup Transmissio");
+					Main_menu.window.setTitle("F1 Tracker : Setup Transmission");
 				} else if (Pagina.getValue() == SetupUpdate.paginas[4]) {
 					Main_menu.window.setScene(Main_menu.SetupPage_Tyres_scene);
 					SetupUpdate.Tyres_Boolean = true;
 					Main_menu.window.setTitle("F1 Tracker : Setup Tyres");
+				} else if (Pagina.getValue() == SetupUpdate.paginas[5]) {
+					Main_menu.window.setScene(Main_menu.SetupPage_Aerodynamics_scene);
+					SetupUpdate.Aerodynamics_Boolean = true;
+					Main_menu.window.setTitle("F1 Tracker : Aerodynamics Tyres");
 				}
 			}
 			Pagina.setValue(SetupUpdate.paginas[0]);
@@ -213,11 +232,9 @@ public class Brakes {
 		HBox Pressure = new HBox();
 		Text Pressure_text = new Text("Brake Pressure");
 		Pressure_text.setStyle("-fx-font: 24 arial;");
-		ProgressBar Pressure_bar = new ProgressBar(0);
 		Pressure_bar.setProgress(0.5);
 		Pressure_bar.setPrefHeight(28);
 		Pressure_bar.setPrefWidth(300);
-		Text Pressure_waarde = new Text("70%");
 		Pressure_waarde.setStyle("-fx-font: 24 arial;");
 		Text Pressure_range = new Text("Min 50% - 100% Max");
 		Pressure_range.setStyle("-fx-font: 24 arial;");
@@ -236,11 +253,9 @@ public class Brakes {
 		HBox Bias = new HBox();
 		Text Bias_text = new Text("Front Brake Bias");
 		Bias_text.setStyle("-fx-font: 24 arial;");
-		ProgressBar Bias_bar = new ProgressBar(0);
 		Bias_bar.setProgress(0.5);
 		Bias_bar.setPrefHeight(28);
 		Bias_bar.setPrefWidth(300);
-		Text Bias_waarde = new Text("70%");
 		Bias_waarde.setStyle("-fx-font: 24 arial;");
 		Text Bias_range = new Text("Front 70% - 50% Rear");
 		Bias_range.setStyle("-fx-font: 24 arial;");

@@ -22,19 +22,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class Transmission {
+public class Aerodynamics {
 	
 	public static ComboBox<String> people = new ComboBox<String>();
 	public static Boolean NoChange = false;
 	
-	public static ProgressBar On_Throttle_bar = new ProgressBar(0);
-	public static Text On_Throttle_waarde = new Text(null);
+	public static ProgressBar Front_Wing_bar = new ProgressBar(0);
+	public static Text Front_Wing_waarde = new Text(null);
 	
-	public static ProgressBar Off_Throttle_bar = new ProgressBar(0);
-	public static Text Off_Throttle_waarde = new Text(null);
+	public static ProgressBar Rear_Wing_bar = new ProgressBar(0);
+	public static Text Rear_Wing_waarde = new Text(null);
 	
-	public static Scene Transmission_scene() {
-		Scene Transmission;
+	public static Scene Aerodynamics_scene() {
+		Scene Aerodynamics;
 		
 		BorderPane top_level = new BorderPane();
 		VBox top_box = new VBox();
@@ -49,16 +49,16 @@ public class Transmission {
 		ScrollPane left_scroll = new ScrollPane();
 		left_scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent; ");
 		
-		Transmission = new Scene(top_level, Main_menu.test[0], Main_menu.test[1]);
+		Aerodynamics = new Scene(top_level, Main_menu.test[0], Main_menu.test[1]);
 		
 		Rectangle H_line = new Rectangle();
 		H_line.setHeight(1);
-		H_line.widthProperty().bind(Transmission.widthProperty());
+		H_line.widthProperty().bind(Aerodynamics.widthProperty());
 		H_line.setStroke(Color.RED);
 		
 		Rectangle V_line = new Rectangle();
 		V_line.setWidth(1);
-		V_line.heightProperty().bind(Transmission.heightProperty());
+		V_line.heightProperty().bind(Aerodynamics.heightProperty());
 		V_line.setStroke(Color.RED);
 		
 		Pane top_spacer = new Pane();
@@ -137,11 +137,11 @@ public class Transmission {
 		center_background.setFill(center_menu_gray);
 		
 		ImageView background_menu = new ImageView("images/background.png"); 
-		background_menu.fitHeightProperty().bind(Transmission.heightProperty());
+		background_menu.fitHeightProperty().bind(Aerodynamics.heightProperty());
 		
 		ImageView imageView = new ImageView("images/menubar_img.png"); 
 		imageView.setFitWidth(111);
-		imageView.fitHeightProperty().bind(Transmission.heightProperty());
+		imageView.fitHeightProperty().bind(Aerodynamics.heightProperty());
 		
 		HBox menu_items = new HBox();
 		
@@ -162,11 +162,11 @@ public class Transmission {
 		for (int i = 0; i < SetupUpdate.paginas.length; i++) {
 			Pagina.getItems().add(SetupUpdate.paginas[i]);
 		}
-		Pagina.setValue(SetupUpdate.paginas[3]);
+		Pagina.setValue(SetupUpdate.paginas[5]);
 		Pagina.setOnAction(e -> {
 			if (NoChange == false) {
 				NoChange = true;
-				SetupUpdate.Transmission_Boolean = false;
+				SetupUpdate.Brakes_Boolean = false;
 				if (Pagina.getValue() == SetupUpdate.paginas[0]) {
 					Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
 					SetupUpdate.Brakes_Boolean = true;
@@ -193,7 +193,7 @@ public class Transmission {
 					Main_menu.window.setTitle("F1 Tracker : Aerodynamics Tyres");
 				}
 			}
-			Pagina.setValue(SetupUpdate.paginas[3]);
+			Pagina.setValue(SetupUpdate.paginas[5]);
 			NoChange = false;
 		});
 		
@@ -229,54 +229,54 @@ public class Transmission {
 		menu_items_underline.setStroke(Color.RED);
 		menu_items_underline.setFill(Color.RED);
 		
-		HBox On_Throttle = new HBox();
-		Text On_Throttle_text = new Text("Differential Adjustment On Throttle");
-		On_Throttle_text.setStyle("-fx-font: 24 arial;");
-		On_Throttle_bar.setProgress(0.5);
-		On_Throttle_bar.setPrefHeight(28);
-		On_Throttle_bar.setPrefWidth(300);
-		On_Throttle_waarde.setStyle("-fx-font: 24 arial;");
-		Text On_Throttle_range = new Text("Unlocked 50% - 100% Locked");
-		On_Throttle_range.setStyle("-fx-font: 24 arial;");
+		HBox Front_Wing = new HBox();
+		Text Front_Wing_text = new Text("Front Wing Aero");
+		Front_Wing_text.setStyle("-fx-font: 24 arial;");
+		Front_Wing_bar.setProgress(0.5);
+		Front_Wing_bar.setPrefHeight(28);
+		Front_Wing_bar.setPrefWidth(300);
+		Front_Wing_waarde.setStyle("-fx-font: 24 arial;");
+		Text Front_Wing_range = new Text("Min 1 - 11 Max");
+		Front_Wing_range.setStyle("-fx-font: 24 arial;");
 		
-		Rectangle[] On_Throttle_spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle()};
-		int[] On_Throttle_heigth = new int[] {1, 1, 1};
-		int[] On_Throttle_width = new int[] {100, 10, 100};
-		for (int i = 0; i < On_Throttle_spacers.length; i++) {
-			On_Throttle_spacers[i].setHeight(On_Throttle_heigth[i]);
-			On_Throttle_spacers[i].setWidth(On_Throttle_width[i]);
-			On_Throttle_spacers[i].setVisible(false);
+		Rectangle[] Front_Wing_spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle()};
+		int[] Front_Wing_heigth = new int[] {1, 1, 1};
+		int[] Front_Wing_width = new int[] {100, 10, 100};
+		for (int i = 0; i < Front_Wing_spacers.length; i++) {
+			Front_Wing_spacers[i].setHeight(Front_Wing_heigth[i]);
+			Front_Wing_spacers[i].setWidth(Front_Wing_width[i]);
+			Front_Wing_spacers[i].setVisible(false);
 		}
-		On_Throttle.getChildren().addAll(On_Throttle_text, On_Throttle_spacers[0], On_Throttle_bar, On_Throttle_spacers[1], On_Throttle_waarde, On_Throttle_spacers[2], On_Throttle_range);
-		On_Throttle.setTranslateX(10);
+		Front_Wing.getChildren().addAll(Front_Wing_text, Front_Wing_spacers[0], Front_Wing_bar, Front_Wing_spacers[1], Front_Wing_waarde, Front_Wing_spacers[2], Front_Wing_range);
+		Front_Wing.setTranslateX(10);
 		
-		HBox Off_Throttle = new HBox();
-		Text Off_Throttle_text = new Text("Differential Adjustment Off Throttle");
-		Off_Throttle_text.setStyle("-fx-font: 24 arial;");
-		Off_Throttle_bar.setProgress(0.5);
-		Off_Throttle_bar.setPrefHeight(28);
-		Off_Throttle_bar.setPrefWidth(300);
-		Off_Throttle_waarde.setStyle("-fx-font: 24 arial;");
-		Text Off_Throttle_range = new Text("Unlocked 50% - 100% Locked");
-		Off_Throttle_range.setStyle("-fx-font: 24 arial;");
+		HBox Rear_Wing = new HBox();
+		Text Rear_Wing_text = new Text("Rear Wing Aero");
+		Rear_Wing_text.setStyle("-fx-font: 24 arial;");
+		Rear_Wing_bar.setProgress(0.5);
+		Rear_Wing_bar.setPrefHeight(28);
+		Rear_Wing_bar.setPrefWidth(300);
+		Rear_Wing_waarde.setStyle("-fx-font: 24 arial;");
+		Text Rear_Wing_range = new Text("Min 1 - 11 Max");
+		Rear_Wing_range.setStyle("-fx-font: 24 arial;");
 		
-		Rectangle[] Off_Throttle_spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle()};
-		int[] Off_Throttle_heigth = new int[] {1, 1, 1};
-		int[] Off_Throttle_width = new int[] {99, 10, 100};
-		for (int i = 0; i < Off_Throttle_spacers.length; i++) {
-			Off_Throttle_spacers[i].setHeight(Off_Throttle_heigth[i]);
-			Off_Throttle_spacers[i].setWidth(Off_Throttle_width[i]);
-			Off_Throttle_spacers[i].setVisible(false);
+		Rectangle[] Rear_Wing_spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle()};
+		int[] Rear_Wing_heigth = new int[] {1, 1, 1};
+		int[] Rear_Wing_width = new int[] {104, 10, 100};
+		for (int i = 0; i < Rear_Wing_spacers.length; i++) {
+			Rear_Wing_spacers[i].setHeight(Rear_Wing_heigth[i]);
+			Rear_Wing_spacers[i].setWidth(Rear_Wing_width[i]);
+			Rear_Wing_spacers[i].setVisible(false);
 		}
-		Off_Throttle.getChildren().addAll(Off_Throttle_text, Off_Throttle_spacers[0], Off_Throttle_bar, Off_Throttle_spacers[1], Off_Throttle_waarde, Off_Throttle_spacers[2], Off_Throttle_range);
-		Off_Throttle.setTranslateX(10);
+		Rear_Wing.getChildren().addAll(Rear_Wing_text, Rear_Wing_spacers[0], Rear_Wing_bar, Rear_Wing_spacers[1], Rear_Wing_waarde, Rear_Wing_spacers[2], Rear_Wing_range);
+		Rear_Wing.setTranslateX(10);
 		
 		HBox Image = new HBox();
 		Rectangle Image_spacer = new Rectangle();
 		Image_spacer.setHeight(1);
 		Image_spacer.setWidth(400);
 		Image_spacer.setVisible(false);
-		ImageView Brake_image = new ImageView("images/setup/Transmission.png");
+		ImageView Brake_image = new ImageView("images/setup/Aerodynamics.png");
 		Brake_image.setPreserveRatio(true);
 		Brake_image.setFitWidth(1000);
 		Image.getChildren().addAll(Image_spacer, Brake_image);
@@ -292,7 +292,7 @@ public class Transmission {
 			spacers[i].setWidth(width[i]);
 			spacers[i].setVisible(false);
 		}
-		Items.getChildren().addAll(menu_items, menu_items_underline ,spacers[0], On_Throttle, spacers[1], Off_Throttle, spacers[2], Image);
+		Items.getChildren().addAll(menu_items, menu_items_underline ,spacers[0], Front_Wing, spacers[1], Rear_Wing, spacers[2], Image);
 				
 		top_level.setTop(top_box);
 		top_box.getChildren().addAll(top_pane, H_line);
@@ -333,7 +333,7 @@ public class Transmission {
 //		BorderPane top_level = new BorderPane();
 		top_level.setTop(top_box);
 		top_level.setLeft(left_box);
-		return Transmission;
+		return Aerodynamics;
 		
 	}
 }

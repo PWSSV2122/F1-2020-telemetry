@@ -3,6 +3,7 @@ package application;
 import java.util.concurrent.TimeUnit;
 
 import contentUpdate.ContentUpdate;
+import contentUpdate.SetupUpdate;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -94,7 +95,7 @@ public class TimingPage {
 		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
 			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
 			ContentUpdate.TimingPage_refresh = false;
-			ContentUpdate.SetupBrakes_refresh = true;});
+			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
 			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
 			ContentUpdate.TimingPage_refresh = false;

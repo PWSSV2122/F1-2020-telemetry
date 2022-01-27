@@ -2,12 +2,14 @@ package application;
 	
 import File_reader.Names;
 import Inkoming.Packet_recieve;
+import application.SetupPage.Aerodynamics;
 import application.SetupPage.Brakes;
 import application.SetupPage.Suspension;
 import application.SetupPage.Suspension_Geometry;
 import application.SetupPage.Transmission;
 import application.SetupPage.Tyres;
 import contentUpdate.ContentUpdate;
+import contentUpdate.SetupUpdate;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -32,7 +34,7 @@ public class Main_menu extends Application{
 	public static double[] test = new double[] {1650, 1000};
 	
 	public static Stage window;
-	public static Scene Main_menu, ComparisonPage_scene, TrackPage_scene, GraphPage_scene, LapTimePage_scene, TimingPage_scene, SetupPage_Brakes_scene, SetupPage_Suspension_Geometry_scene, SetupPage_Suspension_scene, SetupPage_Transmission_scene, SetupPage_Tyres_scene;
+	public static Scene Main_menu, ComparisonPage_scene, TrackPage_scene, GraphPage_scene, LapTimePage_scene, TimingPage_scene, SetupPage_Brakes_scene, SetupPage_Suspension_Geometry_scene, SetupPage_Suspension_scene, SetupPage_Transmission_scene, SetupPage_Tyres_scene, SetupPage_Aerodynamics_scene;
 	
 	Button button1;
 	
@@ -102,7 +104,7 @@ public class Main_menu extends Application{
 			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {window.setScene(SetupPage_Brakes_scene);
 			window.setTitle("F1 Tracker : Setup Page Brakes");
-			ContentUpdate.SetupBrakes_refresh = true;});
+			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[3].setOnAction(e -> {window.setScene(ComparisonPage_scene);
 			window.setTitle("F1 Tracker : Comparison Page");
 			ContentUpdate.Comparison_refresh = true;});
@@ -166,7 +168,7 @@ public class Main_menu extends Application{
 			ContentUpdate.Track_refresh = true;});
 		Content_buttons[1].setOnAction(e -> {window.setScene(SetupPage_Brakes_scene);
 			window.setTitle("F1 Tracker : Setup Page Brakes");
-			ContentUpdate.SetupBrakes_refresh = true;});
+			SetupUpdate.Brakes_Boolean = true;});
 		Content_buttons[3].setOnAction(e -> {window.setScene(ComparisonPage_scene);
 			window.setTitle("F1 Tracker : Comparison Page");
 			ContentUpdate.Comparison_refresh = true;});
@@ -270,6 +272,7 @@ public class Main_menu extends Application{
 	   SetupPage_Suspension_scene = Suspension.Suspension_scene();
 	   SetupPage_Transmission_scene = Transmission.Transmission_scene();
 	   SetupPage_Tyres_scene = Tyres.Tyres_scene();
+	   SetupPage_Aerodynamics_scene = Aerodynamics.Aerodynamics_scene();
 		
 		try {
 			//window.setY(257.0);
