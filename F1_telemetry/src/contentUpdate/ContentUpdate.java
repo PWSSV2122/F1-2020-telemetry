@@ -1,5 +1,8 @@
 package contentUpdate;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +17,7 @@ import data_compute.delta;
 import file_system.L1;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.image.Image;
@@ -31,6 +35,7 @@ public class ContentUpdate {
 	
 	static int delta_refresh = 0;
 	public static int TimingPage_car = 0;
+	public static int GraphPage_car = 0;
 	
 	public static void Update() {
 		Runnable updateClass = new Runnable() {

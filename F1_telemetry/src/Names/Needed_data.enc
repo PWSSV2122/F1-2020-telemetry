@@ -72,3 +72,4 @@ numActiveCars : 01011111 : Participants
 trackId : 01100000 : Session
 sessionType : 01100001 : Session
 formula : 01100010 : Session
+fuelCapacity_ : 01100011 : Car_Status

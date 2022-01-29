@@ -12,11 +12,15 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import application.GraphPage;
+import contentUpdate.ContentUpdate;
 import data_compute.Historical_graph_data;
 import data_compute.Historical_lap_data;
 import data_compute.delta;
 import file_system.L1;
 import file_system.data_manager;
+import javafx.application.Platform;
+import javafx.scene.chart.XYChart;
 
 import java.nio.ByteBuffer;
 
@@ -184,8 +188,30 @@ public class Packet_recieve {
 						delta.speed_of_players((float) Data_decode.get("m_lapDistance_" + i), i);
 						if (Historical_lap_data.lap_num[i] != (byte)Data_decode.get("m_currentLapNum_" + i) && (byte) Data_decode.get("m_currentLapNum_" + i) != (byte)0) {
 							Historical_lap_data.Lap_and_S3((byte) Data_decode.get("m_currentLapNum_" + i), i);
+							if (i == ContentUpdate.GraphPage_car) {
+								try {
+									for (int o = 0; o < 24; o++) {
+										final int p = o;
+										Platform.runLater(new Runnable() {
+										    @Override
+										    public void run() {
+										    	GraphPage.series[p].getData().clear();
+										    }
+										});
+									}
+									Historical_graph_data.laatste_percentage[ContentUpdate.GraphPage_car] = 0;
+								} catch (Exception p) {
+								}
+							}
 						}
 						Historical_lap_data.lap_num[i] = (byte) Data_decode.get("m_currentLapNum_" + i);
+					}
+					if (Historical_lap_data.lap_num[ContentUpdate.GraphPage_car] != (byte)Data_decode.get("m_currentLapNum_" + ContentUpdate.GraphPage_car)) {
+						for (int i = 0; i < 24; i++) {
+							GraphPage.series[i].getData().clear();
+						}
+						Historical_graph_data.laatste_percentage[ContentUpdate.GraphPage_car] = 0;
+						System.out.println(":L");
 					}
 					Historical_graph_data.percentage();
 				} else if (PacketId == 1) {
@@ -204,7 +230,7 @@ public class Packet_recieve {
 			"Final_Classification_Packet", "Lobby_Info_Packet", "Needed_data"};
 	static HashMap<String, HashMap<Integer, String>> Packet_names = new HashMap<String, HashMap<Integer, String>>();
 	static HashMap<String, HashMap<Integer, int[]>> Packet_byte_array = new HashMap<String, HashMap<Integer, int[]>>();;
-	static String[] Needed_data_names = new String[74];
+	static String[] Needed_data_names = new String[75];
 	static int[] repeats = new int[10];
 	private static void data_decode() {
 		String Line;

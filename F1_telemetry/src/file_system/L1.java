@@ -1,6 +1,7 @@
 package file_system;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class L1 {
 	//compression data
@@ -55,6 +56,7 @@ public class L1 {
 	public static byte[] visualTyreCompound = new byte[22];
 	public static byte[] fuelMix = new byte[22];
 	public static float[] fuelInTank = new float[22];
+	public static float[] fuelCapacity = new float[22];
 	public static float[] ersStoreEnergy = new float[22];
 	public static byte[] ersDeployMode = new byte[22];
 	public static byte[] tyresWear_RL = new byte[22];
@@ -142,5 +144,5 @@ public class L1 {
 	public static HashMap<Integer, HashMap<Integer, String>> S3_Times = new HashMap<Integer, HashMap<Integer, String>>();
 	
 	//historcial graph data
-	public static HashMap<Integer, HashMap<Float, HashMap<String, Object>>> Graph_data = new HashMap<Integer, HashMap<Float, HashMap<String, Object>>>();
+	public static HashMap<Integer, HashMap<Integer, HashMap<String, Object>>> Graph_data = new HashMap<Integer, HashMap<Integer, HashMap<String, Object>>>();
 }

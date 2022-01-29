@@ -1,11 +1,10 @@
 package application;
 
 import contentUpdate.ContentUpdate;
-import contentUpdate.SetupUpdate;
 import file_system.L1;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -27,7 +26,16 @@ import javafx.scene.text.Text;
 public class GraphPage {
 	
 	public static ComboBox<String> people = new ComboBox<String>();
-	static int counter = 0;
+	
+	public static String[] Names = new String[] {"Tyre wear Left Rear", "Tyre wear Right Rear", "Tyre wear Left Front", "Tyre wear Right Front", "Throttle Input", "Brake Input",
+			"Speed", "Steering Input", "Fuel Mix", "Fuel In Tank", "Ers Storage", "Ers Mode", "Gear", "Brake Temprature Left Rear", "Brake Temprature Right Rear",
+			"Brake Temprature Left Front", "Brake Temprature Right Front", "Tyre Temprature Left Rear", "Tyre Temprature Rigth Rear", "Tyre Temprature Left Front",
+			"Tyre Temprature Right Front", "Roll", "Pitch", "Yaw"};
+	
+	public static NumberAxis xAxis = new NumberAxis(0, 10000, 100);
+	public static NumberAxis yAxis = new NumberAxis(0, 100, 2);
+	public static LineChart<Number,Number> lineChart = new LineChart<Number,Number>(xAxis,yAxis);
+	public static XYChart.Series[] series = new XYChart.Series[24];
 	
 	public static Scene GraphPage_scene() {
 		Scene GraphPage;
@@ -137,15 +145,16 @@ public class GraphPage {
 		people.setTranslateY(6);
 		people.setPrefWidth(150);
 		people.setOnMouseClicked(e -> {
-			SetupUpdate.dropdown_update();
+			ContentUpdate.dropdown_update();
 		});
 		people.setOnAction(e -> {
 			String name = people.getValue();
 			for (int i = 0; i < L1.name.length; i++) {
 				if (L1.name[i] == name) {
-					SetupUpdate.setup_car = i;
+					ContentUpdate.GraphPage_car = i;
 				}
 			}
+			delete_graph_data();
 		});
 		
 		Rectangle[] Deviders = new Rectangle[] {new Rectangle(), new Rectangle()};
@@ -191,19 +200,108 @@ public class GraphPage {
 		CheckBox_stack.setTranslateX(10);
 		CheckBox_stack.setTranslateY(220);
 		CheckBox[] CheckBox = new CheckBox[24];
-		String[] Names = new String[] {"Tyre wear Left Rear", "Tyre wear Right Rear", "Tyre wear Left Front", "Tyre wear Right Front", "Throttle Input", "Brake Input",
-				"Speed", "Steering Input", "Fuel Mix", "Fuel In Tank", "Ers Storage", "Ers Mode", "Gear", "Brake Temprature Left Rear", "Brake Temprature Right Rear",
-				"Brake Temprature Left Front", "Brake Temprature Right Front", "Tyre Temprature Left Rear", "Tyre Temprature Rigth Rear", "Tyre Temprature Left Front",
-				"Tyre Temprature Right Front", "Roll", "Pitch", "Yaw"};
 		for (int i = 0; i < Names.length; i++) {
 			CheckBox[i] = new CheckBox(Names[i]);
 			CheckBox[i].getStylesheets().add("application/css/CheckBox.css");
 			CheckBox_stack.getChildren().add(CheckBox[i]);
-			CheckBox[i].setOnAction(e -> {
-				ContentUpdate.Graph_selection[counter] = CheckBox[counter].isSelected();
-			});
-			counter++;
 		}
+		CheckBox[0].setOnAction(e -> {
+			ContentUpdate.Graph_selection[0] = CheckBox[0].isSelected();
+			series[0].getNode().setVisible(CheckBox[0].isSelected());
+		});
+		CheckBox[1].setOnAction(e -> {
+			ContentUpdate.Graph_selection[1] = CheckBox[1].isSelected();
+			series[1].getNode().setVisible(CheckBox[1].isSelected());
+		});
+		CheckBox[2].setOnAction(e -> {
+			ContentUpdate.Graph_selection[2] = CheckBox[2].isSelected();
+			series[2].getNode().setVisible(CheckBox[2].isSelected());
+		});
+		CheckBox[3].setOnAction(e -> {
+			ContentUpdate.Graph_selection[3] = CheckBox[3].isSelected();
+			series[3].getNode().setVisible(CheckBox[3].isSelected());
+		});
+		CheckBox[4].setOnAction(e -> {
+			ContentUpdate.Graph_selection[4] = CheckBox[4].isSelected();
+			series[4].getNode().setVisible(CheckBox[4].isSelected());
+		});
+		CheckBox[5].setOnAction(e -> {
+			ContentUpdate.Graph_selection[5] = CheckBox[5].isSelected();
+			series[5].getNode().setVisible(CheckBox[5].isSelected());
+		});
+		CheckBox[6].setOnAction(e -> {
+			ContentUpdate.Graph_selection[6] = CheckBox[6].isSelected();
+			series[6].getNode().setVisible(CheckBox[6].isSelected());
+		});
+		CheckBox[7].setOnAction(e -> {
+			ContentUpdate.Graph_selection[7] = CheckBox[7].isSelected();
+			series[7].getNode().setVisible(CheckBox[7].isSelected());
+		});
+		CheckBox[8].setOnAction(e -> {
+			ContentUpdate.Graph_selection[8] = CheckBox[8].isSelected();
+			series[8].getNode().setVisible(CheckBox[8].isSelected());
+		});
+		CheckBox[9].setOnAction(e -> {
+			ContentUpdate.Graph_selection[9] = CheckBox[9].isSelected();
+			series[9].getNode().setVisible(CheckBox[9].isSelected());
+		});
+		CheckBox[10].setOnAction(e -> {
+			ContentUpdate.Graph_selection[10] = CheckBox[10].isSelected();
+			series[10].getNode().setVisible(CheckBox[10].isSelected());
+		});
+		CheckBox[11].setOnAction(e -> {
+			ContentUpdate.Graph_selection[11] = CheckBox[11].isSelected();
+			series[11].getNode().setVisible(CheckBox[11].isSelected());
+		});
+		CheckBox[12].setOnAction(e -> {
+			ContentUpdate.Graph_selection[12] = CheckBox[12].isSelected();
+			series[12].getNode().setVisible(CheckBox[12].isSelected());
+		});
+		CheckBox[13].setOnAction(e -> {
+			ContentUpdate.Graph_selection[13] = CheckBox[13].isSelected();
+			series[13].getNode().setVisible(CheckBox[13].isSelected());
+		});
+		CheckBox[14].setOnAction(e -> {
+			ContentUpdate.Graph_selection[14] = CheckBox[14].isSelected();
+			series[14].getNode().setVisible(CheckBox[14].isSelected());
+		});
+		CheckBox[15].setOnAction(e -> {
+			ContentUpdate.Graph_selection[15] = CheckBox[15].isSelected();
+			series[15].getNode().setVisible(CheckBox[15].isSelected());
+		});
+		CheckBox[16].setOnAction(e -> {
+			ContentUpdate.Graph_selection[16] = CheckBox[16].isSelected();
+			series[16].getNode().setVisible(CheckBox[16].isSelected());
+		});
+		CheckBox[17].setOnAction(e -> {
+			ContentUpdate.Graph_selection[17] = CheckBox[17].isSelected();
+			series[17].getNode().setVisible(CheckBox[17].isSelected());
+		});
+		CheckBox[18].setOnAction(e -> {
+			ContentUpdate.Graph_selection[18] = CheckBox[18].isSelected();
+			series[18].getNode().setVisible(CheckBox[18].isSelected());
+		});
+		CheckBox[19].setOnAction(e -> {
+			ContentUpdate.Graph_selection[19] = CheckBox[19].isSelected();
+			series[19].getNode().setVisible(CheckBox[19].isSelected());
+		});
+		CheckBox[20].setOnAction(e -> {
+			ContentUpdate.Graph_selection[20] = CheckBox[20].isSelected();
+			series[20].getNode().setVisible(CheckBox[20].isSelected());
+		});
+		CheckBox[21].setOnAction(e -> {
+			ContentUpdate.Graph_selection[21] = CheckBox[21].isSelected();
+			series[21].getNode().setVisible(CheckBox[21].isSelected());
+		});
+		CheckBox[22].setOnAction(e -> {
+			ContentUpdate.Graph_selection[22] = CheckBox[22].isSelected();
+			series[22].getNode().setVisible(CheckBox[22].isSelected());
+		});
+		CheckBox[23].setOnAction(e -> {
+			ContentUpdate.Graph_selection[23] = CheckBox[23].isSelected();
+			series[23].getNode().setVisible(CheckBox[23].isSelected());
+		});
+		
 		Selection_checkbox.getChildren().addAll(Selection_background, CheckBox_stack);
 		Selection.getChildren().addAll(spacer_selection, Selectionmenu_popdown, Selection_checkbox);
 		
@@ -225,9 +323,6 @@ public class GraphPage {
 		Selectionmenu_popup.setTranslateX(0);
 		Selectionmenu_popup.setTranslateY(380);
 		
-		final NumberAxis xAxis = new NumberAxis(0, 100, 1);
-        final NumberAxis yAxis = new NumberAxis(0, 100, 2);
-        final LineChart<Number,Number> lineChart = new LineChart<Number,Number>(xAxis,yAxis);
         lineChart.setCreateSymbols(false);
         lineChart.getXAxis().setTickLabelsVisible(false);
         lineChart.getXAxis().setOpacity(0);
@@ -240,16 +335,12 @@ public class GraphPage {
         lineChart.setTranslateY(-8);
         lineChart.getStylesheets().add("application/css/Graph.css");
         
-        XYChart.Series series = new XYChart.Series(); 
-        series.setName("No of schools in an year"); 
-                
-        series.getData().add(new XYChart.Data(1, 15)); 
-        series.getData().add(new XYChart.Data(10, 30)); 
-        series.getData().add(new XYChart.Data(20, 60)); 
-        series.getData().add(new XYChart.Data(30, 120)); 
-        series.getData().add(new XYChart.Data(40, 240)); 
-        series.getData().add(new XYChart.Data(50, 300));
-        lineChart.getData().add(series);
+		for (int i = 0; i< 24; i++) {
+			series[i] = new XYChart.Series();
+			series[i].setName(Names[i]);
+			lineChart.getData().add(series[i]);
+			series[i].getNode().setVisible(false);
+		}
 
 		Graph.getChildren().addAll(lineChart, Selectionmenu_popup);
 		
@@ -302,5 +393,15 @@ public class GraphPage {
 		top_level.setLeft(left_box);
 		return GraphPage;
 		
+	}
+	private static void delete_graph_data() {
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	for (int o = 0; o < 24; o++) {
+					GraphPage.series[o].getData().clear();
+				}
+		    }
+		});
 	}
 }

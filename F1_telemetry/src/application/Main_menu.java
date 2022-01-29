@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
 import data_compute.Historical_lap_data;
+import file_system.L1;
 
 public class Main_menu extends Application{
 	public static double[] test = new double[] {1650, 1000};
