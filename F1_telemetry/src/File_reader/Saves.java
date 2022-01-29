@@ -31,7 +31,7 @@ public class Saves {
 	    } catch (FileNotFoundException e) {
 	      e.printStackTrace();
 	    }
-		return null;
+		return data;
 	}
 
 	public static void write(String[] save) {

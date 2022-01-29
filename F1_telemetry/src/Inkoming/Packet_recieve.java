@@ -21,8 +21,6 @@ import data_compute.delta;
 import file_system.L1;
 import file_system.data_manager;
 import javafx.application.Platform;
-import javafx.scene.chart.XYChart;
-
 import java.nio.ByteBuffer;
 
 public class Packet_recieve {
@@ -35,7 +33,7 @@ public class Packet_recieve {
 		boolean[] first_packet = new boolean[] {true, true, true, true};
 		int[] packetid = new int[] {7, 6, 2, 0};
 		try {
-			DatagramSocket socket = new DatagramSocket(20777); //var
+			DatagramSocket socket = new DatagramSocket(Settings.Settings_var.Poort); //var
 			while (recieve_on == true) {
 				byte[] test = new byte[2000];
 				DatagramPacket response = new DatagramPacket(test, test.length);

@@ -40,6 +40,7 @@ public class Main_menu extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) {
+		File_reader.settings.read();
 		Names.data_decode();
 		window = primaryStage;
 			
@@ -294,6 +295,6 @@ public class Main_menu extends Application{
 	}
 	
 	public void PreferenceSave() {
-		
+		File_reader.settings.write();
 	}
 }

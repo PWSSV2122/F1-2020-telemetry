@@ -8,21 +8,19 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class settings {
-	public static String[] read() {
+	static String[] names = new String[] {"Poort", "Send Rate"};
+	public static void read() {
 		String[] data = new String[0];
 		try {
-			File myObj = new File("src/Settings.txt");
+			File myObj = new File("src/Settings/Settings.txt");
 			Scanner myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
-				String[] data_temp = new String[data.length];
-				for (int i = 0; i < data.length; i++) {
-					data_temp[i] = data[i];
+				String[] value = myReader.nextLine().split(":");
+				if (value[0].equals("Poort")) {
+					Settings.Settings_var.Poort = Integer.valueOf(value[1]);
+				} else if (value[0].equals("Send Rate")) {
+					Settings.Settings_var.send_rate = Integer.valueOf(value[1]);
 				}
-				data = new String[data.length + 1];
-				for (int i = 0; i < data_temp.length; i++) {
-					data[i] = data_temp[i];
-				}
-				data[data_temp.length] = myReader.nextLine();
 			}
 			myReader.close();
 			for(int i = 0; i < data.length; i++) {
@@ -31,17 +29,17 @@ public class settings {
 	    } catch (FileNotFoundException e) {
 	      e.printStackTrace();
 	    }
-		return null;
 	}
 
-	public static void write(String[] save) {
+	public static void write() {
 		try {
-			FileWriter fw = new FileWriter("src/Settings.txt", true);
+			FileWriter fw = new FileWriter("src/Settings/Settings.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
-			for (int i = 0; i < save.length; i++) {
-				bw.write(save[i]);
-			    bw.newLine();
-			}
+			String data = "Poort:" + Settings.Settings_var.Poort;
+			bw.write(data);
+			bw.newLine();
+			data = "Send Rate:" + Settings.Settings_var.send_rate;
+			bw.write(data);
 		    bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
