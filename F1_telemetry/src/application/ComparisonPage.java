@@ -155,11 +155,13 @@ public class ComparisonPage {
 				if (Names[i] == Compair_select.getValue()) {
 					lineChart.getData().remove(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
 					lineChart.getData().remove(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
+					series[ContentUpdate.GraphCompair_car1][i].setName(Names[ContentUpdate.GraphCompair_graph]);
+			        series[ContentUpdate.GraphCompair_car2][i].setName(Names[ContentUpdate.GraphCompair_graph]);
 					ContentUpdate.GraphCompair_graph = i;
+					series[ContentUpdate.GraphCompair_car1][i].setName("Player 1");
+			        series[ContentUpdate.GraphCompair_car2][i].setName("Player 2");
 					lineChart.getData().add(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
 					lineChart.getData().add(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
-					System.out.println(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph].getNode().isVisible());
-					System.out.println(":L");
 				}
 			}
 		});
@@ -174,9 +176,11 @@ public class ComparisonPage {
 			String name = people.getValue();
 			for (int i = 0; i < L1.name.length; i++) {
 				if (L1.name[i] == name) {
-					//series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph].getNode().setVisible(false);
+					lineChart.getData().remove(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
+					series[ContentUpdate.GraphCompair_car1][i].setName(Names[ContentUpdate.GraphCompair_graph]);
 					ContentUpdate.GraphCompair_car1 = i;
-					//series[i][ContentUpdate.GraphCompair_graph].getNode().setVisible(true);
+					series[ContentUpdate.GraphCompair_car1][i].setName("Speler 1");
+					lineChart.getData().add(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
 				}
 			}
 		});
@@ -191,9 +195,11 @@ public class ComparisonPage {
 			String name = people2.getValue();
 			for (int i = 0; i < L1.name.length; i++) {
 				if (L1.name[i] == name) {
-					//series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph].getNode().setVisible(false);
+					lineChart.getData().remove(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
+					series[ContentUpdate.GraphCompair_car2][i].setName(Names[ContentUpdate.GraphCompair_graph]);
 					ContentUpdate.GraphCompair_car2 = i;
-					//series[i][ContentUpdate.GraphCompair_graph].getNode().setVisible(true);
+					series[ContentUpdate.GraphCompair_car2][i].setName("Speler 2");
+					lineChart.getData().add(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
 				}
 			}
 		});
@@ -235,7 +241,7 @@ public class ComparisonPage {
         lineChart.setMaxHeight(870);
         lineChart.setTranslateX(-10);
         lineChart.setTranslateY(-8);
-        lineChart.getStylesheets().add("application/css/Graph.css");
+        lineChart.getStylesheets().add("application/css/CompairGraph.css");
         
         for (int o = 0; o < 22; o++) {
         	for (int i = 0; i< 24; i++) {
@@ -245,6 +251,10 @@ public class ComparisonPage {
     			//series[o][i].getNode().setVisible(true);
     		}
         }
+        lineChart.getData().add(series[0][0]);
+        lineChart.getData().add(series[1][0]);
+        series[0][0].setName("Player 1");
+        series[1][0].setName("Player 2");
 		VBox content = new VBox();
 		content.getChildren().addAll(Items, menu_items_underline, lineChart);
 				

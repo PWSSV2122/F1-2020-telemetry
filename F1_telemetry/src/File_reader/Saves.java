@@ -7,11 +7,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class settings {
+public class Saves {
 	public static String[] read() {
 		String[] data = new String[0];
 		try {
-			File myObj = new File("src/Settings.txt");
+			File myObj = new File("src/Saves/Saves.txt");
 			Scanner myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
 				String[] data_temp = new String[data.length];
@@ -36,7 +36,7 @@ public class settings {
 
 	public static void write(String[] save) {
 		try {
-			FileWriter fw = new FileWriter("src/Settings.txt", true);
+			FileWriter fw = new FileWriter("src/Saves/Saves.txt", true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			for (int i = 0; i < save.length; i++) {
 				bw.write(save[i]);

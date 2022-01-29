@@ -1,5 +1,6 @@
 package data_compute;
 
+import application.ComparisonPage;
 import application.GraphPage;
 import contentUpdate.ContentUpdate;
 import file_system.L1;
@@ -132,6 +133,60 @@ public class Historical_graph_data {
 					Chart_update(yaw, lap_percentage, 23);
 				}
 			}
+			for (int i = 0; i < 22; i++) {
+				final int lap_percentage = lap_percentage_int[i];
+				final float tyresWear_RL = (float)L1.tyresWear_RL[i];
+				Compaire_Chart_update(tyresWear_RL, lap_percentage, 0, i);
+				final float tyresWear_RR = (float)L1.tyresWear_RR[i];
+				Compaire_Chart_update(tyresWear_RR, lap_percentage, 1, i);
+				final float tyresWear_FL =(float) L1.tyresWear_FL[i];
+				Compaire_Chart_update(tyresWear_FL, lap_percentage, 2, i);
+				final float tyresWear_FR = (float)L1.tyresWear_FR[i];
+				Compaire_Chart_update(tyresWear_FR, lap_percentage, 3, i);
+				final float throttle = (float)L1.throttle[i] * 100;
+				Compaire_Chart_update(throttle, lap_percentage, 4, i);
+				final float Brake = (float)L1.brake[i] * 100;
+				Compaire_Chart_update(Brake, lap_percentage, 5, i);
+				final float speed = (float)L1.speed[i] / 350 * 100;
+				if (L1.speed[i] == 63) {
+				} else {
+					Compaire_Chart_update(speed, lap_percentage, 6, i);
+				}
+				final float steer = (float)L1.steer[i] + 1 / 2 * 100;
+				Compaire_Chart_update(steer, lap_percentage, 7, i);
+				final float fuelMix = (float)L1.fuelMix[i] + 1 * 24;
+				Compaire_Chart_update(fuelMix, lap_percentage, 8, i);
+				final float fuelInTank = (float)L1.fuelInTank[i] / L1.fuelCapacity[i] * 100;
+				Compaire_Chart_update(fuelInTank, lap_percentage, 9, i);
+				final float ersStoreEnergy = (float)L1.ersStoreEnergy[i]; //test max capacity
+				Compaire_Chart_update(ersStoreEnergy, lap_percentage, 10, i);
+				final float ersDeployMode = (float)L1.ersDeployMode[i] + 1 * 24;
+				Compaire_Chart_update(ersDeployMode, lap_percentage, 11, i);
+				final float gear = (float)L1.gear[i] + 2 * 9;
+				Compaire_Chart_update(gear, lap_percentage, 12, i);
+				final float brakesTemperature_RL = (float)L1.brakesTemperature_RL[i] / 1200 * 100;
+				Compaire_Chart_update(brakesTemperature_RL, lap_percentage, 13, i);
+				final float brakesTemperature_RR = (float)L1.brakesTemperature_RR[i] / 1200 * 100;
+				Compaire_Chart_update(brakesTemperature_RR, lap_percentage, 14, i);
+				final float brakesTemperature_FL = (float)L1.brakesTemperature_FL[i] / 1200 * 100;
+				Compaire_Chart_update(brakesTemperature_FL, lap_percentage, 15, i);
+				final float brakesTemperature_FR = (float)L1.brakesTemperature_FR[i] / 1200 * 100;
+				Compaire_Chart_update(brakesTemperature_FR, lap_percentage, 16, i);
+				final float tyresInnerTemperature_RL = (float)L1.tyresInnerTemperature_RL[i] / 120 * 100;
+				Compaire_Chart_update(tyresInnerTemperature_RL, lap_percentage, 17, i);
+				final float tyresInnerTemperature_RR = (float)L1.tyresInnerTemperature_RR[i] / 120 * 100;
+				Compaire_Chart_update(tyresInnerTemperature_RR, lap_percentage, 18, i);
+				final float tyresInnerTemperature_FL = (float)L1.tyresInnerTemperature_FL[i] / 120 * 100;
+				Compaire_Chart_update(tyresInnerTemperature_FL, lap_percentage, 19, i);
+				final float tyresInnerTemperature_FR = (float)L1.tyresInnerTemperature_FR[i] / 120 * 100;
+				Compaire_Chart_update(tyresInnerTemperature_FR, lap_percentage, 20, i);
+				final float roll = (float)L1.roll[i];//test max capacity
+				Compaire_Chart_update(roll, lap_percentage, 21, i);
+				final float pitch = (float)L1.pitch[i]; //test max capacity
+				Compaire_Chart_update(pitch, lap_percentage, 22, i);
+				final float yaw = (float)L1.yaw[i]; //test max capacity
+				Compaire_Chart_update(yaw, lap_percentage, 23, i);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -142,6 +197,20 @@ public class Historical_graph_data {
 			    @Override
 			    public void run() {
 			    		GraphPage.series[chart].getData().add(new XYChart.Data<Integer, Float>(percentage, data));
+			    }
+			});
+			for (int i = 0; i < 22; i++) {
+				laatste_percentage[i] = lap_percentage_int[i];
+			}
+		}
+	}
+	
+	private static void Compaire_Chart_update(float data, int percentage, int chart, int player) {
+		if (laatste_percentage[ContentUpdate.GraphPage_car] <= percentage) {
+			Platform.runLater(new Runnable() {
+			    @Override
+			    public void run() {
+			    	ComparisonPage.series[player][chart].getData().add(new XYChart.Data<Integer, Float>(percentage, data));
 			    }
 			});
 			for (int i = 0; i < 22; i++) {

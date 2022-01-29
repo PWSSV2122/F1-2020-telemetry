@@ -21,7 +21,7 @@ import javafx.scene.image.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.HBox; 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -29,7 +29,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
 import data_compute.Historical_lap_data;
-import file_system.L1;
 
 public class Main_menu extends Application{
 	public static double[] test = new double[] {1650, 1000};

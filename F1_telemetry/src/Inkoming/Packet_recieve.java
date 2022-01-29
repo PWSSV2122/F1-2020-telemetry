@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import application.ComparisonPage;
 import application.GraphPage;
 import contentUpdate.ContentUpdate;
 import data_compute.Historical_graph_data;
@@ -202,6 +203,9 @@ public class Packet_recieve {
 									Historical_graph_data.laatste_percentage[ContentUpdate.GraphPage_car] = 0;
 								} catch (Exception p) {
 								}
+							}
+							for (int o = 0; o < 24; o++) {
+								ComparisonPage.series[i][o].getData().clear();
 							}
 						}
 						Historical_lap_data.lap_num[i] = (byte) Data_decode.get("m_currentLapNum_" + i);
