@@ -32,10 +32,13 @@ public class ContentUpdate {
 	public static boolean Track_refresh = false;
 	
 	public static boolean[] Graph_selection = new boolean[24];
+	public static int GraphCompair_graph = 0;
 	
 	static int delta_refresh = 0;
 	public static int TimingPage_car = 0;
 	public static int GraphPage_car = 0;
+	public static int GraphCompair_car1 = 0;
+	public static int GraphCompair_car2 = 1;
 	
 	public static void Update() {
 		Runnable updateClass = new Runnable() {
@@ -176,13 +179,20 @@ public class ContentUpdate {
 		    	GraphPage.people.getItems().add(L1.name[i]);
 		    }
 		    GraphPage.people.setValue(temp);
-		} else if (Comparison_refresh) {
+		} else if (Comparison_refresh == true) {
 			String temp = ComparisonPage.people.getValue();
 			ComparisonPage.people.getItems().clear();
 		    for (int i = 0; i < L1.numActiveCars; i++) {
 		    	ComparisonPage.people.getItems().add(L1.name[i]);
 		    }
 		    ComparisonPage.people.setValue(temp);
+		    
+		    temp = ComparisonPage.people2.getValue();
+			ComparisonPage.people2.getItems().clear();
+		    for (int i = 0; i < L1.numActiveCars; i++) {
+		    	ComparisonPage.people2.getItems().add(L1.name[i]);
+		    }
+		    ComparisonPage.people2.setValue(temp);
 		}
 	}
 	
