@@ -232,7 +232,7 @@ public class Packet_recieve {
 			"Final_Classification_Packet", "Lobby_Info_Packet", "Needed_data"};
 	static HashMap<String, HashMap<Integer, String>> Packet_names = new HashMap<String, HashMap<Integer, String>>();
 	static HashMap<String, HashMap<Integer, int[]>> Packet_byte_array = new HashMap<String, HashMap<Integer, int[]>>();;
-	static String[] Needed_data_names = new String[75];
+	static String[] Needed_data_names = new String[77];
 	static int[] repeats = new int[10];
 	private static void data_decode() {
 		String Line;

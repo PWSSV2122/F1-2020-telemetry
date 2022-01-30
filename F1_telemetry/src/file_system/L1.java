@@ -103,6 +103,7 @@ public class L1 {
 	public static short[] bestOverallSector3TimeInMS = new short[22];
 	public static byte[] bestOverallSector3LapNum = new byte[22];
 	public static float[] lapDistance = new float[22];
+	public static byte[] currentLapNum = new byte[22];
 	
 	//motion packet header data
 	public static byte[] motion_packetid = new byte[22];
@@ -130,6 +131,7 @@ public class L1 {
 	public static byte trackId = 0;
 	public static byte sessionType = 0;
 	public static byte formula = 0;
+	public static short trackLength = 0;
 	
 	//postion
 	public static HashMap<Byte, Byte> car_positions = new HashMap<>();

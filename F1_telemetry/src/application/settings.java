@@ -1,5 +1,6 @@
 package application;
 
+import data_compute.Historical_lap_data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -39,7 +40,7 @@ public class settings {
 			        "20 per second",
 			        "60 per second"
 			    );
-		final ComboBox Send_rate_dropdown = new ComboBox(Send_rate_options);
+		ComboBox<String> Send_rate_dropdown = new ComboBox<String>(Send_rate_options);
 		if (Settings.Settings_var.send_rate == 10) {
 			Send_rate_dropdown.setValue("10 per second");
 		} else if (Settings.Settings_var.send_rate == 20) {
@@ -47,6 +48,16 @@ public class settings {
 		} else if (Settings.Settings_var.send_rate == 60) {
 			Send_rate_dropdown.setValue("60 per second");
 		}
+		Send_rate_dropdown.setOnAction(e -> {
+			if (Send_rate_dropdown.getValue() == "10 per second") {
+				Settings.Settings_var.send_rate = 10;
+			} else if (Send_rate_dropdown.getValue() == "20 per second") {
+				Settings.Settings_var.send_rate = 20;
+			} else if (Send_rate_dropdown.getValue() == "60 per second") {
+				Settings.Settings_var.send_rate = 60;
+			}
+		});
+		
 		Send_rate.setSpacing(10);
 		Send_rate.getChildren().addAll(Send_rate_label, Send_rate_dropdown);
 		
@@ -68,10 +79,20 @@ public class settings {
 		Save_stop.setText("Stop");
 		Save_stop.setVisible(false);
 		Save_load.setOnAction(e -> {
-			Save_load.setVisible(false);
-			Save_stop.setVisible(true);
+			if (Save_dropdown.getValue() != null) {
+				Inkoming.Packet_recieve.recieve_on = false;
+				new Thread(new Runnable() {
+				    public void run() {
+				    	decode.data_to_file_system.decoded_data_manager((String) Save_dropdown.getValue());
+				    }
+				}).start();
+				Save_load.setVisible(false);
+				Save_stop.setVisible(true);
+			}
 		});
 		Save_stop.setOnAction(e -> {
+			decode.data_to_file_system.play_save = false;
+			Inkoming.Packet_recieve.recieve_on = true;
 			Save_stop.setVisible(false);
 			Save_load.setVisible(true);
 		});

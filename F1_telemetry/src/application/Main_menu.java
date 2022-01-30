@@ -296,5 +296,6 @@ public class Main_menu extends Application{
 	
 	public void PreferenceSave() {
 		File_reader.settings.write();
+		System.exit(0);
 	}
 }

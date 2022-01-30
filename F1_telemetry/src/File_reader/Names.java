@@ -13,7 +13,7 @@ public class Names {
 			"Final_Classification_Packet", "Lobby_Info_Packet", "Needed_data"};
 	public static HashMap<String, HashMap<Integer, String>> Packet_names = new HashMap<String, HashMap<Integer, String>>();
 	public static HashMap<String, HashMap<Integer, int[]>> Packet_byte_array = new HashMap<String, HashMap<Integer, int[]>>();;
-	public static String[] Needed_data_names = new String[75];
+	public static String[] Needed_data_names = new String[77];
 	public static String[] needed_data_packets = new String[8];
 	public static HashMap<String, String> Needed_data_packet = new HashMap<String, String>();
 	public static HashMap<String, String> Needed_data_byte = new HashMap<String, String>();
