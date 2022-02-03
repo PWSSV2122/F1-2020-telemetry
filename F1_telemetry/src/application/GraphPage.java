@@ -1,6 +1,7 @@
 package application;
 
 import contentUpdate.ContentUpdate;
+import contentUpdate.SetupUpdate;
 import file_system.L1;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -35,7 +36,7 @@ public class GraphPage {
 	public static NumberAxis xAxis = new NumberAxis(0, 10000, 100);
 	public static NumberAxis yAxis = new NumberAxis(0, 100, 2);
 	public static LineChart<Number,Number> lineChart = new LineChart<Number,Number>(xAxis,yAxis);
-	public static XYChart.Series[] series = new XYChart.Series[24];
+	//public static XYChart.Series[] series = new XYChart.Series[24];
 	
 	public static Scene GraphPage_scene() {
 		Scene GraphPage;
@@ -98,17 +99,29 @@ public class GraphPage {
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
 		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");});
+			Main_menu.window.setTitle("F1 Tracker : Track Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");});
+			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+			SetupUpdate.Brakes_Boolean = false;
+			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");});
+			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Comparison_refresh = true;});
 		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");});
+			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = true;});
 		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");});
+			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.LapTime_refresh = true;});
 		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");});
+			Main_menu.window.setTitle("F1 Tracker : Timing Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
 		left_background.setWidth(111);
@@ -152,9 +165,10 @@ public class GraphPage {
 			for (int i = 0; i < L1.name.length; i++) {
 				if (L1.name[i] == name) {
 					ContentUpdate.GraphPage_car = i;
+					update_Graph();
 				}
 			}
-			delete_graph_data();
+//			delete_graph_data();
 		});
 		
 		Rectangle[] Deviders = new Rectangle[] {new Rectangle(), new Rectangle()};
@@ -207,99 +221,99 @@ public class GraphPage {
 		}
 		CheckBox[0].setOnAction(e -> {
 			ContentUpdate.Graph_selection[0] = CheckBox[0].isSelected();
-			series[0].getNode().setVisible(CheckBox[0].isSelected());
+			update_Graph();
 		});
 		CheckBox[1].setOnAction(e -> {
 			ContentUpdate.Graph_selection[1] = CheckBox[1].isSelected();
-			series[1].getNode().setVisible(CheckBox[1].isSelected());
+			update_Graph();
 		});
 		CheckBox[2].setOnAction(e -> {
 			ContentUpdate.Graph_selection[2] = CheckBox[2].isSelected();
-			series[2].getNode().setVisible(CheckBox[2].isSelected());
+			update_Graph();
 		});
 		CheckBox[3].setOnAction(e -> {
 			ContentUpdate.Graph_selection[3] = CheckBox[3].isSelected();
-			series[3].getNode().setVisible(CheckBox[3].isSelected());
+			update_Graph();
 		});
 		CheckBox[4].setOnAction(e -> {
 			ContentUpdate.Graph_selection[4] = CheckBox[4].isSelected();
-			series[4].getNode().setVisible(CheckBox[4].isSelected());
+			update_Graph();
 		});
 		CheckBox[5].setOnAction(e -> {
 			ContentUpdate.Graph_selection[5] = CheckBox[5].isSelected();
-			series[5].getNode().setVisible(CheckBox[5].isSelected());
+			update_Graph();
 		});
 		CheckBox[6].setOnAction(e -> {
 			ContentUpdate.Graph_selection[6] = CheckBox[6].isSelected();
-			series[6].getNode().setVisible(CheckBox[6].isSelected());
+			update_Graph();
 		});
 		CheckBox[7].setOnAction(e -> {
 			ContentUpdate.Graph_selection[7] = CheckBox[7].isSelected();
-			series[7].getNode().setVisible(CheckBox[7].isSelected());
+			update_Graph();
 		});
 		CheckBox[8].setOnAction(e -> {
 			ContentUpdate.Graph_selection[8] = CheckBox[8].isSelected();
-			series[8].getNode().setVisible(CheckBox[8].isSelected());
+			update_Graph();
 		});
 		CheckBox[9].setOnAction(e -> {
 			ContentUpdate.Graph_selection[9] = CheckBox[9].isSelected();
-			series[9].getNode().setVisible(CheckBox[9].isSelected());
+			update_Graph();
 		});
 		CheckBox[10].setOnAction(e -> {
 			ContentUpdate.Graph_selection[10] = CheckBox[10].isSelected();
-			series[10].getNode().setVisible(CheckBox[10].isSelected());
+			update_Graph();
 		});
 		CheckBox[11].setOnAction(e -> {
 			ContentUpdate.Graph_selection[11] = CheckBox[11].isSelected();
-			series[11].getNode().setVisible(CheckBox[11].isSelected());
+			update_Graph();
 		});
 		CheckBox[12].setOnAction(e -> {
 			ContentUpdate.Graph_selection[12] = CheckBox[12].isSelected();
-			series[12].getNode().setVisible(CheckBox[12].isSelected());
+			update_Graph();
 		});
 		CheckBox[13].setOnAction(e -> {
 			ContentUpdate.Graph_selection[13] = CheckBox[13].isSelected();
-			series[13].getNode().setVisible(CheckBox[13].isSelected());
+			update_Graph();
 		});
 		CheckBox[14].setOnAction(e -> {
 			ContentUpdate.Graph_selection[14] = CheckBox[14].isSelected();
-			series[14].getNode().setVisible(CheckBox[14].isSelected());
+			update_Graph();
 		});
 		CheckBox[15].setOnAction(e -> {
 			ContentUpdate.Graph_selection[15] = CheckBox[15].isSelected();
-			series[15].getNode().setVisible(CheckBox[15].isSelected());
+			update_Graph();
 		});
 		CheckBox[16].setOnAction(e -> {
 			ContentUpdate.Graph_selection[16] = CheckBox[16].isSelected();
-			series[16].getNode().setVisible(CheckBox[16].isSelected());
+			update_Graph();
 		});
 		CheckBox[17].setOnAction(e -> {
 			ContentUpdate.Graph_selection[17] = CheckBox[17].isSelected();
-			series[17].getNode().setVisible(CheckBox[17].isSelected());
+			update_Graph();
 		});
 		CheckBox[18].setOnAction(e -> {
 			ContentUpdate.Graph_selection[18] = CheckBox[18].isSelected();
-			series[18].getNode().setVisible(CheckBox[18].isSelected());
+			update_Graph();
 		});
 		CheckBox[19].setOnAction(e -> {
 			ContentUpdate.Graph_selection[19] = CheckBox[19].isSelected();
-			series[19].getNode().setVisible(CheckBox[19].isSelected());
+			update_Graph();
 		});
 		CheckBox[20].setOnAction(e -> {
 			ContentUpdate.Graph_selection[20] = CheckBox[20].isSelected();
-			series[20].getNode().setVisible(CheckBox[20].isSelected());
+			update_Graph();
 		});
 		CheckBox[21].setOnAction(e -> {
 			ContentUpdate.Graph_selection[21] = CheckBox[21].isSelected();
-			series[21].getNode().setVisible(CheckBox[21].isSelected());
+			update_Graph();
 		});
 		CheckBox[22].setOnAction(e -> {
 			ContentUpdate.Graph_selection[22] = CheckBox[22].isSelected();
-			series[22].getNode().setVisible(CheckBox[22].isSelected());
+			update_Graph();
 		});
 		CheckBox[23].setOnAction(e -> {
 			ContentUpdate.Graph_selection[23] = CheckBox[23].isSelected();
-			series[23].getNode().setVisible(CheckBox[23].isSelected());
+			update_Graph();
 		});
 		
 		Selection_checkbox.getChildren().addAll(Selection_background, CheckBox_stack);
@@ -334,13 +348,7 @@ public class GraphPage {
         lineChart.setTranslateX(-20);
         lineChart.setTranslateY(-8);
         lineChart.getStylesheets().add("application/css/Graph.css");
-        
-		for (int i = 0; i< 24; i++) {
-			series[i] = new XYChart.Series();
-			series[i].setName(Names[i]);
-			lineChart.getData().add(series[i]);
-			series[i].getNode().setVisible(false);
-		}
+        lineChart.setAnimated(false);
 
 		Graph.getChildren().addAll(lineChart, Selectionmenu_popup);
 		
@@ -387,19 +395,24 @@ public class GraphPage {
 	       center_background.setHeight((double) newVal - 39);
 	   });
 	   
-	   
-//		BorderPane top_level = new BorderPane();
 		top_level.setTop(top_box);
 		top_level.setLeft(left_box);
-		return GraphPage;
-		
+		return GraphPage;		
 	}
-	private static void delete_graph_data() {
+	
+	private static void update_Graph() {
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
-		    	for (int o = 0; o < 24; o++) {
-					GraphPage.series[o].getData().clear();
+		    	lineChart.getData().clear();
+		    	int o = 0;
+		    	for (int i = 0; i < 24; i++) {
+					if (ContentUpdate.Graph_selection[i] == true) {
+						System.out.println("LK");
+						lineChart.getData().add(ComparisonPage.series[ContentUpdate.GraphPage_car][i]);
+						lineChart.getData().get(o).setName(Names[i]);;
+						o++;
+					}
 				}
 		    }
 		});

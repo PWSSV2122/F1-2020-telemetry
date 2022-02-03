@@ -3,8 +3,6 @@ package decode;
 import java.util.HashMap;
 
 import application.ComparisonPage;
-import application.GraphPage;
-import contentUpdate.ContentUpdate;
 import data_compute.Historical_graph_data;
 import data_compute.Historical_lap_data;
 import data_compute.delta;
@@ -116,8 +114,12 @@ public class data_to_file_system {
 						}
 					} else {
 						String Name_l1 = File_reader.Names.Packet_names.get(pakket_name).get(o);
-						byte L1 = (byte) L1.class.getField(Name_l1).get(1);
-						L1.class.getField(Name_l1).set(L1, data.get(pakket_name).get(i).get(Name_l1));
+						Object L1 = L1.class.getField(Name_l1).get(1);
+						if (L1 instanceof Byte) {
+							L1.class.getField(Name_l1).set(L1, (byte)data.get(pakket_name).get(i).get(Name_l1));
+						} else if (L1 instanceof Short) {
+							L1.class.getField(Name_l1).set(L1, (Short)data.get(pakket_name).get(i).get(Name_l1));
+						}
 					}
 				}
 				if (pakket_int == 2) {
@@ -128,32 +130,22 @@ public class data_to_file_system {
 						delta.speed_of_players((float) L1.lapDistance[o], o);
 						if (Historical_lap_data.lap_num[o] != L1.currentLapNum[o] && (byte) L1.currentLapNum[o] != (byte)0) {
 							Historical_lap_data.Lap_and_S3((byte) L1.currentLapNum[o], o);
-							if (o == ContentUpdate.GraphPage_car) {
-								try {
-									for (int l = 0; l < 24; l++) {
-										final int p = l;
-										Platform.runLater(new Runnable() {
-										    @Override
-										    public void run() {
-										    	GraphPage.series[p].getData().clear();
-										    }
-										});
+							final int p = o;
+							Platform.runLater(new Runnable() {
+							    @Override
+							    public void run() {
+							    	for (int o = 0; o < 24; o++) {
+										try {
+											ComparisonPage.series[p][o].getData().clear();
+										} catch (Exception t) {
+											t.printStackTrace();
+										}
 									}
-									Historical_graph_data.laatste_percentage[ContentUpdate.GraphPage_car] = 0;
-								} catch (Exception p) {
-								}
-							}
-							for (int p = 0; p < 24; p++) {
-								ComparisonPage.series[p][o].getData().clear();
-							}
+							    	Historical_graph_data.laatste_percentage[p] = 0;
+							    }
+							});
 						}
 						Historical_lap_data.lap_num[o] = (byte) L1.currentLapNum[o];
-					}
-					if (Historical_lap_data.lap_num[ContentUpdate.GraphPage_car] != L1.currentLapNum[ContentUpdate.GraphPage_car]) {
-						for (int o = 0; o < 24; o++) {
-							GraphPage.series[o].getData().clear();
-						}
-						Historical_graph_data.laatste_percentage[ContentUpdate.GraphPage_car] = 0;
 					}
 					Historical_graph_data.percentage();
 				} else if (pakket_int == 1) {

@@ -102,21 +102,27 @@ public class Main_menu extends Application{
 		}
 		menubar_buttons[0].setOnAction(e -> {window.setScene(TrackPage_scene);
 			window.setTitle("F1 Tracker : Track Page");
+			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {window.setScene(SetupPage_Brakes_scene);
 			window.setTitle("F1 Tracker : Setup Page Brakes");
+			SetupUpdate.Brakes_Boolean = false;
 			SetupUpdate.Brakes_Boolean = true;});
-		menubar_buttons[3].setOnAction(e -> {window.setScene(ComparisonPage_scene);
+		menubar_buttons[2].setOnAction(e -> {window.setScene(ComparisonPage_scene);
 			window.setTitle("F1 Tracker : Comparison Page");
+			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Comparison_refresh = true;});
-		menubar_buttons[4].setOnAction(e -> {window.setScene(GraphPage_scene);
+		menubar_buttons[3].setOnAction(e -> {window.setScene(GraphPage_scene);
 			window.setTitle("F1 Tracker : Graph Page");
+			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Graph_refresh = true;});
-		menubar_buttons[5].setOnAction(e -> {window.setScene(LapTimePage_scene);
+		menubar_buttons[4].setOnAction(e -> {window.setScene(LapTimePage_scene);
 			window.setTitle("F1 Tracker : Lap Time Page");
+			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.LapTime_refresh = true;});
-		menubar_buttons[2].setOnAction(e -> {window.setScene(TimingPage_scene);
+		menubar_buttons[5].setOnAction(e -> {window.setScene(TimingPage_scene);
 			window.setTitle("F1 Tracker : Timing Page");
+			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();

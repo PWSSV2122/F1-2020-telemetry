@@ -27,7 +27,7 @@ public class Packet_recieve {
 	public static boolean recieve_on;
 	public static String[] first_frameIdentifier_name = new String[] {"Car_status", "car_telemetry", "lap_data", "motion"};
 	public static int Player_lap = 0;
-	public static ExecutorService service = Executors.newFixedThreadPool(4);
+	public static ExecutorService service = Executors.newFixedThreadPool(2);
 	public static void recieve_class() {
 		data_decode();
 		boolean[] first_packet = new boolean[] {true, true, true, true};
@@ -187,33 +187,22 @@ public class Packet_recieve {
 						delta.speed_of_players((float) Data_decode.get("m_lapDistance_" + i), i);
 						if (Historical_lap_data.lap_num[i] != (byte)Data_decode.get("m_currentLapNum_" + i) && (byte) Data_decode.get("m_currentLapNum_" + i) != (byte)0) {
 							Historical_lap_data.Lap_and_S3((byte) Data_decode.get("m_currentLapNum_" + i), i);
-							if (i == ContentUpdate.GraphPage_car) {
-								try {
-									for (int o = 0; o < 24; o++) {
-										final int p = o;
-										Platform.runLater(new Runnable() {
-										    @Override
-										    public void run() {
-										    	GraphPage.series[p].getData().clear();
-										    }
-										});
+							final int p = i;
+							Platform.runLater(new Runnable() {
+							    @Override
+							    public void run() {
+							    	for (int o = 0; o < 24; o++) {
+										try {
+											ComparisonPage.series[p][o].getData().clear();
+										} catch (Exception t) {
+											t.printStackTrace();
+										}
 									}
-									Historical_graph_data.laatste_percentage[ContentUpdate.GraphPage_car] = 0;
-								} catch (Exception p) {
-								}
-							}
-							for (int o = 0; o < 24; o++) {
-								ComparisonPage.series[i][o].getData().clear();
-							}
+							    	Historical_graph_data.laatste_percentage[p] = 0;
+							    }
+							});
 						}
 						Historical_lap_data.lap_num[i] = (byte) Data_decode.get("m_currentLapNum_" + i);
-					}
-					if (Historical_lap_data.lap_num[ContentUpdate.GraphPage_car] != (byte)Data_decode.get("m_currentLapNum_" + ContentUpdate.GraphPage_car)) {
-						for (int i = 0; i < 24; i++) {
-							GraphPage.series[i].getData().clear();
-						}
-						Historical_graph_data.laatste_percentage[ContentUpdate.GraphPage_car] = 0;
-						System.out.println(":L");
 					}
 					Historical_graph_data.percentage();
 				} else if (PacketId == 1) {

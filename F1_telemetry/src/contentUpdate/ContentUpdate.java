@@ -1,8 +1,5 @@
 package contentUpdate;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +14,6 @@ import data_compute.delta;
 import file_system.L1;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.image.Image;
@@ -105,7 +101,6 @@ public class ContentUpdate {
 		        		e.printStackTrace();
 		        	}
 		        } else if (Track_refresh == true) {
-		        	System.out.println(":) : " + L1.numActiveCars);
 		        	final ObservableList<TrackPage.Tabel_object> data = FXCollections.observableArrayList();
 		        	try {
 		        		for (int i = 0; i < L1.numActiveCars; i++) {
@@ -137,31 +132,14 @@ public class ContentUpdate {
 		        		
 		    		}
 		        	for (int i = 0; i < L1.numActiveCars; i++) {
-		    			System.out.println("X: " + L1.worldPositionX[i] + " : " + "Y: " + L1.worldPositionY[i]);
 		    			TrackPage.Track_Players[i].setX(L1.worldPositionX[i] + 200);
 		    			TrackPage.Track_Players[i].setY(L1.worldPositionY[i] - 100);
-		    			System.out.println("Done " + "X: " + L1.worldPositionX[i] + " : " + "Y: " + L1.worldPositionY[i]);
 		    		}
 		        }
 		    }
 		};
-		
-		Runnable TrackMap = new Runnable() {
-		    public void run() {
-		    	if (LapTime_refresh == true) {
-		    		for (int i = 0; i < L1.numActiveCars; i++) {
-		    			System.out.println("X: " + L1.worldPositionX[i] + " : " + "Y: " + L1.worldPositionY[i]);
-		    			TrackPage.Track_Players[i].setTranslateX(L1.worldPositionX[i] + 10);
-		    			TrackPage.Track_Players[i].setTranslateY(L1.worldPositionY[i] + 100);
-		    		}
-		    	}
-		    }
-		};
 		ScheduledExecutorService content_update = Executors.newScheduledThreadPool(1);
 		content_update.scheduleAtFixedRate(updateClass, 0, 700, TimeUnit.MILLISECONDS);
-		
-		ScheduledExecutorService TrackMap_update = Executors.newScheduledThreadPool(1);
-		TrackMap_update.scheduleAtFixedRate(TrackMap, 0, 100, TimeUnit.MILLISECONDS);
 	}
 	
 	public static void dropdown_update() {
@@ -181,18 +159,15 @@ public class ContentUpdate {
 		    GraphPage.people.setValue(temp);
 		} else if (Comparison_refresh == true) {
 			String temp = ComparisonPage.people.getValue();
+			String temp2 = ComparisonPage.people2.getValue();
 			ComparisonPage.people.getItems().clear();
-		    for (int i = 0; i < L1.numActiveCars; i++) {
-		    	ComparisonPage.people.getItems().add(L1.name[i]);
-		    }
-		    ComparisonPage.people.setValue(temp);
-		    
-		    temp = ComparisonPage.people2.getValue();
 			ComparisonPage.people2.getItems().clear();
 		    for (int i = 0; i < L1.numActiveCars; i++) {
+		    	ComparisonPage.people.getItems().add(L1.name[i]);
 		    	ComparisonPage.people2.getItems().add(L1.name[i]);
 		    }
-		    ComparisonPage.people2.setValue(temp);
+		    ComparisonPage.people.setValue(temp);
+		    ComparisonPage.people2.setValue(temp2);
 		}
 	}
 	

@@ -1,6 +1,8 @@
 package application;
 
 import contentUpdate.ContentUpdate;
+import contentUpdate.SetupUpdate;
+import data_compute.Historical_graph_data;
 import file_system.L1;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -37,6 +39,8 @@ public class ComparisonPage {
 	public static NumberAxis yAxis = new NumberAxis(0, 100, 2);
 	public static LineChart<Number,Number> lineChart = new LineChart<Number,Number>(xAxis,yAxis);
 	public static XYChart.Series[][] series = new XYChart.Series[22][24];
+	public static XYChart.Series player_1 = new XYChart.Series();
+	public static XYChart.Series player_2 = new XYChart.Series();
 	
 	public static Scene ComparisonPage_scene() {
 		Scene ComparisonPage;
@@ -99,17 +103,29 @@ public class ComparisonPage {
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
 		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");});
+			Main_menu.window.setTitle("F1 Tracker : Track Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");});
+			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+			SetupUpdate.Brakes_Boolean = false;
+			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");});
+			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Comparison_refresh = true;});
 		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");});
+			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = true;});
 		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");});
+			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.LapTime_refresh = true;});
 		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");});
+			Main_menu.window.setTitle("F1 Tracker : Timing Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
 		left_background.setWidth(111);
@@ -153,15 +169,18 @@ public class ComparisonPage {
 		Compair_select.setOnAction(e -> {
 			for (int i = 0; i < Names.length; i++) {
 				if (Names[i] == Compair_select.getValue()) {
-					lineChart.getData().remove(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
-					lineChart.getData().remove(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
-					series[ContentUpdate.GraphCompair_car1][i].setName(Names[ContentUpdate.GraphCompair_graph]);
-			        series[ContentUpdate.GraphCompair_car2][i].setName(Names[ContentUpdate.GraphCompair_graph]);
 					ContentUpdate.GraphCompair_graph = i;
-					series[ContentUpdate.GraphCompair_car1][i].setName("Player 1");
-			        series[ContentUpdate.GraphCompair_car2][i].setName("Player 2");
-					lineChart.getData().add(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
-					lineChart.getData().add(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
+					final int p = i;
+					Platform.runLater(new Runnable() {
+					    @Override
+					    public void run() {
+					    	lineChart.getData().clear();
+							lineChart.getData().add(series[ContentUpdate.GraphCompair_car1][p]);
+							lineChart.getData().add(series[ContentUpdate.GraphCompair_car2][p]);
+							lineChart.getData().get(0).setName(L1.name[ContentUpdate.GraphCompair_car1]);
+							lineChart.getData().get(1).setName(L1.name[ContentUpdate.GraphCompair_car2]);
+					    }
+					});
 				}
 			}
 		});
@@ -176,11 +195,18 @@ public class ComparisonPage {
 			String name = people.getValue();
 			for (int i = 0; i < L1.name.length; i++) {
 				if (L1.name[i] == name) {
-					lineChart.getData().remove(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
-					series[ContentUpdate.GraphCompair_car1][i].setName(Names[ContentUpdate.GraphCompair_graph]);
 					ContentUpdate.GraphCompair_car1 = i;
-					series[ContentUpdate.GraphCompair_car1][i].setName("Speler 1");
-					lineChart.getData().add(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
+					final int p = i;
+					Platform.runLater(new Runnable() {
+					    @Override
+					    public void run() {
+					    	lineChart.getData().clear();
+							lineChart.getData().add(series[p][ContentUpdate.GraphCompair_graph]);
+							lineChart.getData().add(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
+							lineChart.getData().get(0).setName(L1.name[ContentUpdate.GraphCompair_car1]);
+							lineChart.getData().get(1).setName(L1.name[ContentUpdate.GraphCompair_car2]);
+					    }
+					});
 				}
 			}
 		});
@@ -195,11 +221,18 @@ public class ComparisonPage {
 			String name = people2.getValue();
 			for (int i = 0; i < L1.name.length; i++) {
 				if (L1.name[i] == name) {
-					lineChart.getData().remove(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
-					series[ContentUpdate.GraphCompair_car2][i].setName(Names[ContentUpdate.GraphCompair_graph]);
 					ContentUpdate.GraphCompair_car2 = i;
-					series[ContentUpdate.GraphCompair_car2][i].setName("Speler 2");
-					lineChart.getData().add(series[ContentUpdate.GraphCompair_car2][ContentUpdate.GraphCompair_graph]);
+					final int p = i;
+					Platform.runLater(new Runnable() {
+					    @Override
+					    public void run() {
+					    	lineChart.getData().clear();
+							lineChart.getData().add(series[ContentUpdate.GraphCompair_car1][ContentUpdate.GraphCompair_graph]);
+							lineChart.getData().add(series[p][ContentUpdate.GraphCompair_graph]);
+							lineChart.getData().get(0).setName(L1.name[ContentUpdate.GraphCompair_car1]);
+							lineChart.getData().get(1).setName(L1.name[ContentUpdate.GraphCompair_car2]);
+					    }
+					});
 				}
 			}
 		});
@@ -242,19 +275,18 @@ public class ComparisonPage {
         lineChart.setTranslateX(-10);
         lineChart.setTranslateY(-8);
         lineChart.getStylesheets().add("application/css/CompairGraph.css");
+        lineChart.setAnimated(false);
         
         for (int o = 0; o < 22; o++) {
         	for (int i = 0; i< 24; i++) {
     			series[o][i] = new XYChart.Series();
     			series[o][i].setName(Names[i]);
-    			//lineChart.getData().add(series[o][i]);
-    			//series[o][i].getNode().setVisible(true);
     		}
         }
         lineChart.getData().add(series[0][0]);
         lineChart.getData().add(series[1][0]);
-        series[0][0].setName("Player 1");
-        series[1][0].setName("Player 2");
+        lineChart.getData().get(0).setName(L1.name[ContentUpdate.GraphCompair_car1]);
+		lineChart.getData().get(1).setName(L1.name[ContentUpdate.GraphCompair_car2]);
 		VBox content = new VBox();
 		content.getChildren().addAll(Items, menu_items_underline, lineChart);
 				

@@ -62,9 +62,14 @@ public class data_manager {
 					}
 				} else {
 					String Name_l1 = data_names[i];
-					byte L1 = (byte) L1.class.getField(Name_l1).get(1);
-					L2_data_temp_save.put(Name_l1, L1);
-					L1.class.getField(Name_l1).set(L1, temp_save.get(Name_l1));
+					Object L1 = L1.class.getField(Name_l1).get(1);
+					if (L1 instanceof Byte) {
+						L2_data_temp_save.put(Name_l1, (byte)L1);
+						L1.class.getField(Name_l1).set(L1, (byte)temp_save.get(Name_l1));
+					} else if (L1 instanceof Short) {
+						L2_data_temp_save.put(Name_l1, (Short)L1);
+						L1.class.getField(Name_l1).set(L1, (Short)temp_save.get(Name_l1));
+					}
 				}
 			}
 		} catch (Exception e) {
