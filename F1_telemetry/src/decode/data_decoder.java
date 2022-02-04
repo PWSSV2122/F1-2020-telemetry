@@ -13,10 +13,13 @@ import File_reader.Names;
 
 public class data_decoder {
 	public static void main(String[] args) {
-		decode("temp", new int[] {10, 10, 10, 10, 10, 10, 10});
+		decode("temp");
 	}
 	
-	static public HashMap <String, HashMap<Integer, HashMap<String, Object>>> decode(String save, int[] tot_packet) {
+	public static int[] tot_packet = new int[] {20, Settings.Settings_var.send_rate * 10, Settings.Settings_var.send_rate * 10,
+			Settings.Settings_var.send_rate * 10, Settings.Settings_var.send_rate * 10, 2, 20};
+	public static int packetid = 0;
+	public static HashMap <String, HashMap<Integer, HashMap<String, Object>>> decode(String save) {
 		Names.data_decode();
 		HashMap <String, HashMap<Integer, HashMap<String, Object>>> decoded_data = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
 		for (int i = 0; i < Names.needed_data_packets.length - 1; i++) {
@@ -53,9 +56,9 @@ public class data_decoder {
 			HashMap<Integer, HashMap<String, Object>> Temp_packets = new HashMap<Integer, HashMap<String, Object>>();
 			HashMap<String, Object> Temp_packet = new HashMap<String, Object>();
 			try {
-				int packetid = 0;
 				byte[] data = Files.readAllBytes(path);
-				for (int o = 0; o < data.length; o++) {
+				int o;
+				for (o = 0; o < data.length; o++) {
 					if (data[o] == data_codes_string.get("packetid")) {
 						if (ByteBuffer.wrap(new byte[] {data[o + 1] , data[o + 2], data[o + 3], data[o + 4]}).order(ByteOrder.BIG_ENDIAN).getInt() == 0) {
 						} else {
@@ -93,6 +96,9 @@ public class data_decoder {
 							o = o + data_type;
 						}
 					}
+				}
+				if (o == data.length - 1) {
+					data_to_file_system.end_of_file = true;
 				}
 				decoded_data.put(Names.needed_data_packets[i], new HashMap<Integer, HashMap<String, Object>>(Temp_packets));
 				Temp_packets.clear();

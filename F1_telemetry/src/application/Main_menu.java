@@ -2,8 +2,14 @@ package application;
 	
 import File_reader.Names;
 import Inkoming.Packet_recieve;
+import application.SetupPage.Aerodynamics;
 import application.SetupPage.Brakes;
+import application.SetupPage.Suspension;
+import application.SetupPage.Suspension_Geometry;
+import application.SetupPage.Transmission;
+import application.SetupPage.Tyres;
 import contentUpdate.ContentUpdate;
+import contentUpdate.SetupUpdate;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,24 +21,27 @@ import javafx.scene.image.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.HBox; 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
+import data_compute.Historical_lap_data;
 
 public class Main_menu extends Application{
 	public static double[] test = new double[] {1650, 1000};
 	
 	public static Stage window;
-	public static Scene Main_menu, ComparisonPage_scene, TrackPage_scene, SetupPage_Brakes_scene, GraphPage_scene, LapTimePage_scene, TimingPage_scene;
+	public static Scene Main_menu, ComparisonPage_scene, TrackPage_scene, GraphPage_scene, LapTimePage_scene, TimingPage_scene, SetupPage_Brakes_scene, SetupPage_Suspension_Geometry_scene, SetupPage_Suspension_scene, SetupPage_Transmission_scene, SetupPage_Tyres_scene, SetupPage_Aerodynamics_scene;
 	
 	Button button1;
 	
 	@Override
 	public void start(Stage primaryStage) {
+		File_reader.settings.read();
+		Names.data_decode();
 		window = primaryStage;
 			
 		BorderPane top_level = new BorderPane();
@@ -92,17 +101,29 @@ public class Main_menu extends Application{
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
 		menubar_buttons[0].setOnAction(e -> {window.setScene(TrackPage_scene);
-			window.setTitle("F1 Tracker : Track Page");});
+			window.setTitle("F1 Tracker : Track Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {window.setScene(SetupPage_Brakes_scene);
-			window.setTitle("F1 Tracker : Setup Page Brakes");});
+			window.setTitle("F1 Tracker : Setup Page Brakes");
+			SetupUpdate.Brakes_Boolean = false;
+			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[2].setOnAction(e -> {window.setScene(ComparisonPage_scene);
-			window.setTitle("F1 Tracker : Comparison Page");});
+			window.setTitle("F1 Tracker : Comparison Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Comparison_refresh = true;});
 		menubar_buttons[3].setOnAction(e -> {window.setScene(GraphPage_scene);
-			window.setTitle("F1 Tracker : Graph Page");});
+			window.setTitle("F1 Tracker : Graph Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = true;});
 		menubar_buttons[4].setOnAction(e -> {window.setScene(LapTimePage_scene);
-			window.setTitle("F1 Tracker : Lap Time Page");});
+			window.setTitle("F1 Tracker : Lap Time Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.LapTime_refresh = true;});
 		menubar_buttons[5].setOnAction(e -> {window.setScene(TimingPage_scene);
-			window.setTitle("F1 Tracker : Timing Page");});
+			window.setTitle("F1 Tracker : Timing Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
 		left_background.setWidth(111);
@@ -150,17 +171,23 @@ public class Main_menu extends Application{
 		}
 		
 		Content_buttons[0].setOnAction(e -> {window.setScene(TrackPage_scene);
-			window.setTitle("F1 Tracker : Track Page");});
+			window.setTitle("F1 Tracker : Track Page");
+			ContentUpdate.Track_refresh = true;});
 		Content_buttons[1].setOnAction(e -> {window.setScene(SetupPage_Brakes_scene);
-			window.setTitle("F1 Tracker : Setup Page Brakes");});
+			window.setTitle("F1 Tracker : Setup Page Brakes");
+			SetupUpdate.Brakes_Boolean = true;});
 		Content_buttons[3].setOnAction(e -> {window.setScene(ComparisonPage_scene);
-			window.setTitle("F1 Tracker : Comparison Page");});
+			window.setTitle("F1 Tracker : Comparison Page");
+			ContentUpdate.Comparison_refresh = true;});
 		Content_buttons[4].setOnAction(e -> {window.setScene(GraphPage_scene);
-			window.setTitle("F1 Tracker : Graph Page");});
+			window.setTitle("F1 Tracker : Graph Page");
+			ContentUpdate.Graph_refresh = true;});
 		Content_buttons[5].setOnAction(e -> {window.setScene(LapTimePage_scene);
-			window.setTitle("F1 Tracker : Lap Time Page");});
+			window.setTitle("F1 Tracker : Lap Time Page");
+			ContentUpdate.LapTime_refresh = true;});
 		Content_buttons[2].setOnAction(e -> {window.setScene(TimingPage_scene);
-			window.setTitle("F1 Tracker : Timing Page");});
+			window.setTitle("F1 Tracker : Timing Page");
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Box box1 = new Box();
 		box1.setHeight(120);
@@ -235,12 +262,30 @@ public class Main_menu extends Application{
 		    }
 		}).start();
 	   
+	   new Thread(new Runnable() {
+		    public void run() {
+		    	SetupUpdate.Setup_update();;
+		    }
+		}).start();
+	   
+	   new Thread(new Runnable() {
+		    public void run() {
+		    	Historical_lap_data.S1_and_S2();
+		    }
+		}).start();
+	   
 	   TrackPage_scene = TrackPage.TrackPage_scene();
-	   SetupPage_Brakes_scene = Brakes.Brakes_scene();
 	   ComparisonPage_scene = ComparisonPage.ComparisonPage_scene();
 	   GraphPage_scene = GraphPage.GraphPage_scene();
 	   LapTimePage_scene = LapTimePage.LapTimePage_scene();
 	   TimingPage_scene = TimingPage.TimingPage_scene();
+	   
+	   SetupPage_Brakes_scene = Brakes.Brakes_scene();
+	   SetupPage_Suspension_Geometry_scene = Suspension_Geometry.Suspension_Geometry_scene();
+	   SetupPage_Suspension_scene = Suspension.Suspension_scene();
+	   SetupPage_Transmission_scene = Transmission.Transmission_scene();
+	   SetupPage_Tyres_scene = Tyres.Tyres_scene();
+	   SetupPage_Aerodynamics_scene = Aerodynamics.Aerodynamics_scene();
 		
 		try {
 			//window.setY(257.0);
@@ -256,6 +301,7 @@ public class Main_menu extends Application{
 	}
 	
 	public void PreferenceSave() {
-		
+		File_reader.settings.write();
+		System.exit(0);
 	}
 }

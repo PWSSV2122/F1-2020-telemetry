@@ -1,9 +1,17 @@
 package application;
 
+import contentUpdate.ContentUpdate;
+import contentUpdate.SetupUpdate;
+import file_system.L1;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
@@ -13,8 +21,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class LapTimePage {
+	
+	public static TableView<Tabel_object> Tabel = new TableView<Tabel_object>();
+	public static ComboBox<String> people = new ComboBox<String>();
+	public static TableColumn<Tabel_object, String> Lap = new TableColumn<Tabel_object, String>("Lap");
+	
 	public static Scene LapTimePage_scene() {
 		Scene LapTimePage;
 		
@@ -76,17 +90,27 @@ public class LapTimePage {
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
 		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");});
+			Main_menu.window.setTitle("F1 Tracker : Track Page");
+			ContentUpdate.LapTime_refresh = false;
+			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");});
+			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+			ContentUpdate.LapTime_refresh = false;
+			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");});
+			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+			ContentUpdate.LapTime_refresh = false;
+			ContentUpdate.Comparison_refresh = true;});
 		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");});
+			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+			ContentUpdate.LapTime_refresh = false;
+			ContentUpdate.Graph_refresh = true;});
 		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
 			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");});
 		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");});
+			Main_menu.window.setTitle("F1 Tracker : Timing Page");
+			ContentUpdate.LapTime_refresh = false;
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
 		left_background.setWidth(111);
@@ -112,6 +136,56 @@ public class LapTimePage {
 		ImageView imageView = new ImageView("images/menubar_img.png"); 
 		imageView.setFitWidth(111);
 		imageView.fitHeightProperty().bind(LapTimePage.heightProperty());
+		
+		VBox Content = new VBox();
+		HBox content_bar = new HBox();
+		
+		Text Timings = new Text("Lap Times");
+		Timings.setTranslateX(10);
+		Timings.setTranslateY(6);
+		Timings.setStyle("-fx-font: 24 arial;");
+		content_bar.getChildren().add(Timings);
+		
+		people.setTranslateX(20);
+		people.setTranslateY(6);
+		people.setPrefWidth(150);
+		people.setOnMouseClicked(e -> {
+			ContentUpdate.dropdown_update();
+		});
+		people.setOnAction(e -> {
+			String name = people.getValue();
+			for (int i = 0; i < L1.name.length; i++) {
+				if (L1.name[i] == name) {
+					ContentUpdate.TimingPage_car = i;
+				}
+			}
+		});
+		content_bar.getChildren().add(people);
+		Content.getChildren().add(content_bar);
+		
+		Rectangle H_line_Content = new Rectangle();
+		H_line_Content.setHeight(1);
+		H_line_Content.setWidth(1520);
+		H_line_Content.setStroke(Color.RED);
+		H_line_Content.setTranslateY(11);
+		Content.getChildren().add(H_line_Content);
+		
+		Tabel.getStylesheets().add("application/css/LapTimeTabel.css");
+		Tabel.setPrefHeight(2000);
+		Tabel.setTranslateY(12);
+		Tabel.setTranslateX(1);
+		Content.getChildren().add(Tabel);
+		
+		Lap.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>("Lap".replace(" ", "_")));
+		Tabel.getColumns().add(Lap);
+		Lap.setSortType(TableColumn.SortType.DESCENDING);
+		
+		String[] Colom_names = new String[] {"Time", "S1", "S2", "S3"};
+		for (int i = 0; i < Colom_names.length; i++) {
+			TableColumn<Tabel_object, String> test = new TableColumn<Tabel_object, String>(Colom_names[i]);
+			test.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>(Colom_names[i].replace(" ", "_")));
+			Tabel.getColumns().addAll(test);
+		}
 				
 		top_level.setTop(top_box);
 		top_box.getChildren().addAll(top_pane, H_line);
@@ -125,8 +199,8 @@ public class LapTimePage {
 		left_scroll.setContent(left_box2);
 		left_box2.getChildren().addAll(menubar_buttons);
 		
-		//top_level.setCenter(center_pane);
-		//center_pane.getChildren().addAll(background_menu, center_background);
+		top_level.setCenter(center_pane);
+		center_pane.getChildren().addAll(background_menu, center_background, Content);
 		
 	    left_box2.setOnScroll(new EventHandler<ScrollEvent>() {
 	        @Override
@@ -142,10 +216,13 @@ public class LapTimePage {
 	   Main_menu.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
+		   H_line_Content.setWidth((double) newVal - 130);
+		   Tabel.setMaxWidth((double) newVal - 132);
 	   });
 
 	   Main_menu.window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
+	       Tabel.setPrefHeight((double) newVal - 165);
 	   });
 	   
 	   
@@ -155,4 +232,35 @@ public class LapTimePage {
 		return LapTimePage;
 		
 	}
+	
+	public static class Tabel_object {
+        private final SimpleObjectProperty<String> Lap;
+        private final SimpleObjectProperty<String> Time;
+        private final SimpleObjectProperty<String> S1;
+        private final SimpleObjectProperty<String> S2;
+        private final SimpleObjectProperty<String> S3;
+
+        public Tabel_object(String Lap, String Time, String S1, String S2, String S3) {
+            this.Lap = new SimpleObjectProperty<>(Lap);
+            this.Time = new SimpleObjectProperty<>(Time);
+            this.S1 = new SimpleObjectProperty<>(S1);
+            this.S2 = new SimpleObjectProperty<>(S2);
+            this.S3 = new SimpleObjectProperty<>(S3);
+        }
+        public String getLap() {
+            return Lap.get();
+        }        
+        public String getTime() {
+            return Time.get();
+        }               
+        public String getS1() {
+            return S1.get();
+        }        
+        public String getS2() {
+            return S2.get();
+        }        
+        public String getS3() {
+            return S3.get();
+        }        
+    }
 }

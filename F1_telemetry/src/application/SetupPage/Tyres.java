@@ -2,9 +2,14 @@ package application.SetupPage;
 
 import application.Main_menu;
 import application.settings;
+import contentUpdate.ContentUpdate;
+import contentUpdate.SetupUpdate;
+import file_system.L1;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
@@ -15,9 +20,26 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class Tyres {
-	public static Scene Brakes_scene() {
+	
+	public static ComboBox<String> people = new ComboBox<String>();
+	public static Boolean NoChange = false;
+	
+	public static ProgressBar Front_Right_bar = new ProgressBar(0);
+	public static Text Front_Right_waarde = new Text(null);
+	
+	public static ProgressBar Front_Left_bar = new ProgressBar(0);
+	public static Text Front_Left_waarde = new Text(null);
+	
+	public static ProgressBar Rear_Right_bar = new ProgressBar(0);
+	public static Text Rear_Right_waarde = new Text(null);
+	
+	public static ProgressBar Rear_Left_bar = new ProgressBar(0);
+	public static Text Rear_Left_waarde = new Text(null);
+	
+	public static Scene Tyres_scene() {
 		Scene Tyres;
 		
 		BorderPane top_level = new BorderPane();
@@ -78,17 +100,29 @@ public class Tyres {
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
 		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");});
+			Main_menu.window.setTitle("F1 Tracker : Track Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");});
+			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+			SetupUpdate.Brakes_Boolean = false;
+			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");});
+			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Comparison_refresh = true;});
 		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");});
+			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = true;});
 		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");});
+			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.LapTime_refresh = true;});
 		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");});
+			Main_menu.window.setTitle("F1 Tracker : Timing Page");
+			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
 		left_background.setWidth(111);
@@ -114,6 +148,199 @@ public class Tyres {
 		ImageView imageView = new ImageView("images/menubar_img.png"); 
 		imageView.setFitWidth(111);
 		imageView.fitHeightProperty().bind(Tyres.heightProperty());
+		
+		HBox menu_items = new HBox();
+		
+		Text Setup = new Text("Setup");
+		Setup.setTranslateX(10);
+		Setup.setTranslateY(6);
+		Setup.setStyle("-fx-font: 24 arial;");
+		
+		Text Track = new Text("test");
+		Track.setTranslateX(30);
+		Track.setTranslateY(6);
+		Track.setStyle("-fx-font: 24 arial;");
+		
+		ComboBox<String> Pagina = new ComboBox<String>();
+		Pagina.setTranslateX(50);
+		Pagina.setTranslateY(6);
+		Pagina.setPrefWidth(150);
+		for (int i = 0; i < SetupUpdate.paginas.length; i++) {
+			Pagina.getItems().add(SetupUpdate.paginas[i]);
+		}
+		Pagina.setValue(SetupUpdate.paginas[4]);
+		Pagina.setOnAction(e -> {
+			if (NoChange == false) {
+				NoChange = true;
+				SetupUpdate.Tyres_Boolean = false;
+				if (Pagina.getValue() == SetupUpdate.paginas[0]) {
+					Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
+					SetupUpdate.Brakes_Boolean = true;
+					Main_menu.window.setTitle("F1 Tracker : Setup Brake");
+				} else if (Pagina.getValue() == SetupUpdate.paginas[1]) {
+					Main_menu.window.setScene(Main_menu.SetupPage_Suspension_Geometry_scene);
+					SetupUpdate.Suspension_Geometry_Boolean = true;
+					Main_menu.window.setTitle("F1 Tracker : Setup Suspension Geometry");
+				} else if (Pagina.getValue() == SetupUpdate.paginas[2]) {
+					Main_menu.window.setScene(Main_menu.SetupPage_Suspension_scene);
+					SetupUpdate.Suspension_Boolean = true;
+					Main_menu.window.setTitle("F1 Tracker : Setup Suspension");
+				} else if (Pagina.getValue() == SetupUpdate.paginas[3]) {
+					Main_menu.window.setScene(Main_menu.SetupPage_Transmission_scene);
+					SetupUpdate.Transmission_Boolean = true;
+					Main_menu.window.setTitle("F1 Tracker : Setup Transmission");
+				} else if (Pagina.getValue() == SetupUpdate.paginas[4]) {
+					Main_menu.window.setScene(Main_menu.SetupPage_Tyres_scene);
+					SetupUpdate.Tyres_Boolean = true;
+					Main_menu.window.setTitle("F1 Tracker : Setup Tyres");
+				} else if (Pagina.getValue() == SetupUpdate.paginas[5]) {
+					Main_menu.window.setScene(Main_menu.SetupPage_Aerodynamics_scene);
+					SetupUpdate.Aerodynamics_Boolean = true;
+					Main_menu.window.setTitle("F1 Tracker : Aerodynamics Tyres");
+				}
+			}
+			Pagina.setValue(SetupUpdate.paginas[4]);
+			NoChange = false;
+		});
+		
+		people.setTranslateX(70);
+		people.setTranslateY(6);
+		people.setPrefWidth(150);
+		people.setOnMouseClicked(e -> {
+			SetupUpdate.dropdown_update();
+		});
+		people.setOnAction(e -> {
+			String name = people.getValue();
+			for (int i = 0; i < L1.name.length; i++) {
+				if (L1.name[i] == name) {
+					SetupUpdate.setup_car = i;
+				}
+			}
+		});
+		
+		Rectangle[] Deviders = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle(), new Rectangle()};
+		int[] translate = new int[] {20, 40, 60, 80};
+		for (int i = 0; i < Deviders.length; i++) {
+			Deviders[i].setTranslateX(translate[i]);
+			Deviders[i].setHeight(35);
+			Deviders[i].setWidth(1);
+			Deviders[i].setStroke(Color.RED);
+			Deviders[i].setFill(Color.RED);
+		}
+		menu_items.getChildren().addAll(Setup, Deviders[0], Track, Deviders[1], Pagina, Deviders[2], people, Deviders[3]);
+		
+		Rectangle menu_items_underline = new Rectangle();
+		menu_items_underline.setWidth(Main_menu.test[0] - 115);
+		menu_items_underline.setHeight(1);
+		menu_items_underline.setStroke(Color.RED);
+		menu_items_underline.setFill(Color.RED);
+		
+		HBox Front_Right = new HBox();
+		Text Front_Right_text = new Text("Front Right Tyre Pressure");
+		Front_Right_text.setStyle("-fx-font: 24 arial;");
+		Front_Right_bar.setProgress(0.5);
+		Front_Right_bar.setPrefHeight(28);
+		Front_Right_bar.setPrefWidth(300);
+		Front_Right_waarde.setStyle("-fx-font: 24 arial;");
+		Text Front_Right_range = new Text("21,0 - 25,0 PSI");
+		Front_Right_range.setStyle("-fx-font: 24 arial;");
+		
+		Rectangle[] Front_Right_spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle()};
+		int[] Front_Right_heigth = new int[] {1, 1, 1};
+		int[] Front_Right_width = new int[] {100, 10, 100};
+		for (int i = 0; i < Front_Right_spacers.length; i++) {
+			Front_Right_spacers[i].setHeight(Front_Right_heigth[i]);
+			Front_Right_spacers[i].setWidth(Front_Right_width[i]);
+			Front_Right_spacers[i].setVisible(false);
+		}
+		Front_Right.getChildren().addAll(Front_Right_text, Front_Right_spacers[0], Front_Right_bar, Front_Right_spacers[1], Front_Right_waarde, Front_Right_spacers[2], Front_Right_range);
+		Front_Right.setTranslateX(10);
+		
+		HBox Front_Left = new HBox();
+		Text Front_Left_text = new Text("Front Left Tyre Pressure");
+		Front_Left_text.setStyle("-fx-font: 24 arial;");
+		Front_Left_bar.setProgress(0.5);
+		Front_Left_bar.setPrefHeight(28);
+		Front_Left_bar.setPrefWidth(300);
+		Front_Left_waarde.setStyle("-fx-font: 24 arial;");
+		Text Front_Left_range = new Text("21,0 - 25,0 PSI");
+		Front_Left_range.setStyle("-fx-font: 24 arial;");
+		
+		Rectangle[] Front_Left_spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle()};
+		int[] Front_Left_heigth = new int[] {1, 1, 1};
+		int[] Front_Left_width = new int[] {116, 10, 100};
+		for (int i = 0; i < Front_Left_spacers.length; i++) {
+			Front_Left_spacers[i].setHeight(Front_Left_heigth[i]);
+			Front_Left_spacers[i].setWidth(Front_Left_width[i]);
+			Front_Left_spacers[i].setVisible(false);
+		}
+		Front_Left.getChildren().addAll(Front_Left_text, Front_Left_spacers[0], Front_Left_bar, Front_Left_spacers[1], Front_Left_waarde, Front_Left_spacers[2], Front_Left_range);
+		Front_Left.setTranslateX(10);
+		
+		HBox Rear_Right = new HBox();
+		Text Rear_Right_text = new Text("Rear Right Tyre Pressure");
+		Rear_Right_text.setStyle("-fx-font: 24 arial;");
+		Rear_Right_bar.setProgress(0.5);
+		Rear_Right_bar.setPrefHeight(28);
+		Rear_Right_bar.setPrefWidth(300);
+		Rear_Right_waarde.setStyle("-fx-font: 24 arial;");
+		Text Rear_Right_range = new Text("19,5 - 23,5 PSI");
+		Rear_Right_range.setStyle("-fx-font: 24 arial;");
+		
+		Rectangle[] Rear_Right_spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle()};
+		int[] Rear_Right_heigth = new int[] {1, 1, 1};
+		int[] Rear_Right_width = new int[] {104, 10, 100};
+		for (int i = 0; i < Rear_Right_spacers.length; i++) {
+			Rear_Right_spacers[i].setHeight(Rear_Right_heigth[i]);
+			Rear_Right_spacers[i].setWidth(Rear_Right_width[i]);
+			Rear_Right_spacers[i].setVisible(false);
+		}
+		Rear_Right.getChildren().addAll(Rear_Right_text, Rear_Right_spacers[0], Rear_Right_bar, Rear_Right_spacers[1], Rear_Right_waarde, Rear_Right_spacers[2], Rear_Right_range);
+		Rear_Right.setTranslateX(10);
+		
+		HBox Rear_Left = new HBox();
+		Text Rear_Left_text = new Text("Rear Left Tyre Pressure");
+		Rear_Left_text.setStyle("-fx-font: 24 arial;");
+		Rear_Left_bar.setProgress(0.5);
+		Rear_Left_bar.setPrefHeight(28);
+		Rear_Left_bar.setPrefWidth(300);
+		Rear_Left_waarde.setStyle("-fx-font: 24 arial;");
+		Text Rear_Left_range = new Text("19,5 - 23,5 PSI");
+		Rear_Left_range.setStyle("-fx-font: 24 arial;");
+		
+		Rectangle[] Rear_Left_spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle()};
+		int[] Rear_Left_heigth = new int[] {1, 1, 1};
+		int[] Rear_Left_width = new int[] {120, 10, 100};
+		for (int i = 0; i < Rear_Left_spacers.length; i++) {
+			Rear_Left_spacers[i].setHeight(Rear_Left_heigth[i]);
+			Rear_Left_spacers[i].setWidth(Rear_Left_width[i]);
+			Rear_Left_spacers[i].setVisible(false);
+		}
+		Rear_Left.getChildren().addAll(Rear_Left_text, Rear_Left_spacers[0], Rear_Left_bar, Rear_Left_spacers[1], Rear_Left_waarde, Rear_Left_spacers[2], Rear_Left_range);
+		Rear_Left.setTranslateX(10);
+		
+		HBox Image = new HBox();
+		Rectangle Image_spacer = new Rectangle();
+		Image_spacer.setHeight(1);
+		Image_spacer.setWidth(400);
+		Image_spacer.setVisible(false);
+		ImageView Brake_image = new ImageView("images/setup/Tyres.png");
+		Brake_image.setPreserveRatio(true);
+		Brake_image.setFitWidth(1010);
+		Image.getChildren().addAll(Image_spacer, Brake_image);
+		
+		VBox Items = new VBox();
+		
+		
+		Rectangle[] spacers = new Rectangle[] {new Rectangle(), new Rectangle(), new Rectangle(), new Rectangle(), new Rectangle()};
+		int[] heigth = new int[] {10, 25, 25, 25, 290};
+		int[] width = new int[] {1, 1, 1, 1, 1};
+		for (int i = 0; i < spacers.length; i++) {
+			spacers[i].setHeight(heigth[i]);
+			spacers[i].setWidth(width[i]);
+			spacers[i].setVisible(false);
+		}
+		Items.getChildren().addAll(menu_items, menu_items_underline ,spacers[0], Front_Right, spacers[1], Front_Left, spacers[2], Rear_Right, spacers[3], Rear_Left, spacers[4], Image);
 				
 		top_level.setTop(top_box);
 		top_box.getChildren().addAll(top_pane, H_line);
@@ -127,8 +354,8 @@ public class Tyres {
 		left_scroll.setContent(left_box2);
 		left_box2.getChildren().addAll(menubar_buttons);
 		
-		//top_level.setCenter(center_pane);
-		//center_pane.getChildren().addAll(background_menu, center_background);
+		top_level.setCenter(center_pane);
+		center_pane.getChildren().addAll(background_menu, center_background, Items);
 		
 	    left_box2.setOnScroll(new EventHandler<ScrollEvent>() {
 	        @Override

@@ -1,0 +1,2 @@
+Poort:20777
+Send Rate:60

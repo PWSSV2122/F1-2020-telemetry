@@ -9,23 +9,31 @@ import java.net.DatagramSocket;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import application.ComparisonPage;
+import application.GraphPage;
+import contentUpdate.ContentUpdate;
+import data_compute.Historical_graph_data;
+import data_compute.Historical_lap_data;
 import data_compute.delta;
 import file_system.L1;
 import file_system.data_manager;
-
+import javafx.application.Platform;
 import java.nio.ByteBuffer;
 
 public class Packet_recieve {
 	public static boolean recieve_on;
 	public static String[] first_frameIdentifier_name = new String[] {"Car_status", "car_telemetry", "lap_data", "motion"};
 	public static int Player_lap = 0;
+	public static ExecutorService service = Executors.newFixedThreadPool(2);
 	public static void recieve_class() {
 		data_decode();
 		boolean[] first_packet = new boolean[] {true, true, true, true};
 		int[] packetid = new int[] {7, 6, 2, 0};
 		try {
-			DatagramSocket socket = new DatagramSocket(20777); //var
+			DatagramSocket socket = new DatagramSocket(Settings.Settings_var.Poort); //var
 			while (recieve_on == true) {
 				byte[] test = new byte[2000];
 				DatagramPacket response = new DatagramPacket(test, test.length);
@@ -172,13 +180,35 @@ public class Packet_recieve {
 				data_manager.data(Needed_data, (byte) Header.get("packetId"), (float) Header.get("sessionTime"), (int) Header.get("frameIdentifier"));
 				
 				if (PacketId == 2) {
+					for(int i = 0; i < L1.numActiveCars; i++) {
+	    				L1.car_positions.put((byte) (L1.carPosition[i] - 1), (byte)i);
+	    			}
 					for (int i = 0; i < 22; i++) {
 						delta.speed_of_players((float) Data_decode.get("m_lapDistance_" + i), i);
-						L1.position.put((byte) Data_decode.get("m_carPosition_" + i), i);
+						if (Historical_lap_data.lap_num[i] != (byte)Data_decode.get("m_currentLapNum_" + i) && (byte) Data_decode.get("m_currentLapNum_" + i) != (byte)0) {
+							Historical_lap_data.Lap_and_S3((byte) Data_decode.get("m_currentLapNum_" + i), i);
+							final int p = i;
+							Platform.runLater(new Runnable() {
+							    @Override
+							    public void run() {
+							    	for (int o = 0; o < 24; o++) {
+										try {
+											ComparisonPage.series[p][o].getData().clear();
+										} catch (Exception t) {
+											t.printStackTrace();
+										}
+									}
+							    	Historical_graph_data.laatste_percentage[p] = 0;
+							    }
+							});
+						}
+						Historical_lap_data.lap_num[i] = (byte) Data_decode.get("m_currentLapNum_" + i);
 					}
-					delta.delta_time();
+					Historical_graph_data.percentage();
 				} else if (PacketId == 1) {
 					delta.trackLength = (Short) Data_decode.get("m_trackLength");
+				} else if (PacketId == 7) {
+					Historical_graph_data.data();
 				}
 			}
 			socket.close();
@@ -191,7 +221,7 @@ public class Packet_recieve {
 			"Final_Classification_Packet", "Lobby_Info_Packet", "Needed_data"};
 	static HashMap<String, HashMap<Integer, String>> Packet_names = new HashMap<String, HashMap<Integer, String>>();
 	static HashMap<String, HashMap<Integer, int[]>> Packet_byte_array = new HashMap<String, HashMap<Integer, int[]>>();;
-	static String[] Needed_data_names = new String[74];
+	static String[] Needed_data_names = new String[77];
 	static int[] repeats = new int[10];
 	private static void data_decode() {
 		String Line;
