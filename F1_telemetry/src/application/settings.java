@@ -1,6 +1,5 @@
 package application;
 
-import data_compute.Historical_lap_data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;

@@ -1,5 +1,7 @@
 package application;
 	
+import java.io.File;
+
 import File_reader.Names;
 import Inkoming.Packet_recieve;
 import application.SetupPage.Aerodynamics;
@@ -92,7 +94,7 @@ public class Main_menu extends Application{
 		Button[] menubar_buttons = new Button[6];
 		String[] names = new String[] {"TrackPage", "SetupPage", "ComparisonPage", "GraphPage", "LapTimePage", "TimingPage"};
 		ImageView[] menubar_image = new ImageView[6];
-		for (int i = 0; i < (6); i++) {
+		for (int i = 0; i < 6; i++) {
 			menubar_buttons[i] = new Button();
 			menubar_image[i] = new ImageView("images/icons/" + names[i] + ".png");
 			menubar_buttons[i].getStylesheets().add(getClass().getResource("css/menu_button.css").toExternalForm());
@@ -302,6 +304,12 @@ public class Main_menu extends Application{
 	
 	public void PreferenceSave() {
 		File_reader.settings.write();
+		File file = new File("src/Saves/temp/Lap_Data.dec");
+		System.out.println(file.length());
+		if (file.length() == 0) {
+		} else {
+			Save_file.display("Save File");
+		}
 		System.exit(0);
 	}
 }

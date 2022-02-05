@@ -11,9 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import application.ComparisonPage;
 import application.GraphPage;
+import application.Save_file;
 import contentUpdate.ContentUpdate;
 import data_compute.Historical_graph_data;
 import data_compute.Historical_lap_data;
@@ -27,7 +29,8 @@ public class Packet_recieve {
 	public static boolean recieve_on;
 	public static String[] first_frameIdentifier_name = new String[] {"Car_status", "car_telemetry", "lap_data", "motion"};
 	public static int Player_lap = 0;
-	public static ExecutorService service = Executors.newFixedThreadPool(2);
+	public static ExecutorService service = (ThreadPoolExecutor)Executors.newFixedThreadPool(2);
+	public static int queue_size = 0;
 	public static void recieve_class() {
 		data_decode();
 		boolean[] first_packet = new boolean[] {true, true, true, true};
@@ -177,7 +180,7 @@ public class Packet_recieve {
 						}
 					}
 				}
-				data_manager.data(Needed_data, (byte) Header.get("packetId"), (float) Header.get("sessionTime"), (int) Header.get("frameIdentifier"));
+				data_manager.data(Needed_data, PacketId, (float) Header.get("sessionTime"), (int) Header.get("frameIdentifier"));
 				
 				if (PacketId == 2) {
 					for(int i = 0; i < L1.numActiveCars; i++) {
@@ -209,6 +212,10 @@ public class Packet_recieve {
 					delta.trackLength = (Short) Data_decode.get("m_trackLength");
 				} else if (PacketId == 7) {
 					Historical_graph_data.data();
+				} else if (PacketId == 3) {
+					if (Data_decode.get("m_eventStringCode") == "SEND") {
+						Save_file.display("Save File");
+					}
 				}
 			}
 			socket.close();
