@@ -60,9 +60,6 @@ public class data_manager {
 					}
 				}
 			}
-			if (packetID == 5) {
-				System.out.println(L2_data_temp_save.get("offThrottle_20"));
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

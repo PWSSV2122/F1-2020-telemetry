@@ -141,6 +141,7 @@ public class data_compressie {
 			e.printStackTrace();
 		}
 		byte[] data = new BigInteger(output, 2).toByteArray();
+		System.out.println(data.length);
 		try (FileOutputStream write = new FileOutputStream("src/Saves/temp/" + Packet + ".dec", true)) {
 			write.write(data);
 		} catch (Exception e) {
