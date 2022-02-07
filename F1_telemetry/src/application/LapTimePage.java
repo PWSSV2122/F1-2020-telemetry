@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
@@ -89,6 +90,22 @@ public class LapTimePage {
 			menubar_image[i].setFitWidth(90);
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
+		
+		Tooltip[] tooltip_menubuttons = new Tooltip[6];
+		for (int i = 0; i <6; i++) {
+				tooltip_menubuttons[i] = new Tooltip();
+				tooltip_menubuttons[i].setText(names[i]);
+				menubar_buttons[i].setTooltip(tooltip_menubuttons[i]);
+				Tooltip.install(menubar_buttons[i], tooltip_menubuttons[i]);	
+				tooltip_menubuttons[i].setStyle(
+						"-fx-background-color: #3F3F3F;"
+					+	"-fx-text-fill: white;"
+					+	"-fx-border-width: 1px;"
+					+	"-fx-border-color: red;"
+					+ 	"-fx-font-size: 15px;"
+				);	
+		}
+		
 		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
 			Main_menu.window.setTitle("F1 Tracker : Track Page");
 			ContentUpdate.LapTime_refresh = false;

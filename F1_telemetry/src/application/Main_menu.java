@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
@@ -171,6 +172,21 @@ public class Main_menu extends Application{
 			content.add(Content_buttons[i], table[i][0], table[i][1]);
 			Content_buttons[i].setPadding(Insets.EMPTY);
 		}
+		
+		Tooltip[] tooltip_menubuttons = new Tooltip[6];
+		for (int i = 0; i <6; i++) {
+				tooltip_menubuttons[i] = new Tooltip();
+				tooltip_menubuttons[i].setText(names[i]);
+				menubar_buttons[i].setTooltip(tooltip_menubuttons[i]);
+				Tooltip.install(menubar_buttons[i], tooltip_menubuttons[i]);	
+				tooltip_menubuttons[i].setStyle(
+						"-fx-background-color: #3F3F3F;"
+					+	"-fx-text-fill: white;"
+					+	"-fx-border-width: 1px;"
+					+	"-fx-border-color: red;"
+					+ 	"-fx-font-size: 15px;"
+				);	
+		}	
 		
 		Content_buttons[0].setOnAction(e -> {window.setScene(TrackPage_scene);
 			window.setTitle("F1 Tracker : Track Page");
