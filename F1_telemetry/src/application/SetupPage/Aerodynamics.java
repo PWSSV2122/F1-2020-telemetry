@@ -167,18 +167,18 @@ public class Aerodynamics {
 		Setup.setTranslateY(6);
 		Setup.setStyle("-fx-font: 24 arial;");
 		
-		Text Track = new Text("test");
+		Text Track = new Text("tAst");
 		Track.setTranslateX(30);
 		Track.setTranslateY(6);
 		Track.setStyle("-fx-font: 24 arial;");
 		
 		ComboBox<String> Pagina = new ComboBox<String>();
 		Pagina.setTranslateX(50);
-		Pagina.setTranslateY(6);
-		Pagina.setPrefWidth(150);
+		Pagina.setPrefWidth(250);
 		for (int i = 0; i < SetupUpdate.paginas.length; i++) {
 			Pagina.getItems().add(SetupUpdate.paginas[i]);
 		}
+		Pagina.getStylesheets().add("application/css/Dropdown.css");
 		Pagina.setValue(SetupUpdate.paginas[5]);
 		Pagina.setOnAction(e -> {
 			if (NoChange == false) {
@@ -214,8 +214,8 @@ public class Aerodynamics {
 			NoChange = false;
 		});
 		
+		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(70);
-		people.setTranslateY(6);
 		people.setPrefWidth(150);
 		people.setOnMouseClicked(e -> {
 			SetupUpdate.dropdown_update();

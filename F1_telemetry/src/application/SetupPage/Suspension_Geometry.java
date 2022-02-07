@@ -180,12 +180,13 @@ public class Suspension_Geometry {
 		
 		ComboBox<String> Pagina = new ComboBox<String>();
 		Pagina.setTranslateX(50);
-		Pagina.setTranslateY(6);
-		Pagina.setPrefWidth(150);
+		Pagina.setPrefWidth(280);
 		for (int i = 0; i < SetupUpdate.paginas.length; i++) {
 			Pagina.getItems().add(SetupUpdate.paginas[i]);
 		}
 		Pagina.setValue(SetupUpdate.paginas[1]);
+		Pagina.getStylesheets().add("application/css/Dropdown.css");
+		Pagina.getStylesheets().add("application/css/Dropdown.css");
 		Pagina.setOnAction(e -> {
 			if (NoChange == false) {
 				NoChange = true;
@@ -219,9 +220,9 @@ public class Suspension_Geometry {
 			Pagina.setValue(SetupUpdate.paginas[1]);
 			NoChange = false;
 		});
-		
+		people.getStylesheets().add("application/css/Dropdown.css");
+		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(70);
-		people.setTranslateY(6);
 		people.setPrefWidth(150);
 		people.setOnMouseClicked(e -> {
 			SetupUpdate.dropdown_update();

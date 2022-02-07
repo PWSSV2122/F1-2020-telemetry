@@ -174,11 +174,11 @@ public class Brakes {
 		
 		ComboBox<String> Pagina = new ComboBox<String>();
 		Pagina.setTranslateX(50);
-		Pagina.setTranslateY(6);
 		Pagina.setPrefWidth(150);
 		for (int i = 0; i < SetupUpdate.paginas.length; i++) {
 			Pagina.getItems().add(SetupUpdate.paginas[i]);
 		}
+		Pagina.getStylesheets().add("application/css/Dropdown.css");
 		Pagina.setValue(SetupUpdate.paginas[0]);
 		Pagina.setOnAction(e -> {
 			if (NoChange == false) {
@@ -213,9 +213,8 @@ public class Brakes {
 			Pagina.setValue(SetupUpdate.paginas[0]);
 			NoChange = false;
 		});
-		
+		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(70);
-		people.setTranslateY(6);
 		people.setPrefWidth(150);
 		people.setOnMouseClicked(e -> {
 			SetupUpdate.dropdown_update();
