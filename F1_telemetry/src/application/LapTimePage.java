@@ -163,6 +163,7 @@ public class LapTimePage {
 		Timings.setStyle("-fx-font: 24 arial;");
 		content_bar.getChildren().add(Timings);
 		
+		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(20);
 		people.setTranslateY(6);
 		people.setPrefWidth(150);

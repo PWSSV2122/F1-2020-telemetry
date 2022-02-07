@@ -45,11 +45,11 @@ public class Packet_recieve {
 				String quote = new String(test, 0, response.getLength());
 				byte[] e = quote.getBytes();
 				
-//		        for (byte b : e) {
-//		            String st = String.format("%02X ", b);
-//		            System.out.print(st);
-//		        }
-//		        System.out.println("\n");
+		        for (byte b : e) {
+		            String st = String.format("%02X ", b);
+		            System.out.print(st);
+		        }
+		        System.out.println("\n");
 
 		        HashMap<String, Object> Header = new HashMap<String, Object>();
 				Header.put("packetFormat", (short)((e[1] & 0xFF) << 8) | (e[0] & 0xFF));

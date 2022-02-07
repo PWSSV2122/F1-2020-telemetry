@@ -168,11 +168,11 @@ public class GraphPage {
 		HBox Items = new HBox();
 		Text Graph_Text = new Text("Graph");
 		Graph_Text.setTranslateX(10);
-		Graph_Text.setTranslateY(6);
+		Graph_Text.setTranslateY(5);
 		Graph_Text.setStyle("-fx-font: 24 arial;");
 		
+		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(30);
-		people.setTranslateY(6);
 		people.setPrefWidth(150);
 		people.setOnMouseClicked(e -> {
 			ContentUpdate.dropdown_update();

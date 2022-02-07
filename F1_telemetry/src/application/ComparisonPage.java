@@ -172,12 +172,12 @@ public class ComparisonPage {
 		HBox Items = new HBox();
 		Text Graph_Text = new Text("Graph");
 		Graph_Text.setTranslateX(10);
-		Graph_Text.setTranslateY(6);
+		Graph_Text.setTranslateY(5);
 		Graph_Text.setStyle("-fx-font: 24 arial;");
 		
 		ComboBox<String> Compair_select = new ComboBox<String>();
+		Compair_select.getStylesheets().add("application/css/Dropdown.css");
 		Compair_select.setTranslateX(30);
-		Compair_select.setTranslateY(6);
 		Compair_select.setPrefWidth(190);
 		Compair_select.setValue(Names[0]);
 		for (int i = 0; i < Names.length; i++) {
@@ -202,8 +202,8 @@ public class ComparisonPage {
 			}
 		});
 		
+		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(50);
-		people.setTranslateY(6);
 		people.setPrefWidth(150);
 		people.setOnMouseClicked(e -> {
 			ContentUpdate.dropdown_update();
@@ -228,8 +228,8 @@ public class ComparisonPage {
 			}
 		});
 		
+		people2.getStylesheets().add("application/css/Dropdown.css");
 		people2.setTranslateX(70);
-		people2.setTranslateY(6);
 		people2.setPrefWidth(150);
 		people2.setOnMouseClicked(e -> {
 			ContentUpdate.dropdown_update();
