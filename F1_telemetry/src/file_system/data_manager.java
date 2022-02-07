@@ -29,34 +29,33 @@ public class data_manager {
 						if (L1 instanceof byte[]) {
 							byte[] byte_type = (byte[]) L1;
 							byte_type[o] = (byte) temp_save.get(Name_l1 + "_" + o);
-							L2_data_temp_save.put(Name_l1 + "_" + o, byte_type[o]);
+							L2_data_temp_save.put(data_names[i] + o, byte_type[o]);
 							L1.class.getField(Name_l1).set(byte_type, byte_type);
 						} else if (L1 instanceof float[]) {
 							float[] float_type = (float[]) L1;
 							float_type[o] = (float) temp_save.get(Name_l1 + "_" + o);
-							L2_data_temp_save.put(Name_l1 + "_" + o, float_type[o]);
+							L2_data_temp_save.put(data_names[i] + o, float_type[o]);
 							L1.class.getField(Name_l1).set(float_type, float_type);
 						} else if (L1 instanceof short[]) {
 							short[] double_type = (short[]) L1;
 							double_type[o] = (short) temp_save.get(Name_l1 + "_" + o);
-							L2_data_temp_save.put(Name_l1 + "_" + o, double_type[o]);
+							L2_data_temp_save.put(data_names[i] + o, double_type[o]);
 							L1.class.getField(Name_l1).set(double_type, double_type);
 						} else if (L1 instanceof String[]) {
 							String[] String_type = (String[]) L1;
 							String_type[o] = (String) temp_save.get(Name_l1 + "_" + o);
-							L2_data_temp_save.put(Name_l1 + "_" + o, String_type[o]);
+							L2_data_temp_save.put(data_names[i] + o, String_type[o]);
 							L1.class.getField(Name_l1).set(String_type, String_type);
 						}
 					}
 				} else {
-					String Name_l1 = data_names[i];
-					Object L1 = L1.class.getField(Name_l1).get(1);
+					Object L1 = L1.class.getField(data_names[i]).get(1);
 					if (L1 instanceof Byte) {
-						L2_data_temp_save.put(Name_l1, (byte)L1);
-						L1.class.getField(Name_l1).set(L1, (byte)temp_save.get(Name_l1));
+						L2_data_temp_save.put(data_names[i], (byte)L1);
+						L1.class.getField(data_names[i]).set(L1, (byte)temp_save.get(data_names[i]));
 					} else if (L1 instanceof Short) {
-						L2_data_temp_save.put(Name_l1, (Short)L1);
-						L1.class.getField(Name_l1).set(L1, (Short)temp_save.get(Name_l1));
+						L2_data_temp_save.put(data_names[i], (Short)L1);
+						L1.class.getField(data_names[i]).set(L1, (Short)temp_save.get(data_names[i]));
 					}
 				}
 			}
@@ -148,10 +147,7 @@ public class data_manager {
 				L2.Car_Status_packet.clear();
 			}
 		} else if (packetID == 5) {
-			//L2_data_temp_save.put("sessionTime", sessionTime);
-//			System.out.println(L2_data_temp_save);
 			L2.Car_Setup_packet.put(L2.Car_Setup_packet.size() + 1, L2_data_temp_save);
-//			System.out.println(L2.Car_Setup_packet.get(L2.Car_Setup_packet.size()));
 			if (L2.Car_Setup_packet.size() >= 10) {
 				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
 				encode_data.putAll(L2.Car_Setup_packet);
@@ -164,7 +160,6 @@ public class data_manager {
 				L2.Car_Setup_packet.clear();
 			}
 		} else if (packetID == 4) {
-			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Participants_packet.put(L2.Participants_packet.size() + 1, L2_data_temp_save);
 			if (L2.Participants_packet.size() >= 1) {
 				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
@@ -179,7 +174,6 @@ public class data_manager {
 				L2.Participants_packet.clear();
 			}
 		} else if (packetID == 1) {
-			L2_data_temp_save.put("sessionTime", sessionTime);
 			L2.Session_packet.put(L2.Session_packet.size() + 1, L2_data_temp_save);
 			if (L2.Session_packet.size() >= 10) {
 				final HashMap<Integer, HashMap<String, Object>> encode_data = new HashMap<Integer, HashMap<String, Object>>();
@@ -200,23 +194,19 @@ public class data_manager {
 	private static HashMap<Integer, HashMap<String, Object>> dropped_Packet(int array, int m_frameIdentifier, HashMap<String, Object> L2_data_temp_save) {
 		HashMap<Integer, HashMap<String, Object>> data_temp_save = new HashMap<Integer, HashMap<String, Object>>();
 		try {
-			String blabla = "frameIdentifier_" + Packet_recieve.first_frameIdentifier_name[array];
-			int frame = (int) L1.class.getField(blabla).get(1);
+			String Frame_name = "frameIdentifier_" + Packet_recieve.first_frameIdentifier_name[array];
+			int frame = (int) L1.class.getField(Frame_name).get(1);
 			if (m_frameIdentifier - 1 == frame) {
 				data_temp_save.put(0, new HashMap() {{putAll(L2_data_temp_save);}});
-					L1.class.getField(blabla).set(m_frameIdentifier, m_frameIdentifier);
+					L1.class.getField(Frame_name).set(m_frameIdentifier, m_frameIdentifier);
 			} else if (m_frameIdentifier <= frame) {
 				//System.out.println("error code #7"); //nog te bepalen error code
 			} else if (m_frameIdentifier >= frame + 2) {
-				L1.class.getField(blabla).set(m_frameIdentifier, m_frameIdentifier);
+				L1.class.getField(Frame_name).set(m_frameIdentifier, m_frameIdentifier);
 				int o = 0;
 				for (int i = 0; i < m_frameIdentifier - frame - 1; i++) {
 					data_temp_save.put(o, null);
 					o++;
-					//System.out.println("error code #8 : " + (frame + 1 + i) + " : " + Packet_recieve.first_frameIdentifier_name[array]); //nog te bepalen error code
-					if (Packet_recieve.first_frameIdentifier_name[array] == "lap_data") {
-						//System.out.println(L2.Lap_Data_packet.size());
-					}
 				}
 				data_temp_save.put(o + 1, new HashMap() {{putAll(L2_data_temp_save);}});
 			}
