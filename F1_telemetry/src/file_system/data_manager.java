@@ -203,12 +203,12 @@ public class data_manager {
 				//System.out.println("error code #7"); //nog te bepalen error code
 			} else if (m_frameIdentifier >= frame + 2) {
 				L1.class.getField(Frame_name).set(m_frameIdentifier, m_frameIdentifier);
-				int o = 0;
-				for (int i = 0; i < m_frameIdentifier - frame - 1; i++) {
-					data_temp_save.put(o, null);
-					o++;
+				int i = 0;
+				for (i = 0; i < m_frameIdentifier - frame - 1; i++) {
+					data_temp_save.put(i, null);
+					i++;
 				}
-				data_temp_save.put(o + 1, new HashMap() {{putAll(L2_data_temp_save);}});
+				data_temp_save.put(i + 1, new HashMap() {{putAll(L2_data_temp_save);}});
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

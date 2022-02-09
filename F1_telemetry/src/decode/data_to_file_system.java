@@ -25,48 +25,38 @@ public class data_to_file_system {
 		while (play_save == true) {
 			if (end_of_file == false) {
 				HashMap <String, HashMap<Integer, HashMap<String, Object>>> data2 = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
-				//System.out.println(data.get("Car_Setups").size());
 				for (int i = 0; i < 7; i++) {
 					data_decoder.tot_packet[i] = data_decoder.tot_packet[i] + packets[i];
-					//System.out.println(data_decoder.tot_packet[i]);
 				}
 				Thread getdata = new Thread(() -> {
 			        data2.putAll(data_decoder.decode(Save));
-			        //System.out.println(data2.get("Car_Setups").size());
 			    });
 				
 			    Thread Car_Setups = new Thread(() -> {
-			    	//System.out.println("Car_Setups");
 			    	data_inject(5, "Car_Setups", 500, 0);
 			    });
 
 			    Thread Car_Status = new Thread(() -> {
-			    	//System.out.println("Car_Status");
 			    	data_inject(7, "Car_Status", 1000 / Settings.Settings_var.send_rate, 1);
 			    });
 			    
 			    Thread Car_Telemetry = new Thread(() -> {
-			    	//System.out.println("Car_Telemetry");
 			    	data_inject(6, "Car_Telemetry", 1000 / Settings.Settings_var.send_rate, 2);
 			    });
 			    
 			    Thread Lap_Data = new Thread(() -> {
-			    	//System.out.println("Lap_Data");
 			    	data_inject(2, "Lap_Data", 1000 / Settings.Settings_var.send_rate, 3);
 			    });
 			    
 			    Thread Motion = new Thread(() -> {
-			    	//System.out.println("Motion");
 			    	data_inject(0, "Motion", 1000 / Settings.Settings_var.send_rate, 4);
 			    });
 			    
 			    Thread Participants = new Thread(() -> {
-			    	//System.out.println("Participants");
 			    	data_inject(4, "Participants", 500, 5);
 			    });
 			    
 			    Thread Session = new Thread(() -> {
-			    	//System.out.println("Session");
 			    	data_inject(1, "Session", 500, 6);
 			    });
 			    
@@ -93,23 +83,20 @@ public class data_to_file_system {
 				}
 			    cycles++;
 			    data.putAll(data2);
-			    //System.out.println("Done");
 			}
 		}
 	}
 	
 	private static void data_inject(int pakket_int, String pakket_name, long wait, int a) {
 		try {
-			//int pakket = data_decoder.tot_packet[pakket_int] - packets[pakket_int];
 			String[] PacketID_name = new String[] {"Motion", "Session", "Lap_Data", "Event", "Participants", "Car_Setups", "Car_Telemetry", "Car_Status", "Final_Classificationt", "Lobby_Info", "Needed"};
 			String[] data_names = Names.Needed_data_packet.get(PacketID_name[pakket_int]);
 			int stop = 0;
-			for (int i = 0; i < data_names.length; i++) {
+			for (int i = 0; i < 30; i++) {
 				if (data_names[i] != null) {
 					stop++;
 				}
 			}
-			//System.out.println(stop);
 			
 			for (int i = cycles * packets[a]; i < (cycles + 1) * packets[a]; i++) {
 				long start  = System.currentTimeMillis();
@@ -140,9 +127,6 @@ public class data_to_file_system {
 										L1.class.getField(Name_l1).set(double_type, double_type);
 									} catch (Exception e) {
 									}
-//									if (Name_l1.equals("speed")) {
-//										System.out.println(Name_l1 + "_" + p + " : " + data.get(PacketID_name[pakket_int]).get(i).get(Name_l1 + "_" + p) + " : " + double_type[p]);
-//									}
 								} else if (L1 instanceof String[]) {
 									String[] String_type = (String[]) L1;
 									try {
@@ -156,15 +140,12 @@ public class data_to_file_system {
 							String Name_l1 =  data_names[o];
 							Object L1 = L1.class.getField(Name_l1).get(1);
 							if (L1 instanceof Byte) {
-								//System.out.println(Name_l1 + " : " + data.get(PacketID_name[pakket_int]).get(i));
 								L1.class.getField(Name_l1).set(Name_l1, (byte)data.get(PacketID_name[pakket_int]).get(i).get(Name_l1));
 							} else if (L1 instanceof Short) {
 								L1.class.getField(Name_l1).set(Name_l1, (Short)data.get(PacketID_name[pakket_int]).get(i).get(Name_l1));
 							}
 						}
 					}
-				} else {
-					System.out.println("LOST");
 				}
 				if (pakket_int == 2) {
 					for(int o = 0; o < L1.numActiveCars; o++) {
@@ -205,7 +186,6 @@ public class data_to_file_system {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-		       // System.out.println(pakket_name + " : " + i + " : " + L1.speed[0]);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

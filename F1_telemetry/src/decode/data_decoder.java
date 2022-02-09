@@ -1,6 +1,7 @@
 package decode;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
@@ -8,8 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
-
 import File_reader.Names;
 
 public class data_decoder {
@@ -17,51 +16,29 @@ public class data_decoder {
 	public static int[] tot_packet = new int[] {20, Settings.Settings_var.send_rate * 10, Settings.Settings_var.send_rate * 10,
 			Settings.Settings_var.send_rate * 10, Settings.Settings_var.send_rate * 10, 2, 20};
 	
-	//public static int[] tot_packet = new int[] {10000, 10000, 10000, 10000, 10000, 10000, 10000};
-	
 	public static String[] packetid = new String[] {"Car_Setups", "Car_Status", "Car_Telemetry", "Lap_Data", "Motion", "Participants", "Session"};
-	public static int packetcounter = 0;
 	private static int[] starting_point = new int[8];
 	public static HashMap <String, HashMap<Integer, HashMap<String, Object>>> decode(String save) {
 		HashMap <String, HashMap<Integer, HashMap<String, Object>>> decoded_data = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
+		
 		try {
-			long start = System.currentTimeMillis();
 			for (int i = 0; i < 7; i++) {
-				
 				HashMap<String, Byte> data_codes_string = new HashMap<String, Byte>();
 				HashMap<Byte, String> data_codes_byte = new HashMap<Byte, String>();
 
-				byte Code = 0;
+
 				for (int o = 0; o < Names.Needed_data_packet.get(packetid[i]).length; o++) {
 					if (Names.Needed_data_packet.get(packetid[i])[o] != null) {
-						if (Names.Needed_data_byte.get(packetid[i])[o].length() % 8 != 0) {
-						  	System.out.println("error code #7"); //nog te bepalen error code
-					    } else {
-						    for (int p = 0; p < Names.Needed_data_byte.get(packetid[i])[o].length(); p++) {
-						        char c = Names.Needed_data_byte.get(packetid[i])[o].charAt(p);
-						        if (c == '1') {
-						        	Code |= 0x80 >> (p & 0x7);
-						        } else if (c != '0') {
-						            throw new IllegalArgumentException("Invalid char in binary string : " + c + " : should be 1 or 0");
-						        }
-						    }
+						byte Code = 0;
+						if (Names.Needed_data_byte.get(packetid[i])[o].length() % 8 == 0) {
+							Code = new BigInteger(Names.Needed_data_byte.get(packetid[i])[o], 2).toByteArray()[0];
 						}
 						data_codes_string.put(Names.Needed_data_packet.get(packetid[i])[o], Code);
 						data_codes_byte.put(Code, Names.Needed_data_packet.get(packetid[i])[o]);
-						Code = 0;
-					} else {
 					}
 				}
 				
-				byte Header = 0;
-				for (int p = 0; p < Names.Needed_data_byte.get("Header")[0].length(); p++) {
-					char c = Names.Needed_data_byte.get("Header")[0].charAt(p);
-				    if (c == '1') {
-				    	Header |= 0x80 >> (p & 0x7);
-				    } else if (c != '0') {
-				        throw new IllegalArgumentException("Invalid char in binary string : " + c + " : should be 1 or 0");
-				    }
-				}
+				byte Header = new BigInteger(Names.Needed_data_byte.get("Header")[0], 2).toByteArray()[0];
 				data_codes_string.put("packetid", Header);
 				data_codes_byte.put(Header, "packetid");
 			
@@ -77,28 +54,19 @@ public class data_decoder {
 					byte[] data = Files.readAllBytes(path);
 					int o;
 					for (o = 0 + starting_point[i]; o < data.length; o++) {
-						//System.out.println(o);
 						if (data[o] == Header) {
-							if (ByteBuffer.wrap(new byte[] {data[o + 1] , data[o + 2], data[o + 3], data[o + 4]}).order(ByteOrder.BIG_ENDIAN).getInt() == 0) {
-							} else {
-								Temp_packets.put(packetcounter, new HashMap<String, Object>() {{putAll(Temp_packet);}});
+							int packetid = ByteBuffer.wrap(new byte[] {data[o + 1] , data[o + 2], data[o + 3], data[o + 4]}).order(ByteOrder.BIG_ENDIAN).getInt();
+							if (packetid != 0) {
+								Temp_packets.put(packetid - 1, new HashMap<String, Object>() {{putAll(Temp_packet);}});
 								Temp_packet.clear();
-								if (i == 2) {
-									System.out.println(Temp_packets.get(packetcounter).get("speed_0"));
-								}
 							}
-							packetcounter = ByteBuffer.wrap(new byte[] {data[o + 1] , data[o + 2], data[o + 3], data[o + 4]}).order(ByteOrder.BIG_ENDIAN).getInt();
 							o = o + 4;
-							if (packetcounter == tot_packet[i]) {
-								//System.out.println("wel");
+							if (packetid == tot_packet[i]) {
 								starting_point[i] = o - 4;
 								o = data.length;
 							}
 						} else {
 							String data_name = data_codes_byte.get(data[o]);
-							if (key.get("m_" + data_name) == null) {
-								System.out.println("BAD");
-							}
 							int int_key = key.get("m_" + data_name);
 							int data_type = Names.Packet_byte_array.get(Names.needed_data_packets[i] + "_Packet").get(int_key).length;
 							if (data_name.endsWith("_")) {
@@ -113,9 +81,6 @@ public class data_decoder {
 											decode[l] = data[o + 2 + l];
 										}
 										Temp_packet.put(data_name + data[o + 1], decode(decode));
-//										if (data_name.equals("speed_")) {
-//											System.out.println(data_name + 0 + " : " + Temp_packet.get(data_name + 0));
-//										}
 										o = o + data_type + 1;
 									}
 								}
@@ -138,10 +103,7 @@ public class data_decoder {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				//System.out.println(packetcounter);
 			}
-			long Stop = System.currentTimeMillis();
-			//System.out.println(Stop - start);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
