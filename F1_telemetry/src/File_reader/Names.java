@@ -80,7 +80,7 @@ public class Names {
 						Name[6][array_places[2]] = split[0];
 						Code[6][array_places[2]] = split[1];
 						array_places[2]++;
-					} else if (split[2].equals( "Header")) {
+					} else if (split[2].equals("Header")) {
 						Name[10][array_places[3]] = split[0];
 						Code[10][array_places[3]] = split[1];
 						array_places[3]++;
@@ -92,7 +92,7 @@ public class Names {
 						Name[0][array_places[5]] = split[0];
 						Code[0][array_places[5]] = split[1];
 						array_places[5]++;
-					} else if (split[2].equals( "Participants")) {
+					} else if (split[2].equals("Participants")) {
 						Name[4][array_places[6]] = split[0];
 						Code[4][array_places[6]] = split[1];
 						array_places[6]++;
@@ -118,7 +118,6 @@ public class Names {
 				Needed_data_packet.put(packetid[p], Name[ids[p]]);
 				Needed_data_byte.put(packetid[p], Code[ids[p]]);
 			}
-			System.out.println("Ran");
 			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
