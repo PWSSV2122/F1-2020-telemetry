@@ -23,9 +23,6 @@ public class settings {
 				}
 			}
 			myReader.close();
-			for(int i = 0; i < data.length; i++) {
-				System.out.println(data[i]);
-			}
 	    } catch (FileNotFoundException e) {
 	      e.printStackTrace();
 	    }
