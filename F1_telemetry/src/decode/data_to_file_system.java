@@ -173,7 +173,6 @@ public class data_to_file_system {
 						Historical_lap_data.lap_num[o] = (byte) L1.currentLapNum[o];
 					}
 					Historical_graph_data.percentage();
-					System.out.println("DONE");
 				} else if (pakket_int == 1) {
 					delta.trackLength = L1.trackLength;
 				} else if (pakket_int == 7) {
