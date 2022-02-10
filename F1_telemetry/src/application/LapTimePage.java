@@ -161,6 +161,15 @@ public class LapTimePage {
 		Timings.setTranslateX(10);
 		Timings.setTranslateY(6);
 		Timings.setStyle("-fx-font: 24 arial;");
+		content_bar.getChildren().add(Timings);
+		
+		Rectangle devider = new Rectangle();
+		devider.setTranslateX(20);
+		devider.setHeight(35);
+		devider.setWidth(1);
+		devider.setStroke(Color.RED);
+		devider.setFill(Color.RED);
+		content_bar.getChildren().add(devider);
 		
 		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(20);
@@ -177,24 +186,14 @@ public class LapTimePage {
 				}
 			}
 		});
-		
-		Rectangle[] Deviders = new Rectangle[] {new Rectangle(), new Rectangle()};
-		int[] translate = new int[] {20, 40};
-		for (int i = 0; i < Deviders.length; i++) {
-			Deviders[i].setTranslateX(translate[i]);
-			Deviders[i].setHeight(35);
-			Deviders[i].setWidth(1);
-			Deviders[i].setStroke(Color.RED);
-			Deviders[i].setFill(Color.RED);
-		}
-		content_bar.getChildren().addAll(Timings, Deviders[0], people, Deviders[1]);
+		content_bar.getChildren().add(people);
 		Content.getChildren().add(content_bar);
 		
 		Rectangle H_line_Content = new Rectangle();
 		H_line_Content.setHeight(1);
 		H_line_Content.setWidth(1520);
 		H_line_Content.setStroke(Color.RED);
-		H_line_Content.setTranslateY(11);
+		H_line_Content.setTranslateY(-1);
 		Content.getChildren().add(H_line_Content);
 		
 		Tabel.getStylesheets().add("application/css/LapTimeTabel.css");
