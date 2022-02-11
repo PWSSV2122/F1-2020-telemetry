@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 
 import File_reader.Names;
+import application.Main;
 
 public class data_compressie {
 
@@ -142,7 +143,7 @@ public class data_compressie {
 		}
 		byte[] data = new BigInteger(output, 2).toByteArray();
 		System.out.println(data.length);
-		try (FileOutputStream write = new FileOutputStream("src/Saves/temp/" + Packet + ".dec", true)) {
+		try (FileOutputStream write = new FileOutputStream(Main.dir + "Saves/temp/" + Packet + ".dec", true)) {
 			write.write(data);
 		} catch (Exception e) {
 			e.printStackTrace();

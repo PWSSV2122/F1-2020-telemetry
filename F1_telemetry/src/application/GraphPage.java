@@ -55,7 +55,7 @@ public class GraphPage {
 		ScrollPane left_scroll = new ScrollPane();
 		left_scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent; ");
 		
-		GraphPage = new Scene(top_level, Main_menu.test[0], Main_menu.test[1]);
+		GraphPage = new Scene(top_level, Main.test[0], Main.test[1]);
 		
 		Rectangle H_line = new Rectangle();
 		H_line.setHeight(1);
@@ -76,8 +76,8 @@ public class GraphPage {
 		logo_image.setPreserveRatio(true);
 		logo_image.setFitHeight(70);
 		logo.getStylesheets().add("application/css/menu_button.css");
-		logo.setOnAction(e -> {Main_menu.window.setScene(Main_menu.Main_menu);
-			Main_menu.window.setTitle("F1 Tracker : Main Menu");});
+		logo.setOnAction(e -> {Main.window.setScene(Main.Main_menu);
+			Main.window.setTitle("F1 Tracker : Main Menu");});
 		
 		Button Settings = new Button();
 		ImageView Settings_image = new ImageView("images/settings.png");
@@ -115,28 +115,28 @@ public class GraphPage {
 				);	
 		}
 		
-		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");
+		menubar_buttons[0].setOnAction(e -> {Main.window.setScene(Main.TrackPage_scene);
+			Main.window.setTitle("F1 Tracker : Track Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Track_refresh = true;});
-		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+		menubar_buttons[1].setOnAction(e -> {Main.window.setScene(Main.SetupPage_Brakes_scene);
+			Main.window.setTitle("F1 Tracker : Setup Page Brakes");
 			SetupUpdate.Brakes_Boolean = false;
 			SetupUpdate.Brakes_Boolean = true;});
-		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+		menubar_buttons[2].setOnAction(e -> {Main.window.setScene(Main.ComparisonPage_scene);
+			Main.window.setTitle("F1 Tracker : Comparison Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Comparison_refresh = true;});
-		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+		menubar_buttons[3].setOnAction(e -> {Main.window.setScene(Main.GraphPage_scene);
+			Main.window.setTitle("F1 Tracker : Graph Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Graph_refresh = true;});
-		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
+		menubar_buttons[4].setOnAction(e -> {Main.window.setScene(Main.LapTimePage_scene);
+			Main.window.setTitle("F1 Tracker : Lap Time Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.LapTime_refresh = true;});
-		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");
+		menubar_buttons[5].setOnAction(e -> {Main.window.setScene(Main.TimingPage_scene);
+			Main.window.setTitle("F1 Tracker : Timing Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.TimingPage_refresh = true;});
 		
@@ -200,7 +200,7 @@ public class GraphPage {
 		Items.getChildren().addAll(Graph_Text, Deviders[0], people, Deviders[1]);
 		
 		Rectangle menu_items_underline = new Rectangle();
-		menu_items_underline.setWidth(Main_menu.test[0] - 115);
+		menu_items_underline.setWidth(Main.test[0] - 115);
 		menu_items_underline.setHeight(1);
 		menu_items_underline.setStroke(Color.RED);
 		menu_items_underline.setFill(Color.RED);
@@ -403,12 +403,12 @@ public class GraphPage {
 	        }
 	    });
 
-	   Main_menu.window.widthProperty().addListener((obs, oldVal, newVal) -> {
+	   Main.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
 	   });
 
-	   Main_menu.window.heightProperty().addListener((obs, oldVal, newVal) -> {
+	   Main.window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
 	   });
 	   

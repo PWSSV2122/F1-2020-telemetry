@@ -42,7 +42,7 @@ public class Save_file {
 		Button Save = new Button();
 		Save.setText("Save");
 		Save.setOnAction(e -> {
-			if (!Files.isDirectory(Paths.get("src/Saves/" + save_name.getText()))) {
+			if (!Files.isDirectory(Paths.get(Main.dir + "Saves/" + save_name.getText()))) {
 				System.out.println(save_name.getText());
 				save(save_name.getText());
 			} else {
@@ -72,23 +72,23 @@ public class Save_file {
 		    	Processing.setVisible(true);
 		    	Packet_recieve.recieve_on = false;
 				Packet_recieve.service.shutdown();
-				File Temp = new File("src/Saves/temp");
-				File Rename = new File("src/Saves/" + save);
+				File Temp = new File(Main.dir + "Saves/temp");
+				File Rename = new File(Main.dir + "Saves/" + save);
 				Temp.renameTo(Rename);
 					
 					
-				File theDir = new File("src/Saves/temp");
+				File theDir = new File(Main.dir + "Saves/temp");
 				if (!theDir.exists()){
 					theDir.mkdirs();
 				}
 					
-				File Car_Setups = new File("src/Saves/temp/Car_Setups.dec");
-				File Car_Status = new File("src/Saves/temp/Car_Status.dec");
-				File Car_Telemetry = new File("src/Saves/temp/Car_Telemetry.dec");
-				File Lap_Data = new File("src/Saves/temp/Lap_Data.dec");
-				File Motion = new File("src/Saves/temp/Motion.dec");
-				File Participants = new File("src/Saves/temp/Participants.dec");
-				File Session = new File("src/Saves/temp/Session.dec");
+				File Car_Setups = new File(Main.dir + "Saves/temp/Car_Setups.dec");
+				File Car_Status = new File(Main.dir + "Saves/temp/Car_Status.dec");
+				File Car_Telemetry = new File(Main.dir + "Saves/temp/Car_Telemetry.dec");
+				File Lap_Data = new File(Main.dir + "Saves/temp/Lap_Data.dec");
+				File Motion = new File(Main.dir + "Saves/temp/Motion.dec");
+				File Participants = new File(Main.dir + "Saves/temp/Participants.dec");
+				File Session = new File(Main.dir + "Saves/temp/Session.dec");
 				try {
 					Car_Setups.createNewFile();
 					Car_Status.createNewFile();
@@ -110,7 +110,7 @@ public class Save_file {
 //				    	Packet_recieve.recieve_class();
 //				    }
 //				}).start();
-				Temp = new File("src/Saves/temp");
+				Temp = new File("Saves/temp");
 				Processing.setVisible(false);
 				Done.setVisible(true);
 		    }

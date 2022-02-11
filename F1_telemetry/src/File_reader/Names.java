@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import application.Main;
+
 public class Names {
 	public static String[] File_Path = new String[] {"Motion_Packet", "Session_Packet", "Lap_Data_Packet", "Event_Packet", "Participants_Packet", "Car_Setups_Packet", "Car_Telemetry_Packet", "Car_Status_Packet", 
 			"Final_Classification_Packet", "Lobby_Info_Packet", "Needed_data"};
@@ -27,7 +29,7 @@ public class Names {
 			HashMap<Integer, int[]> data_decode_temp_int = new HashMap<Integer, int[]>();
 			HashMap<Integer, String> data_decode_temp_String = new HashMap<Integer, String>();
 			try {
-				BufferedReader reader = new BufferedReader(new FileReader("src/Names/" + File_Path[i] + ".enc"));
+				BufferedReader reader = new BufferedReader(new FileReader(Main.dir + "Names/" + File_Path[i] + ".enc"));
 				while ((Line = reader.readLine()) != null) {
 					String[] split = Line.split(" : ", 2);
 					if (split.length >= 2) {
@@ -58,7 +60,7 @@ public class Names {
 			}
 		}
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("src/Names/" + File_Path[10] + ".enc"));
+			BufferedReader reader = new BufferedReader(new FileReader(Main.dir + "Names/" + File_Path[10] + ".enc"));
 			int i = 0;
 			int o = 0;
 			int[] array_places = new int[8];

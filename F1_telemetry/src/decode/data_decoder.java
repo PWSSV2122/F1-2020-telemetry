@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import File_reader.Names;
+import application.Main;
 
 public class data_decoder {
 	
@@ -47,7 +48,7 @@ public class data_decoder {
 					key.put(Names.Packet_names.get(Names.needed_data_packets[i] + "_Packet").get(o), o);
 				}
 				
-				Path path = Paths.get("src/Saves/" + save + "/" + packetid[i] + ".dec");
+				Path path = Paths.get(Main.dir + "Saves/" + save + "/" + packetid[i] + ".dec");
 				HashMap<Integer, HashMap<String, Object>> Temp_packets = new HashMap<Integer, HashMap<String, Object>>();
 				HashMap<String, Object> Temp_packet = new HashMap<String, Object>();
 				try {

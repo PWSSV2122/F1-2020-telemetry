@@ -33,13 +33,17 @@ import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
 import data_compute.Historical_lap_data;
 
-public class Main_menu extends Application{
+public class Main extends Application{
 	public static double[] test = new double[] {1650, 1000};
 	
 	public static Stage window;
 	public static Scene Main_menu, ComparisonPage_scene, TrackPage_scene, GraphPage_scene, LapTimePage_scene, TimingPage_scene, SetupPage_Brakes_scene, SetupPage_Suspension_Geometry_scene, SetupPage_Suspension_scene, SetupPage_Transmission_scene, SetupPage_Tyres_scene, SetupPage_Aerodynamics_scene;
-	
+	public static String dir = "";
 	Button button1;
+	
+	public static void main(String[] args) {
+		launch(args);	
+	}
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -265,7 +269,6 @@ public class Main_menu extends Application{
 	       test[1] = (double) newVal;
 	   });
 
-	   //Write_encoded.Names("src/Names/Motion_Packet.enc");
 	   Packet_recieve.recieve_on = true;
 	   new Thread(new Runnable() {
 		    public void run() {
@@ -320,7 +323,7 @@ public class Main_menu extends Application{
 	
 	public void PreferenceSave() {
 		File_reader.settings.write();
-		File file = new File("src/Saves/temp/Lap_Data.dec");
+		File file = new File("Saves/temp/Lap_Data.dec");
 		System.out.println(file.length());
 		if (file.length() == 0) {
 		} else {

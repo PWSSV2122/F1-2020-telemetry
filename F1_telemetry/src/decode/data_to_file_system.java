@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import File_reader.Names;
+import Settings.Settings_var;
 import application.ComparisonPage;
 import data_compute.Historical_graph_data;
 import data_compute.Historical_lap_data;
@@ -13,10 +14,10 @@ import javafx.application.Platform;
 
 public class data_to_file_system {
 	
-	public static Boolean play_save = true;
+	public static Boolean play_save = false;
 	public static Boolean end_of_file = false;
-	final static int[] packets = new int[] {20, Settings.Settings_var.send_rate * 10, Settings.Settings_var.send_rate * 10,
-			Settings.Settings_var.send_rate * 10, Settings.Settings_var.send_rate * 10, 2, 20};
+	final static int[] packets = new int[] {20, Settings_var.send_rate * 10, Settings_var.send_rate * 10,
+			Settings_var.send_rate * 10, Settings_var.send_rate * 10, 2, 20};
 	static int cycles = 0;
 	
 	private static HashMap <String, HashMap<Integer, HashMap<String, Object>>> data = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
@@ -24,6 +25,7 @@ public class data_to_file_system {
 	   data.putAll(data_decoder.decode(Save));
 		while (play_save == true) {
 			if (end_of_file == false) {
+				//System.out.println(Settings_var.send_rate + " : 60");
 				HashMap <String, HashMap<Integer, HashMap<String, Object>>> data2 = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
 				for (int i = 0; i < 7; i++) {
 					data_decoder.tot_packet[i] = data_decoder.tot_packet[i] + packets[i];
@@ -37,19 +39,19 @@ public class data_to_file_system {
 			    });
 
 			    Thread Car_Status = new Thread(() -> {
-			    	data_inject(7, "Car_Status", 1000 / Settings.Settings_var.send_rate, 1);
+			    	data_inject(7, "Car_Status", 1000 / Settings_var.send_rate, 1);
 			    });
 			    
 			    Thread Car_Telemetry = new Thread(() -> {
-			    	data_inject(6, "Car_Telemetry", 1000 / Settings.Settings_var.send_rate, 2);
+			    	data_inject(6, "Car_Telemetry", 1000 / Settings_var.send_rate, 2);
 			    });
 			    
 			    Thread Lap_Data = new Thread(() -> {
-			    	data_inject(2, "Lap_Data", 1000 / Settings.Settings_var.send_rate, 3);
+			    	data_inject(2, "Lap_Data", 1000 / Settings_var.send_rate, 3);
 			    });
 			    
 			    Thread Motion = new Thread(() -> {
-			    	data_inject(0, "Motion", 1000 / Settings.Settings_var.send_rate, 4);
+			    	data_inject(0, "Motion", 1000 / Settings_var.send_rate, 4);
 			    });
 			    
 			    Thread Participants = new Thread(() -> {

@@ -15,6 +15,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import application.ComparisonPage;
 import application.GraphPage;
+import application.Main;
 import application.Save_file;
 import contentUpdate.ContentUpdate;
 import data_compute.Historical_graph_data;
@@ -45,11 +46,11 @@ public class Packet_recieve {
 				String quote = new String(test, 0, response.getLength());
 				byte[] e = quote.getBytes();
 				
-		        for (byte b : e) {
-		            String st = String.format("%02X ", b);
-		            System.out.print(st);
-		        }
-		        System.out.println("\n");
+//		        for (byte b : e) {
+//		            String st = String.format("%02X ", b);
+//		            System.out.print(st);
+//		        }
+//		        System.out.println("\n");
 
 		        HashMap<String, Object> Header = new HashMap<String, Object>();
 				Header.put("packetFormat", (short)((e[1] & 0xFF) << 8) | (e[0] & 0xFF));
@@ -239,7 +240,7 @@ public class Packet_recieve {
 			HashMap<Integer, int[]> data_decode_temp_int = new HashMap<Integer, int[]>();
 			HashMap<Integer, String> data_decode_temp_String = new HashMap<Integer, String>();
 			try {
-				BufferedReader reader = new BufferedReader(new FileReader("src/Names/" + File_Path[i] + ".enc"));
+				BufferedReader reader = new BufferedReader(new FileReader(Main.dir + "Names/" + File_Path[i] + ".enc"));
 				while ((Line = reader.readLine()) != null) {
 					String[] split = Line.split(" : ", 2);
 					if (split.length >= 2) {
@@ -270,7 +271,7 @@ public class Packet_recieve {
 			}
 		}
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("src/Names/" + File_Path[10] + ".enc"));
+			BufferedReader reader = new BufferedReader(new FileReader(Main.dir + "Names/" + File_Path[10] + ".enc"));
 			int i = 0;
 			while ((Line = reader.readLine()) != null) {
 				String[] split = Line.split(" : ", 3);
