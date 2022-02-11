@@ -11,8 +11,8 @@ public class Historical_graph_data {
 	public static float[] lap_percentage_float = new float[22];
 	public static int[] lap_percentage_int = new int[22];
 	public static void percentage() {
-		for (int i = 0; i < 22; i++) {
-			if (delta.trackLength != null) {
+		if (delta.trackLength != null) {
+			for (int i = 0; i < 22; i++) {
 				lap_percentage_float[i] = (L1.lapDistance[i] / delta.trackLength) * 100;
 				lap_percentage_int[i] = Math.round(lap_percentage_float[i] * 100);
 			}
@@ -23,7 +23,6 @@ public class Historical_graph_data {
 	private static int packet_limiter = 0;
 	private static float[][] last_data = new float[22][24];
 	public static void data() {
-		int start = (int) System.currentTimeMillis();
 		if (first == true) {
 			for (int i = 0; i < 22; i++) {
 				laatste_percentage[i] = lap_percentage_int[i];
@@ -83,7 +82,6 @@ public class Historical_graph_data {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		int stop = (int) System.currentTimeMillis();
 	}
 
 	private static void Compaire_Chart_update(float[][] data, float[] percentage) {
@@ -96,7 +94,7 @@ public class Historical_graph_data {
 			    			for (int o = 0; o < data[i].length; o++) {
 				    			ComparisonPage.series[i][o].getData().add(new XYChart.Data<Integer, Float>((int) percentage[i], data[i][o]));
 				    		}
-							laatste_percentage[i] = lap_percentage_int[i];
+							laatste_percentage[i] = (int) percentage[i];
 			    		}
 		    		} catch (Exception e) {
 		    			e.printStackTrace();

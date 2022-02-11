@@ -18,10 +18,8 @@ public class Historical_lap_data {
 		Runnable updateClass = new Runnable() {
 		    public void run() {
 		    	for (int i = 0; i < 22; i++) {
-		    		if (L1.sector2TimeInMS[i] == 0) {
-			    	} else {
+		    		if (L1.sector2TimeInMS[i] != 0) {
 			    		try {
-			    				//System.out.println(L1.S1_Times);
 			    				HashMap<Integer, Short> temp = new HashMap<Integer, Short>();
 			    				try {
 			    					temp.putAll(L1.S1_Times.get(i));
@@ -36,7 +34,6 @@ public class Historical_lap_data {
 			    				}
 			    				temp2.put((int) lap_num[i], L1.sector2TimeInMS[i]);
 			    				L1.S2_Times.put(i, temp2);
-			    				//System.out.println(i + " : " + L1.S1_Times.get(i).get((int)lap_num[i]) + " : " + L1.S2_Times.get(i).get((int)lap_num[i]));
 			    		} catch (Exception e) {
 			    			e.printStackTrace();
 			    		}
@@ -53,7 +50,6 @@ public class Historical_lap_data {
 		if (first == true || lap < starting_lap) {
 			first = false;
 			starting_lap = lap;
-			System.out.println(starting_lap);
 		}
 		try {
 			String S3 = TimingPage.MsTo_min_sec_ms(Math.round((L1.lastLapTime[car] * 1000) - (L1.S1_Times.get(car).get((int)lap_num[car])) - (L1.S2_Times.get(car).get((int)lap_num[car]))), 1);
@@ -75,6 +71,5 @@ public class Historical_lap_data {
 		} catch (Exception e) {
 			
 		}
-		//System.out.println(L1.Lap_Times.get(car));
 	}
 }
