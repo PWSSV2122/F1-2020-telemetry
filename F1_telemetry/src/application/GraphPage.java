@@ -117,27 +117,27 @@ public class GraphPage {
 		
 		menubar_buttons[0].setOnAction(e -> {Main.window.setScene(Main.TrackPage_scene);
 			Main.window.setTitle("F1 Tracker : Track Page");
-			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.Track_refresh = true;});
 		menubar_buttons[1].setOnAction(e -> {Main.window.setScene(Main.SetupPage_Brakes_scene);
 			Main.window.setTitle("F1 Tracker : Setup Page Brakes");
-			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = false;
 			SetupUpdate.Brakes_Boolean = true;});
 		menubar_buttons[2].setOnAction(e -> {Main.window.setScene(Main.ComparisonPage_scene);
 			Main.window.setTitle("F1 Tracker : Comparison Page");
-			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.Comparison_refresh = true;});
 		menubar_buttons[3].setOnAction(e -> {Main.window.setScene(Main.GraphPage_scene);
 			Main.window.setTitle("F1 Tracker : Graph Page");
-			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.Graph_refresh = true;});
 		menubar_buttons[4].setOnAction(e -> {Main.window.setScene(Main.LapTimePage_scene);
 			Main.window.setTitle("F1 Tracker : Lap Time Page");
-			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.LapTime_refresh = true;});
 		menubar_buttons[5].setOnAction(e -> {Main.window.setScene(Main.TimingPage_scene);
 			Main.window.setTitle("F1 Tracker : Timing Page");
-			SetupUpdate.Brakes_Boolean = false;
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
