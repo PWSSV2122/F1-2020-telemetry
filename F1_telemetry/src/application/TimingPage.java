@@ -159,18 +159,26 @@ public class TimingPage {
 		Timings.setTranslateX(10);
 		Timings.setTranslateY(6);
 		Timings.setStyle("-fx-font: 24 arial;");
-		Content.getChildren().add(Timings);
+		
+		Rectangle Deviders = new Rectangle();
+		Deviders.setTranslateX(20);
+		Deviders.setHeight(35);
+		Deviders.setWidth(1);
+		Deviders.setStroke(Color.RED);
+		Deviders.setFill(Color.RED);
+		
+		HBox Items = new HBox();
+		Items.getChildren().addAll(Timings, Deviders);
+		Content.getChildren().add(Items);
 		
 		Rectangle H_line_Content = new Rectangle();
 		H_line_Content.setHeight(1);
 		H_line_Content.setWidth(1520);
 		H_line_Content.setStroke(Color.RED);
-		H_line_Content.setTranslateY(11);
 		Content.getChildren().add(H_line_Content);
 		
 		Tabel.getStylesheets().add("application/css/TimingPageTabel.css");
 		Tabel.setPrefHeight(2000);
-		Tabel.setTranslateY(12);
 		Tabel.setTranslateX(1);
 		Content.getChildren().add(Tabel);
 		
