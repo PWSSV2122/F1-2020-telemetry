@@ -240,7 +240,7 @@ public class Suspension_Geometry {
 		int[] translate = new int[] {20, 40, 60, 80};
 		for (int i = 0; i < Deviders.length; i++) {
 			Deviders[i].setTranslateX(translate[i]);
-			Deviders[i].setHeight(35);
+			Deviders[i].setHeight(36);
 			Deviders[i].setWidth(1);
 			Deviders[i].setStroke(Color.RED);
 			Deviders[i].setFill(Color.RED);
@@ -248,7 +248,7 @@ public class Suspension_Geometry {
 		menu_items.getChildren().addAll(Setup, Deviders[0], Track, Deviders[1], Pagina, Deviders[2], people, Deviders[3]);
 		
 		Rectangle menu_items_underline = new Rectangle();
-		menu_items_underline.setWidth(Main.test[0] - 115);
+//		menu_items_underline.setWidth(Main.test[0] - 115);
 		menu_items_underline.setHeight(1);
 		menu_items_underline.setStroke(Color.RED);
 		menu_items_underline.setFill(Color.RED);
@@ -389,6 +389,7 @@ public class Suspension_Geometry {
 	   Main.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
+		   menu_items_underline.setWidth((double) newVal - 130);
 	   });
 
 	   Main.window.heightProperty().addListener((obs, oldVal, newVal) -> {

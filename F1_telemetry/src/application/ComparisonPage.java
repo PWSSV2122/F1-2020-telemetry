@@ -266,7 +266,7 @@ public class ComparisonPage {
 		Items.getChildren().addAll(Graph_Text, Deviders[0], Compair_select, Deviders[1], people, Deviders[2], people2, Deviders[3]);
 		
 		Rectangle menu_items_underline = new Rectangle();
-		menu_items_underline.setWidth(Main.test[0] - 115);
+//		menu_items_underline.setWidth(Main.test[0] - 115);
 		menu_items_underline.setHeight(1);
 		menu_items_underline.setStroke(Color.RED);
 		menu_items_underline.setFill(Color.RED);
@@ -336,6 +336,7 @@ public class ComparisonPage {
 	   Main.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
+		   menu_items_underline.setWidth((double) newVal - 130);
 	   });
 
 	   Main.window.heightProperty().addListener((obs, oldVal, newVal) -> {

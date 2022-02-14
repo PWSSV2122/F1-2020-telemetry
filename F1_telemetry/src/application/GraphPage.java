@@ -200,7 +200,7 @@ public class GraphPage {
 		Items.getChildren().addAll(Graph_Text, Deviders[0], people, Deviders[1]);
 		
 		Rectangle menu_items_underline = new Rectangle();
-		menu_items_underline.setWidth(Main.test[0] - 115);
+//		menu_items_underline.setWidth(Main.test[0] - 115);
 		menu_items_underline.setHeight(1);
 		menu_items_underline.setStroke(Color.RED);
 		menu_items_underline.setFill(Color.RED);
@@ -209,7 +209,7 @@ public class GraphPage {
 		Selection.setVisible(false);
 		Rectangle spacer_selection = new Rectangle();
 		spacer_selection.setHeight(1);
-		spacer_selection.setWidth(1220);
+//		spacer_selection.setWidth(1220);
 		spacer_selection.setVisible(false);
 		
 		StackPane Selection_checkbox = new StackPane();
@@ -359,7 +359,7 @@ public class GraphPage {
         lineChart.getXAxis().setOpacity(0);
         lineChart.getYAxis().setTickLabelsVisible(false);
         lineChart.getYAxis().setOpacity(0);
-        lineChart.setPrefWidth(1540);
+       // lineChart.setPrefWidth(1540);
         lineChart.setMinHeight(870);
         lineChart.setMaxHeight(870);
         lineChart.setTranslateX(-20);
@@ -406,6 +406,10 @@ public class GraphPage {
 	   Main.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
+		   menu_items_underline.setWidth((double) newVal - 130);
+		   lineChart.setPrefWidth((double) newVal - 130); 
+		   spacer_selection.setWidth((double) newVal - 450);
+		   
 	   });
 
 	   Main.window.heightProperty().addListener((obs, oldVal, newVal) -> {
