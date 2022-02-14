@@ -359,7 +359,7 @@ public class GraphPage {
         lineChart.getXAxis().setOpacity(0);
         lineChart.getYAxis().setTickLabelsVisible(false);
         lineChart.getYAxis().setOpacity(0);
-       // lineChart.setPrefWidth(1540);
+//      lineChart.setPrefWidth(1540);
         lineChart.setMinHeight(870);
         lineChart.setMaxHeight(870);
         lineChart.setTranslateX(-20);
