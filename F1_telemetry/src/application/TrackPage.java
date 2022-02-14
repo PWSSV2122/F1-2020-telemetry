@@ -22,15 +22,16 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class TrackPage {
 	
-	public static TableView<Tabel_object> players = new TableView<Tabel_object>();
+//	public static TableView<Tabel_object> players = new TableView<Tabel_object>();
 	public static StackPane center_pane = new StackPane();
-	public static ImageView Track = new ImageView("images/Tracks/" + L1.trackId + ".png");
-	public static ImageView[] Track_Players = new ImageView[22]; 
-	public static TableColumn<Tabel_object, String> Icon = new TableColumn<Tabel_object, String>("Icon");
-	public static TableColumn<Tabel_object, String> Player = new TableColumn<Tabel_object, String>("Player");
+//	public static ImageView Track = new ImageView("images/Tracks/" + L1.trackId + ".png");
+//	public static ImageView[] Track_Players = new ImageView[22]; 
+//	public static TableColumn<Tabel_object, String> Icon = new TableColumn<Tabel_object, String>("Icon");
+//	public static TableColumn<Tabel_object, String> Player = new TableColumn<Tabel_object, String>("Player");
 	
 	public static Scene TrackPage_scene() {
 		Scene TrackPage;
@@ -159,20 +160,25 @@ public class TrackPage {
 		
 		HBox content_top = new HBox();
 		
-		Track.setPreserveRatio(true);
-		content_top.getChildren().add(Track);
+		Text UnderConstruction = new Text("Under Construction!");
+		UnderConstruction.setTranslateX(10);
+		UnderConstruction.setTranslateY(5);
+		UnderConstruction.setStyle("-fx-font: 24 arial;");
 		
-		players.getStylesheets().add("application/css/TrackPage.css");
-		content_top.getChildren().add(players);
+//		Track.setPreserveRatio(true);
+		content_top.getChildren().add( /*Track*/ UnderConstruction);
 		
-		Icon.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>("Icon".replace(" ", "_")));
-		Icon.setPrefWidth(50);
-		players.getColumns().add(Icon);
-		
-		Player.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>("Player".replace(" ", "_")));
-		players.getColumns().add(Player);
-		
-		players.setPrefWidth((double)Icon.getWidth() + Player.getWidth() + 2);
+//		players.getStylesheets().add("application/css/TrackPage.css");
+//		content_top.getChildren().add(players);
+//		
+//		Icon.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>("Icon".replace(" ", "_")));
+//		Icon.setPrefWidth(50);
+//		players.getColumns().add(Icon);
+//		
+//		Player.setCellValueFactory(new PropertyValueFactory<Tabel_object, String>("Player".replace(" ", "_")));
+//		players.getColumns().add(Player);
+//		
+//		players.setPrefWidth((double)Icon.getWidth() + Player.getWidth() + 2);
 		
 		
 				
@@ -191,10 +197,10 @@ public class TrackPage {
 		top_level.setCenter(center_pane);
 		center_pane.getChildren().addAll(background_menu, center_background, content_top);
 		for (int i = 0; i < 22; i++) {
-			Track_Players[i] = new ImageView("images/Track_icons/" + (i + 1) + ".png");
-			Track_Players[i].setPreserveRatio(true);
-			Track_Players[i].setFitHeight(30);
-			center_pane.getChildren().add(Track_Players[i]);
+//			Track_Players[i] = new ImageView("images/Track_icons/" + (i + 1) + ".png");
+//			Track_Players[i].setPreserveRatio(true);
+//			Track_Players[i].setFitHeight(30);
+//			center_pane.getChildren().add(Track_Players[i]);
 		}
 		
 	    left_box2.setOnScroll(new EventHandler<ScrollEvent>() {
@@ -211,14 +217,14 @@ public class TrackPage {
 	   Main.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   	center_background.setWidth((double) newVal - 130);
 		   	background_menu.setFitWidth((double) newVal - 130);
-		   	players.setPrefWidth((double)newVal - 130 / 4);
-		   	Track.setFitWidth((double)newVal - 140 - 160);
+//		   	players.setPrefWidth((double)newVal - 130 / 4);
+//		   	Track.setFitWidth((double)newVal - 140 - 160);
 	   });
 
 	   Main.window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       	center_background.setHeight((double) newVal - 39);
-	       	players.setPrefHeight((double)newVal - 165);
-	       	Track.setFitHeight((double)newVal - 83);
+//	       	players.setPrefHeight((double)newVal - 165);
+//	       	Track.setFitHeight((double)newVal - 83);
 	   });
 
 //		BorderPane top_level = new BorderPane();
@@ -228,20 +234,20 @@ public class TrackPage {
 		
 	}
 	
-	public static class Tabel_object {
-        private final SimpleObjectProperty<ImageView> Icon;
-        private final SimpleObjectProperty<String> Player;
-
-        public Tabel_object(ImageView Icon, String Player) {
-            this.Icon = new SimpleObjectProperty<>(Icon);
-            this.Player = new SimpleObjectProperty<>(Player);
-        }
-        public ImageView getIcon() {
-            return Icon.get();
-        }        
-        public String getPlayer() {
-            return Player.get();
-        }               
-       
-    }
+//	public static class Tabel_object {
+//        private final SimpleObjectProperty<ImageView> Icon;
+//        private final SimpleObjectProperty<String> Player;
+//
+//        public Tabel_object(ImageView Icon, String Player) {
+//            this.Icon = new SimpleObjectProperty<>(Icon);
+//            this.Player = new SimpleObjectProperty<>(Player);
+//        }
+//        public ImageView getIcon() {
+//            return Icon.get();
+//        }        
+//        public String getPlayer() {
+//            return Player.get();
+//        }               
+//       
+//    }
 }
