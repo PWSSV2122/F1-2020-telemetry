@@ -40,6 +40,8 @@ public class Tyres {
 	public static ProgressBar Rear_Left_bar = new ProgressBar(0);
 	public static Text Rear_Left_waarde = new Text(null);
 	
+	public static Text Track = new Text("");
+	
 	public static Scene Tyres_scene() {
 		Scene Tyres;
 		
@@ -173,7 +175,6 @@ public class Tyres {
 		Setup.setTranslateY(6);
 		Setup.setStyle("-fx-font: 24 arial;");
 		
-		Text Track = new Text("test");
 		Track.setTranslateX(30);
 		Track.setTranslateY(6);
 		Track.setStyle("-fx-font: 24 arial;");

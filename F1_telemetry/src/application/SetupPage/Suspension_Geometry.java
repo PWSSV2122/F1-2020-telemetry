@@ -40,6 +40,8 @@ public class Suspension_Geometry {
 	public static ProgressBar Rear_toe_bar = new ProgressBar(0);
 	public static Text Rear_toe_waarde = new Text(null);
 	
+	public static Text Track = new Text("");
+	
 	public static Scene Suspension_Geometry_scene() {
 		Scene Suspension_Geometry;
 		
@@ -173,7 +175,6 @@ public class Suspension_Geometry {
 		Setup.setTranslateY(6);
 		Setup.setStyle("-fx-font: 24 arial;");
 		
-		Text Track = new Text("test");
 		Track.setTranslateX(30);
 		Track.setTranslateY(6);
 		Track.setStyle("-fx-font: 24 arial;");

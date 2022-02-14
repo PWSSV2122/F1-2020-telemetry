@@ -46,6 +46,8 @@ public class Suspension {
 	public static ProgressBar Rear_Ride_Height_bar = new ProgressBar(0);
 	public static Text Rear_Ride_Height_waarde = new Text(null);
 	
+	public static Text Track = new Text("");
+	
 	public static Scene Suspension_scene() {
 		Scene Suspension;
 		
@@ -179,7 +181,6 @@ public class Suspension {
 		Setup.setTranslateY(6);
 		Setup.setStyle("-fx-font: 24 arial;");
 		
-		Text Track = new Text("test");
 		Track.setTranslateX(30);
 		Track.setTranslateY(6);
 		Track.setStyle("-fx-font: 24 arial;");
