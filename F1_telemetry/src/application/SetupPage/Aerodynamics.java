@@ -34,6 +34,8 @@ public class Aerodynamics {
 	public static ProgressBar Rear_Wing_bar = new ProgressBar(0);
 	public static Text Rear_Wing_waarde = new Text(null);
 	
+	public static Text Track = new Text("");
+	
 	public static Scene Aerodynamics_scene() {
 		Scene Aerodynamics;
 		
@@ -167,7 +169,6 @@ public class Aerodynamics {
 		Setup.setTranslateY(6);
 		Setup.setStyle("-fx-font: 24 arial;");
 		
-		Text Track = new Text("tAst");
 		Track.setTranslateX(30);
 		Track.setTranslateY(6);
 		Track.setStyle("-fx-font: 24 arial;");

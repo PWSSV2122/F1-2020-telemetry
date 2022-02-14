@@ -34,6 +34,8 @@ public class Brakes {
 	public static Text Bias_waarde = new Text(null);
 	public static ProgressBar Bias_bar = new ProgressBar(0);
 	
+	public static Text Track = new Text("");
+	
 	public static Scene Brakes_scene() {
 		Scene Brakes;
 		
@@ -167,7 +169,6 @@ public class Brakes {
 		Setup.setTranslateY(6);
 		Setup.setStyle("-fx-font: 24 arial;");
 		
-		Text Track = new Text("test");
 		Track.setTranslateX(30);
 		Track.setTranslateY(6);
 		Track.setStyle("-fx-font: 24 arial;");
