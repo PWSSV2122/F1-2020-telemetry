@@ -316,7 +316,6 @@ public class Main extends Application{
 			window.setTitle("F1 Tracker : Main Menu");
 			window.show();
 		} catch(Exception e) {
-			e.printStackTrace();
 		}
 		window.setOnCloseRequest(e -> PreferenceSave());
 	}
@@ -324,7 +323,6 @@ public class Main extends Application{
 	public void PreferenceSave() {
 		File_reader.settings.write();
 		File file = new File("Saves/temp/Lap_Data.dec");
-		System.out.println(file.length());
 		if (file.length() == 0) {
 		} else {
 			Save_file.display("Save File");

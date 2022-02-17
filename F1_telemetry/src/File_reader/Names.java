@@ -45,8 +45,6 @@ public class Names {
 						data_decode_temp_int.put(id, Byte_array);
 						data_decode_temp_String.put(id, Name);
 						id++;
-					} else {
-						System.out.println("error code #3"); //nog te bepalen error code
 					}
 				}
 				reader.close();
@@ -54,9 +52,7 @@ public class Names {
 				Packet_byte_array.put(File_Path[i], data_decode_temp_int);
 				repeats[i] = repeat;
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 		try {
@@ -110,8 +106,6 @@ public class Names {
 						o++;
 					}
 					i++;
-				} else {
-					System.out.println("error code #3"); //nog te bepalen error code
 				}
 			} 
 			String[] packetid = new String[] {"Car_Setups", "Car_Status", "Car_Telemetry", "Header", "Lap_Data", "Motion", "Participants", "Session"};
@@ -122,9 +116,7 @@ public class Names {
 			}
 			reader.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }

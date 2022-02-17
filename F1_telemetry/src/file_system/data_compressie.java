@@ -33,7 +33,6 @@ public class data_compressie {
 				try {
 					output += binary_data(ByteBuffer.allocate(4).putInt(i + L1.class.getField(Packet).getInt(Packet)).array());
 				} catch (Exception e) {
-					e.printStackTrace();
 				}
 				for (int o = 0; o < stop; o++) {
 					if (data_names[o].endsWith("_")) {
@@ -139,14 +138,11 @@ public class data_compressie {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		byte[] data = new BigInteger(output, 2).toByteArray();
-		System.out.println(data.length);
 		try (FileOutputStream write = new FileOutputStream(Main.dir + "Saves/temp/" + Packet + ".dec", true)) {
 			write.write(data);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	static private String binary_num(byte o) {

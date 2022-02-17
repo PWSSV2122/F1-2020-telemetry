@@ -17,7 +17,6 @@ public class data_manager {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		HashMap<String, Object> L2_data_temp_save = new HashMap<String, Object>();
 		try {
@@ -60,7 +59,6 @@ public class data_manager {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		if (packetID == 2) {
 			HashMap<Integer, HashMap<String, Object>> data_temp_save = dropped_Packet(2, m_frameIdentifier, L2_data_temp_save);
@@ -166,7 +164,6 @@ public class data_manager {
 				encode_data.putAll(L2.Participants_packet);
 				Packet_recieve.service.submit(new Runnable() {
 				    public void run() {
-				    	System.out.println("KL");
 				    	data_compressie.encode("Participants", encode_data);
 						L1.Participants = L1.Participants + encode_data.size();
 				    }
@@ -200,7 +197,6 @@ public class data_manager {
 				data_temp_save.put(0, new HashMap() {{putAll(L2_data_temp_save);}});
 					L1.class.getField(Frame_name).set(m_frameIdentifier, m_frameIdentifier);
 			} else if (m_frameIdentifier <= frame) {
-				//System.out.println("error code #7"); //nog te bepalen error code
 			} else if (m_frameIdentifier >= frame + 2) {
 				L1.class.getField(Frame_name).set(m_frameIdentifier, m_frameIdentifier);
 				int i = 0;
@@ -211,7 +207,6 @@ public class data_manager {
 				data_temp_save.put(i + 1, new HashMap() {{putAll(L2_data_temp_save);}});
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return data_temp_save;
 	}

@@ -80,7 +80,6 @@ public class Historical_graph_data {
 				packet_limiter = 0;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -90,7 +89,6 @@ public class Historical_graph_data {
 		    public void run() {
 		    	for (int i = 0; i < L1.numActiveCars; i++) {
 		    		try {
-		    			//System.out.println(percentage[i] + " : " + laatste_percentage[i]);
 		    			if (percentage[i] > laatste_percentage[i] || laatste_percentage[i] == 2147483647) {
 			    			for (int o = 0; o < data[i].length; o++) {
 				    			ComparisonPage.series[i][o].getData().add(new XYChart.Data<Integer, Float>((int) percentage[i], data[i][o]));
@@ -98,7 +96,6 @@ public class Historical_graph_data {
 			    			}
 			    		}
 		    		} catch (Exception e) {
-		    			e.printStackTrace();
 		    		}
 		    	}
 		    }

@@ -429,7 +429,6 @@ public class GraphPage {
 		    	int o = 0;
 		    	for (int i = 0; i < 24; i++) {
 					if (ContentUpdate.Graph_selection[i] == true) {
-						System.out.println("LK");
 						lineChart.getData().add(ComparisonPage.series[ContentUpdate.GraphPage_car][i]);
 						lineChart.getData().get(o).setName(Names[i]);;
 						o++;

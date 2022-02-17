@@ -118,7 +118,6 @@ public class settings {
 			window.setTitle(title);
 			window.showAndWait();
 		} catch(Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

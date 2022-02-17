@@ -43,7 +43,6 @@ public class Save_file {
 		Save.setText("Save");
 		Save.setOnAction(e -> {
 			if (!Files.isDirectory(Paths.get(Main.dir + "Saves/" + save_name.getText()))) {
-				System.out.println(save_name.getText());
 				save(save_name.getText());
 			} else {
 				already_exists.setVisible(true);

@@ -214,7 +214,6 @@ public class Packet_recieve {
 			}
 			socket.close();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

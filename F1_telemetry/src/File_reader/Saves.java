@@ -28,10 +28,8 @@ public class Saves {
 			}
 			myReader.close();
 			for(int i = 0; i < data.length; i++) {
-				System.out.println(data[i]);
 			}
 	    } catch (FileNotFoundException e) {
-	      e.printStackTrace();
 	    }
 		return data;
 	}
@@ -46,7 +44,6 @@ public class Saves {
 			}
 		    bw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	    
 	}

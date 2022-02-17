@@ -102,11 +102,9 @@ public class data_decoder {
 					}
 					decoded_data.put(packetid[i], new HashMap<Integer, HashMap<String, Object>>() {{putAll(Temp_packets);}});
 				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return decoded_data;
 	}

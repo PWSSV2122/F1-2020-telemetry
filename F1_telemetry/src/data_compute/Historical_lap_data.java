@@ -35,7 +35,6 @@ public class Historical_lap_data {
 			    				temp2.put((int) lap_num[i], L1.sector2TimeInMS[i]);
 			    				L1.S2_Times.put(i, temp2);
 			    		} catch (Exception e) {
-			    			e.printStackTrace();
 			    		}
 			    	}
 		    	}

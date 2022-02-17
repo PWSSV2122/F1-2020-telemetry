@@ -26,7 +26,6 @@ public class settings {
 			}
 			myReader.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -41,7 +40,6 @@ public class settings {
 			bw.write(data);
 		    bw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	    
 	}

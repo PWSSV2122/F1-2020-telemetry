@@ -25,7 +25,6 @@ public class data_to_file_system {
 	   data.putAll(data_decoder.decode(Save));
 		while (play_save == true) {
 			if (end_of_file == false) {
-				//System.out.println(Settings_var.send_rate + " : 60");
 				HashMap <String, HashMap<Integer, HashMap<String, Object>>> data2 = new HashMap <String, HashMap<Integer, HashMap<String, Object>>>();
 				for (int i = 0; i < 7; i++) {
 					data_decoder.tot_packet[i] = data_decoder.tot_packet[i] + packets[i];
@@ -81,7 +80,6 @@ public class data_to_file_system {
 				    Participants.join();
 				    Session.join();
 				} catch (InterruptedException e) {
-					e.printStackTrace();
 				}
 			    cycles++;
 			    data.putAll(data2);
@@ -185,11 +183,9 @@ public class data_to_file_system {
 		        try {
 					TimeUnit.MILLISECONDS.sleep(sleep_time);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }
