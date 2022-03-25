@@ -7,13 +7,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import application.Main;
+
 public class settings {
 	static String[] names = new String[] {"Poort", "Send Rate"};
 	public static void read() {
-		String[] data = new String[0];
+		File myObj = new File(Main.dir + "Settings/Settings.txt");
+		Scanner myReader;
 		try {
-			File myObj = new File("src/Settings/Settings.txt");
-			Scanner myReader = new Scanner(myObj);
+			myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
 				String[] value = myReader.nextLine().split(":");
 				if (value[0].equals("Poort")) {
@@ -23,17 +25,13 @@ public class settings {
 				}
 			}
 			myReader.close();
-			for(int i = 0; i < data.length; i++) {
-				System.out.println(data[i]);
-			}
-	    } catch (FileNotFoundException e) {
-	      e.printStackTrace();
-	    }
+		} catch (FileNotFoundException e) {
+		}
 	}
 
 	public static void write() {
 		try {
-			FileWriter fw = new FileWriter("src/Settings/Settings.txt");
+			FileWriter fw = new FileWriter(Main.dir + "Settings/Settings.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
 			String data = "Poort:" + Settings.Settings_var.Poort;
 			bw.write(data);
@@ -42,7 +40,6 @@ public class settings {
 			bw.write(data);
 		    bw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	    
 	}

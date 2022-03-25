@@ -1,6 +1,7 @@
 package contentUpdate;
 
 import file_system.L1;
+import javafx.scene.text.Text;
 import application.SetupPage.Brakes;
 import application.SetupPage.Suspension_Geometry;
 import application.SetupPage.Suspension;
@@ -24,6 +25,8 @@ public class SetupUpdate {
 	public static int setup_car = 0;
 	
 	public static String[] paginas = new String[] {"Brakes", "Suspension Geometry", "Suspension", "Transmission", "Tyres", "Aerodynamics"};
+	public static String[] Track = new String[] {"Melbourne", "Paul Ricard", "Shanghai", "Sakhir (Bahrain)", "Catalunya", "Monaco", "Montreal", "Silverstone", "Hockenheim", "Hungaroring", "Spa",
+			"Monza", "Singapore", "Suzuka", "Abu Dhabi", "Texas", "Brazil", "Austria" ,"Sochi", "Mexico", "Baku (Azerbaijan)", "Sakhir Short", "Silverstone Short", "Texas Short", "Suzuka Short", "Hanoi", "Zandvoort"};
 	
 	public static void Setup_update() {
 		Runnable updateClass = new Runnable() {
@@ -35,6 +38,10 @@ public class SetupUpdate {
 			    		
 			    		Brakes.Bias_waarde.setText(String.valueOf(L1.brakeBias[setup_car]) + "%");
 			    		Brakes.Bias_bar.setProgress((L1.brakeBias[setup_car] - 50) * 0.05);
+		    		}
+		    		try {
+		    			Brakes.Track.setText(Track[L1.trackId]);
+		    		} catch (Exception e) {
 		    		}
 				} else if (Suspension_Geometry_Boolean == true) {
 					if (L1.frontCamber[setup_car] != 0) {
@@ -50,6 +57,10 @@ public class SetupUpdate {
 						Suspension_Geometry.Rear_toe_waarde.setText(String.valueOf((float)Math.round(L1.rearToe[setup_car] * 100) / 100));
 						Suspension_Geometry.Rear_camber_bar.setProgress((L1.rearToe[setup_car] - 0.2) / 0.3);
 					}
+					try {
+						Suspension_Geometry.Track.setText(Track[L1.trackId]);
+		    		} catch (Exception e) {
+		    		}
 				} else if (Suspension_Boolean == true) {
 					if (L1.frontSuspension[setup_car] != 0) {
 						Suspension.Front_Suspension_waarde.setText(String.valueOf(L1.frontSuspension[setup_car]));
@@ -70,6 +81,10 @@ public class SetupUpdate {
 						Suspension.Rear_Ride_Height_waarde.setText(String.valueOf(L1.rearSuspensionHeight[setup_car]));
 						Suspension.Rear_Ride_Height_bar.setProgress((float)(L1.rearSuspensionHeight[setup_car] - 1) / 10);
 					}
+					try {
+						Suspension.Track.setText(Track[L1.trackId]);
+		    		} catch (Exception e) {
+		    		}
 				} else if (Transmission_Boolean == true) {
 					if (L1.onThrottle[setup_car] != 0) {
 						Transmission.On_Throttle_waarde.setText(String.valueOf(L1.onThrottle[setup_car]) + "%");
@@ -78,6 +93,10 @@ public class SetupUpdate {
 						Transmission.Off_Throttle_waarde.setText(String.valueOf(L1.offThrottle[setup_car]) + "%");
 						Transmission.Off_Throttle_bar.setProgress((float)(L1.offThrottle[setup_car] - 50) / 50);
 					}
+					try {
+						Transmission.Track.setText(Track[L1.trackId]);
+		    		} catch (Exception e) {
+		    		}
 				} else if (Tyres_Boolean == true) {
 					if (L1.frontRightTyrePressure[setup_car] != 0) {
 						Tyres.Front_Right_waarde.setText(String.valueOf(L1.frontRightTyrePressure[setup_car]));
@@ -92,6 +111,10 @@ public class SetupUpdate {
 						Tyres.Rear_Left_waarde.setText(String.valueOf(L1.rearLeftTyrePressure[setup_car]));
 						Tyres.Rear_Left_bar.setProgress((float)(L1.rearLeftTyrePressure[setup_car] - 19.5) / 4);
 					}
+					try {
+						Tyres.Track.setText(Track[L1.trackId]);
+		    		} catch (Exception e) {
+		    		}
 				} else if (Aerodynamics_Boolean == true) {
 					if (L1.frontWing[setup_car] != 0) {
 						Aerodynamics.Front_Wing_waarde.setText(String.valueOf(L1.frontWing[setup_car]));
@@ -100,6 +123,10 @@ public class SetupUpdate {
 						Aerodynamics.Rear_Wing_waarde.setText(String.valueOf(L1.rearWing[setup_car]));
 						Aerodynamics.Rear_Wing_bar.setProgress((float)(L1.rearWing[setup_car] - 1) / 10);
 					}
+					try {
+						Aerodynamics.Track.setText(Track[L1.trackId]);
+		    		} catch (Exception e) {
+		    		}
 				}
 		    } 
 		};

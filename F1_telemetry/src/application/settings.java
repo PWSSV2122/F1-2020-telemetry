@@ -1,6 +1,7 @@
 package application;
 
-import data_compute.Historical_lap_data;
+import Inkoming.Packet_recieve;
+import decode.data_to_file_system;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -77,13 +78,21 @@ public class settings {
 		Button Save_stop = new Button();
 		Save_load.setText("Load");
 		Save_stop.setText("Stop");
-		Save_stop.setVisible(false);
+		if (data_to_file_system.play_save == false) {
+			Save_stop.setVisible(false);
+			Save_load.setVisible(true);
+		} else {
+			Save_load.setVisible(false);
+			Save_stop.setVisible(true);
+		}
+		//Save_stop.setVisible(false);
 		Save_load.setOnAction(e -> {
 			if (Save_dropdown.getValue() != null) {
-				Inkoming.Packet_recieve.recieve_on = false;
+				data_to_file_system.play_save = true;
+				Packet_recieve.recieve_on = false;
 				new Thread(new Runnable() {
 				    public void run() {
-				    	decode.data_to_file_system.decoded_data_manager((String) Save_dropdown.getValue());
+				    	data_to_file_system.decoded_data_manager((String) Save_dropdown.getValue());
 				    }
 				}).start();
 				Save_load.setVisible(false);
@@ -91,8 +100,8 @@ public class settings {
 			}
 		});
 		Save_stop.setOnAction(e -> {
-			decode.data_to_file_system.play_save = false;
-			Inkoming.Packet_recieve.recieve_on = true;
+			data_to_file_system.play_save = false;
+			Packet_recieve.recieve_on = true;
 			Save_stop.setVisible(false);
 			Save_load.setVisible(true);
 		});
@@ -109,7 +118,6 @@ public class settings {
 			window.setTitle(title);
 			window.showAndWait();
 		} catch(Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

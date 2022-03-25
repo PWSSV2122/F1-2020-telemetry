@@ -1,172 +1,149 @@
 package file_system;
 
 import java.io.FileOutputStream;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import File_reader.Names;
+import application.Main;
 
 public class data_compressie {
 
 	public static void encode(String Packet, HashMap<Integer, HashMap<String, Object>> compression_data) {
-		String[] data_names_untrimmed = new String[80];
 		HashMap<String, String> data_codes = new HashMap<String, String>();
-		int amount_of_names = 0;
-		int[] places = new int[80];
-		for (int i = 0; i < Names.Needed_data_packet.size(); i++) {
-			if (Names.Needed_data_packet.get(Names.Needed_data_names[i]).equals(Packet) || Names.Needed_data_packet.get(Names.Needed_data_names[i]).equals("Header")) {
-				data_names_untrimmed[i] = Names.Needed_data_names[i];
-				data_codes.put(data_names_untrimmed[i], Names.Needed_data_byte.get(data_names_untrimmed[i]));
-				places[amount_of_names] = i;
-				amount_of_names++;
-			}
+		for (int i = 0; i < Names.Needed_data_byte.get(Packet).length; i++) {
+			data_codes.put(Names.Needed_data_packet.get(Packet)[i], Names.Needed_data_byte.get(Packet)[i]);
 		}
-		String[] data_names = new String[amount_of_names];
-		for (int i = 0; i < amount_of_names; i++) {
-			data_names[i] = data_names_untrimmed[places[i]];
+		data_codes.put(Names.Needed_data_packet.get("Header")[0], Names.Needed_data_byte.get("Header")[0]);
+		int stop = 0;
+		String data_names[] = Names.Needed_data_packet.get(Packet);
+		for (int i = 0; i < data_names.length; i++) {
+			if (data_names[i] != null) {
+				stop++;
+			}
 		}
 		
 		HashMap<String, Object> last_data = new HashMap<String, Object>();
-		String[] data_names_temp = new String[data_names.length - 2];
-		int l = 0;
-		for (int i = 0; i < data_names.length ; i++) {
-			if (data_names[i].equals("packetid") || data_names[i].equals("sessionTime")) {
-			} else if (data_names[i].endsWith("_")) {
-				data_names_temp[l] = data_names[i];
-				l++;
-				for (int o = 0; o < 22; o ++) {
-					last_data.put(data_names[i] + o, null);
-				}
-			} else {
-				data_names_temp[l] = data_names[i];
-				l++;
-				last_data.put(data_names[i], null);
-			}
-		}
-		
-		data_names = new String[data_names_temp.length];
-		for (int i = 0; i < data_names_temp.length; i++) {
-			data_names[i] = data_names_temp[i];
-		}
-		
+
 		String output = "";
-		for (int i = 0; i < compression_data.size(); i++) {
-			output += data_codes.get("packetid");
-			try {
-				output += binary_data(ByteBuffer.allocate(4).putInt(i + L1.class.getField(Packet).getInt(Packet)).array());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			for (int o = 0; o < data_names.length; o++) {
-				if (data_names[o].endsWith("_")) {
-					Object data = compression_data.get(i+1).get(data_names[o] + 1);
-					if (data.getClass().equals(Byte.class)) {
-						byte[] data_byte = new byte[22];
-						byte[] data_byte_compaire = (byte[]) last_data.get(data_names[o]);
+		try {
+			for (int i = 0; i < compression_data.size(); i++) {
+				output += data_codes.get("packetid");
+				try {
+					output += binary_data(ByteBuffer.allocate(4).putInt(i + L1.class.getField(Packet).getInt(Packet)).array());
+				} catch (Exception e) {
+				}
+				for (int o = 0; o < stop; o++) {
+					if (data_names[o].endsWith("_")) {
+						Object data = null;
+						try {
+							data = compression_data.get(i+1).get(data_names[o] + 1);
+						} catch (Exception e2) {
+							data = (long)1;
+						}
+						if (data.getClass().equals(Byte.class)) {
+							byte[] data_byte = new byte[22];
+							byte[] data_byte_compaire = (byte[]) last_data.get(data_names[o]);
+							
+							int change = 0;
+							String temp = "";
+							for (int p = 0; p < 22; p++) {
+								data_byte[p] = (byte) compression_data.get(i + 1).get(data_names[o] + p);
+								if (i != 0 && data_byte[p] == data_byte_compaire[p]) {
+								} else {
+									temp += binary_num((byte) p);
+									temp += binary_data(new byte[] {data_byte[p]});
+									change++;
+								}
+							}
+							if(change > 0) {
+								output += data_codes.get(data_names[o]);
+								output += temp;
+								last_data.put(data_names[o], data_byte);
+							}
+						} else if (data.getClass().equals(Float.class)) {
+							float[] data_float = new float[22];
+							float[] data_float_compaire = (float[]) last_data.get(data_names[o]);
 						
-						int change = 0;
-						for (int p = 0; p < 22; p++) {
-							data_byte[p] = (byte) compression_data.get(i + 1).get(data_names[o] + p);
-							if (i != 0 && data_byte[p] == data_byte_compaire[p]) {
-							} else {
-								output += binary_num((byte) p);
-								output += binary_data(new byte[] {data_byte[p]});
-								change++;
+							int change = 0;
+							String temp = "";
+							for (int p = 0; p < 22; p++) {
+								data_float[p] = (float) compression_data.get(i + 1).get(data_names[o] + p);
+								if (i != 0 && data_float[p] == data_float_compaire[p]) {
+								} else {
+									temp += binary_num((byte) p);
+									temp += binary_data(ByteBuffer.allocate(4).putFloat(data_float[p]).array());
+									change++;
+								}
 							}
-						}
-						if(change > 0) {
-							output += data_codes.get(data_names[o]);
-							last_data.put(data_names[o], data_byte);
-						}
-					} else if (data.getClass().equals(Float.class)) {
-						float[] data_float = new float[22];
-						float[] data_float_compaire = (float[]) last_data.get(data_names[o]);
-					
-						int change = 0;
-						for (int p = 0; p < 22; p++) {
-							data_float[p] = (float) compression_data.get(i + 1).get(data_names[o] + p);
-							if (i != 0 && data_float[p] == data_float_compaire[p]) {
-							} else {
-								output += binary_num((byte) p);
-								output += binary_data(ByteBuffer.allocate(4).putFloat(data_float[p]).array());
-								change++;
+							if (change > 0) {
+								output += data_codes.get(data_names[o]);
+								output += temp;
+								last_data.put(data_names[o], data_float);
 							}
-						}
-						if (change > 0) {
-							output += data_codes.get(data_names[o]);
-							last_data.put(data_names[o], data_float);
-						}
-					} else if (data.getClass().equals(Short.class)) {
-						short[] data_short = new short[22];
-						short[] data_short_compaire = (short[]) last_data.get(data_names[o]);
-						
-						int change = 0;
-						for (int p = 0; p < 22; p++) {
-							data_short[p] = (short) compression_data.get(i + 1).get(data_names[o] + p);
-							if (i != 0 && data_short[p] == data_short_compaire[p]) {
-							} else {
-								output += binary_num((byte) p);
-								output += binary_data(ByteBuffer.allocate(2).putShort(data_short[p]).array());
-								change++;
+						} else if (data.getClass().equals(Short.class)) {
+							short[] data_short = new short[22];
+							short[] data_short_compaire = (short[]) last_data.get(data_names[o]);
+							
+							int change = 0;
+							String temp = "";
+							for (int p = 0; p < 22; p++) {
+								data_short[p] = (short) compression_data.get(i + 1).get(data_names[o] + p);
+								if (i != 0 && data_short[p] == data_short_compaire[p]) {
+								} else {
+									temp += binary_num((byte) p);
+									temp += binary_data(ByteBuffer.allocate(2).putShort(data_short[p]).array());
+									change++;
+								}
 							}
-						}
-						if (change > 0) {
-							output += data_codes.get(data_names[o]);
-							last_data.put(data_names[o], data_short);
-						}	
-					} else if (data.getClass().equals(String.class)) {
-						String[] data_String = new String[22];
-						String[] data_String_compaire = (String[]) last_data.get(data_names[o]);
-						
-						int change = 0;
-						for (int p = 0; p < 22; p++) {
-							data_String[p] = (String) compression_data.get(i + 1).get(data_names[o] + p);
-							if (i != 0 && data_String[p] == data_String_compaire[p]) {
-							} else {
-								output += binary_num((byte) p);
-								output += binary_data(ByteBuffer.allocate(48).put(data_String[p].getBytes()).array());
-								change++;
+							if (change > 0) {							
+								output += data_codes.get(data_names[o]);
+								output += temp;
+								last_data.put(data_names[o], data_short);
+							}	
+						} else if (data.getClass().equals(String.class)) {
+							String[] data_String = new String[22];
+							String[] data_String_compaire = (String[]) last_data.get(data_names[o]);
+							
+							int change = 0;
+							String temp = "";
+							for (int p = 0; p < 22; p++) {
+								data_String[p] = (String) compression_data.get(i + 1).get(data_names[o] + p);
+								if (i != 0 && data_String[p] == data_String_compaire[p]) {
+								} else {
+									temp += binary_num((byte) p);
+									temp += binary_data(ByteBuffer.allocate(48).put(data_String[p].getBytes()).array());
+									change++;
+								}
 							}
+							if (change > 0) {
+								output += data_codes.get(data_names[o]);
+								output += temp;
+								last_data.put(data_names[o], data_String);
+							}		
 						}
-						if (change > 0) {
+					} else {
+						if (compression_data.get(i + 1).get(data_names[o]) instanceof Byte) {
+							byte temp = (byte)compression_data.get(i + 1).get(data_names[o]);
 							output += data_codes.get(data_names[o]);
-							last_data.put(data_names[o], data_String);
-						}		
+							output += binary_num(temp);
+							
+						} else if (compression_data.get(i + 1).get(data_names[o]) instanceof Short) {
+							Short temp = (Short)compression_data.get(i + 1).get(data_names[o]);
+							output += data_codes.get(data_names[o]);
+							output += binary_data(ByteBuffer.allocate(2).putShort(temp).array());
+						}
 					}
-				} //else {
-//					System.out.println(data_names[o]);
-//					byte[] temp = (byte[])compression_data.get(i).get(data_names[o]);
-//					for (int p = 0; p < temp.length; p++) {
-//						output += String.format("%8s", Integer.toBinaryString(temp[p] & 0xFF).replace(' ', '0'));	
-//					}
-//				}
-				// needs some work
+				}
 			}
+		} catch (Exception e) {
 		}
-		
-		byte[] data = null;
-		if (output.length() % 8 != 0) {
-		  	System.out.println("error code #7"); //nog te bepalen error code
-	    } else {
-		    data = new byte[output.length() / 8];
-		    for (int i = 0; i < output.length(); i++) {
-		        char c = output.charAt(i);
-		        if (c == '1') {
-		            data[i >> 3] |= 0x80 >> (i & 0x7);
-		        } else if (c != '0') {
-		        	System.out.println(output);
-		            throw new IllegalArgumentException("Invalid char in binary string : " + c + " : should be 1 or 0");
-		        }
-		    }
-		}
-		try (FileOutputStream write = new FileOutputStream("src/saves/temp/" + Packet + ".dec", true)) {
+		byte[] data = new BigInteger(output, 2).toByteArray();
+		try (FileOutputStream write = new FileOutputStream(Main.dir + "Saves/temp/" + Packet + ".dec", true)) {
 			write.write(data);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		//System.out.println(data.length);
-		//System.out.println(compression_data.size());
 	}
 	static private String binary_num(byte o) {
 		StringBuilder sb = new StringBuilder("00000000");
