@@ -69,7 +69,7 @@ public class settings {
 		for (int i = 0; i < Save_names.length; i++) {
 			Save_options.add(Save_names[i]);
 		}
-		final ComboBox Save_dropdown = new ComboBox(Save_options);
+		final ComboBox<String> Save_dropdown = new ComboBox<String>(Save_options);
 		Save.setSpacing(10);
 		Save.getChildren().addAll(Save_label, Save_dropdown);
 		

@@ -58,7 +58,9 @@ public class data_decoder {
 						if (data[o] == Header) {
 							int packetid = ByteBuffer.wrap(new byte[] {data[o + 1] , data[o + 2], data[o + 3], data[o + 4]}).order(ByteOrder.BIG_ENDIAN).getInt();
 							if (packetid != 0) {
-								Temp_packets.put(packetid - 1, new HashMap<String, Object>() {{putAll(Temp_packet);}});
+								Temp_packets.put(packetid - 1, new HashMap<String, Object>() {
+									private static final long serialVersionUID = 1L;
+								{putAll(Temp_packet);}});
 								Temp_packet.clear();
 							}
 							o = o + 4;
@@ -100,7 +102,9 @@ public class data_decoder {
 					if (o == data.length - 1) {
 						data_to_file_system.end_of_file = true;
 					}
-					decoded_data.put(packetid[i], new HashMap<Integer, HashMap<String, Object>>() {{putAll(Temp_packets);}});
+					decoded_data.put(packetid[i], new HashMap<Integer, HashMap<String, Object>>() {
+						private static final long serialVersionUID = 1L;
+					{putAll(Temp_packets);}});
 				} catch (IOException e) {
 				}
 			}

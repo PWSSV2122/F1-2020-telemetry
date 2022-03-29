@@ -1,7 +1,6 @@
 package contentUpdate;
 
 import file_system.L1;
-import javafx.scene.text.Text;
 import application.SetupPage.Brakes;
 import application.SetupPage.Suspension_Geometry;
 import application.SetupPage.Suspension;

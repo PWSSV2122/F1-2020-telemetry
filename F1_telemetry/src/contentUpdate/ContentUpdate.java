@@ -8,7 +8,6 @@ import application.GraphPage;
 import application.ComparisonPage;
 import application.LapTimePage;
 import application.TimingPage;
-import application.TrackPage;
 import data_compute.Historical_lap_data;
 import data_compute.delta;
 import file_system.L1;
@@ -16,8 +15,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.skin.TableColumnHeader;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class ContentUpdate {
 	protected static final TableColumnHeader columnHeader = null;

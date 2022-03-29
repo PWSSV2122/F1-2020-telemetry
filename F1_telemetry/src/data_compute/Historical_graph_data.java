@@ -1,8 +1,6 @@
 package data_compute;
 
 import application.ComparisonPage;
-import application.GraphPage;
-import contentUpdate.ContentUpdate;
 import file_system.L1;
 import javafx.application.Platform;
 import javafx.scene.chart.XYChart;
@@ -85,7 +83,8 @@ public class Historical_graph_data {
 
 	private static void Compaire_Chart_update(float[][] data, float[] percentage) {
 		Platform.runLater(new Runnable() {
-		    @Override
+		    @SuppressWarnings("unchecked")
+			@Override
 		    public void run() {
 		    	for (int i = 0; i < L1.numActiveCars; i++) {
 		    		try {

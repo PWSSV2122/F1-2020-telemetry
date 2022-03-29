@@ -2,7 +2,6 @@ package application;
 
 import contentUpdate.ContentUpdate;
 import contentUpdate.SetupUpdate;
-import data_compute.Historical_graph_data;
 import file_system.L1;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -39,10 +38,14 @@ public class ComparisonPage {
 	public static NumberAxis xAxis = new NumberAxis(0, 10000, 100);
 	public static NumberAxis yAxis = new NumberAxis(0, 100, 2);
 	public static LineChart<Number,Number> lineChart = new LineChart<Number,Number>(xAxis,yAxis);
+	@SuppressWarnings("rawtypes")
 	public static XYChart.Series[][] series = new XYChart.Series[22][24];
+	@SuppressWarnings("rawtypes")
 	public static XYChart.Series player_1 = new XYChart.Series();
+	@SuppressWarnings("rawtypes")
 	public static XYChart.Series player_2 = new XYChart.Series();
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Scene ComparisonPage_scene() {
 		Scene ComparisonPage;
 		

@@ -8,7 +8,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -423,7 +422,8 @@ public class GraphPage {
 	
 	private static void update_Graph() {
 		Platform.runLater(new Runnable() {
-		    @Override
+		    @SuppressWarnings("unchecked")
+			@Override
 		    public void run() {
 		    	lineChart.getData().clear();
 		    	int o = 0;

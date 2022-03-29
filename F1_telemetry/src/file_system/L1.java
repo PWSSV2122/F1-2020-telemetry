@@ -1,7 +1,6 @@
 package file_system;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 public class L1 {
 	//compression data

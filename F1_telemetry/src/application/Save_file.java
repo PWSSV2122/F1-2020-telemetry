@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import File_reader.Names;
 import Inkoming.Packet_recieve;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

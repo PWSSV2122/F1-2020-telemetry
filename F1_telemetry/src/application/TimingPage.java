@@ -28,6 +28,7 @@ public class TimingPage {
 	
 	public static TableView<Tabel_object> Tabel = new TableView<Tabel_object>();
 	
+	@SuppressWarnings("unchecked")
 	public static Scene TimingPage_scene() {
 		Scene TimingPage;
 		

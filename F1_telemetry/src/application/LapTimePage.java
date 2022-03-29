@@ -30,6 +30,7 @@ public class LapTimePage {
 	public static ComboBox<String> people = new ComboBox<String>();
 	public static TableColumn<Tabel_object, String> Lap = new TableColumn<Tabel_object, String>("Lap");
 	
+	@SuppressWarnings("unchecked")
 	public static Scene LapTimePage_scene() {
 		Scene LapTimePage;
 		
