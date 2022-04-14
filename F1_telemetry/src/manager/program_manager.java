@@ -14,7 +14,6 @@ public class program_manager {
         }.start();
         
         
-        
 	Motion_car[] test = new Motion_car[2];
 	test[0] = new Motion_car((float)0, (float)0, (float)0, (float)0, (float)0, (float)0, (short)0, (short)0, (short)0, (short)0, (short)0, (short)0, (float)0, (float)0, (float)0, (float)0, (float)0, (float)0);
 	System.out.println(test[0].getRoll());

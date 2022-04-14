@@ -10,6 +10,10 @@ public class Car_setups {
 	private float rearCamber;
 	private float frontToe;
 	private float rearToe;
+	private byte frontSuspension;
+	private byte rearSuspsnesion;
+	private byte frontAntiRollBar;
+	private byte rearAntiRollBar;
 	private byte frontSuspnesionHeight;
 	private byte rearSuspensionHeight;
 	private byte brakePressure;
@@ -21,9 +25,9 @@ public class Car_setups {
 	private byte ballast;
 	private float fuelLoad;
 	
-	public Car_setups(byte frontWing, byte rearWing, byte onThrottle, byte offThrottle, float frontCamber, float rearCamber, float frontToe, float rearToe, byte frontSuspnesionHeight,
-			byte rearSuspensionHeight, byte brakePressure, byte brakeBias, float rearLeftTyrePressure, float rearRightTyrePressue, float frontLeftTyrePressure, float frontRightTyrePressure, 
-			byte ballast, float fuelLoad) {
+	public Car_setups(byte frontWing, byte rearWing, byte onThrottle, byte offThrottle, float frontCamber, float rearCamber, float frontToe, float rearToe, byte frontSuspension,
+			byte rearSuspsnesion, byte frontAntiRollBar, byte rearAntiRollBar, byte frontSuspnesionHeight, byte rearSuspensionHeight, byte brakePressure, byte brakeBias, 
+			float rearLeftTyrePressure, float rearRightTyrePressue, float frontLeftTyrePressure, float frontRightTyrePressure, byte ballast, float fuelLoad) {
 		
 		this.frontWing = frontWing;
 		this.rearWing = rearWing;
@@ -33,6 +37,10 @@ public class Car_setups {
 		this.rearCamber = rearCamber;
 		this.frontToe = frontToe;
 		this.rearToe = rearToe;
+		this.frontSuspension = frontSuspension;
+		this.rearSuspsnesion = rearSuspsnesion;
+		this.frontAntiRollBar = frontAntiRollBar;
+		this.rearAntiRollBar = rearAntiRollBar;
 		this.frontSuspnesionHeight = frontSuspnesionHeight;
 		this.rearSuspensionHeight = rearSuspensionHeight;
 		this.brakePressure = brakePressure;
@@ -75,6 +83,22 @@ public class Car_setups {
 	
 	public float getRearToe() {
 		return rearToe;
+	}
+	
+	public float getFrontSuspension() {
+		return frontSuspension;
+	}
+	
+	public float getRearSuspsnesion() {
+		return rearSuspsnesion;
+	}
+	
+	public float getFrontAntiRollBar() {
+		return frontAntiRollBar;
+	}
+	
+	public float getRearAntiRollBar() {
+		return rearAntiRollBar;
 	}
 	
 	public byte getFrontSuspnesionHeight() {

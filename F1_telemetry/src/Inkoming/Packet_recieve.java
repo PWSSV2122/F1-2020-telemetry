@@ -1,9 +1,5 @@
 package Inkoming;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteOrder;
@@ -15,10 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import File_reader.Names;
 import application.ComparisonPage;
-import application.GraphPage;
-import application.Main;
 import application.Save_file;
-import contentUpdate.ContentUpdate;
 import data_compute.Historical_graph_data;
 import data_compute.Historical_lap_data;
 import data_compute.delta;

@@ -11,6 +11,7 @@ public class Session {
 	private byte formula;
 	private short sessionTimeLeft;
 	private short sessionDuration;
+	private byte pitSpeedLimit;
 	private byte gamePaused;
 	private byte isSpectating;
 	private byte spectatorCarIndex;
@@ -21,8 +22,8 @@ public class Session {
 	private byte numWeatherForcastSamples;
 	
 	public Session(byte weather, byte trackTemperature, byte airTemperature, byte totalLaps, short trackLength, byte sessionType, byte trackId, byte formula,
-			short sessionTimeLeft, short sessionDuration, byte gamePaused, byte isSpectating, byte spectatorCarIndex, byte sliProNativeSupport, byte numMarshalZones,
-			byte safetyCarStatus, byte networkGame, byte numWeatherForcastSamples) {
+			short sessionTimeLeft, short sessionDuration, byte pitSpeedLimit, byte gamePaused, byte isSpectating, byte spectatorCarIndex, byte sliProNativeSupport,
+			byte numMarshalZones, byte safetyCarStatus, byte networkGame, byte numWeatherForcastSamples) {
 		
 		this.weather = weather;
 		this.trackTemperature = trackTemperature;
@@ -34,6 +35,7 @@ public class Session {
 		this.formula = formula;
 		this.sessionTimeLeft = sessionTimeLeft;
 		this.sessionDuration = sessionDuration;
+		this.pitSpeedLimit = pitSpeedLimit;
 		this.gamePaused = gamePaused;
 		this.isSpectating = isSpectating;
 		this.spectatorCarIndex = spectatorCarIndex;
@@ -82,6 +84,10 @@ public class Session {
 	
 	public short getSessionDuration() {
 		return sessionDuration;
+	}
+	
+	public byte getPitSpeedLimit() {
+		return pitSpeedLimit;
 	}
 	
 	public byte getGamePaused() {

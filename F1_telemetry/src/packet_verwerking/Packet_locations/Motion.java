@@ -1,0 +1,54 @@
+package packet_verwerking.Packet_locations;
+
+public class Motion {
+	public static int[] m_worldPositionX_ = new int[] {24, 25, 26, 27};
+	public static int[] m_worldPositionY_ = new int[] {28, 29, 30, 31};
+	public static int[] m_worldPositionZ_ = new int[] {32, 33, 34, 35};
+	public static int[] m_worldVelocityX_ = new int[] {36, 37, 38, 39};
+	public static int[] m_worldVelocityY_ = new int[] {40, 41, 42, 43};
+	public static int[] m_worldVelocityZ_ = new int[] {44, 45, 46, 47};
+	public static int[] m_worldForwardDirX_ = new int[] {48, 49};
+	public static int[] m_worldForwardDirY_ = new int[] {50, 51};
+	public static int[] m_worldForwardDirZ_ = new int[] {52, 53};
+	public static int[] m_worldRightDirX_ = new int[] {54, 55};
+	public static int[] m_worldRightDirY_ = new int[] {56, 57};
+	public static int[] m_worldRightDirZ_ = new int[] {58, 59};
+	public static int[] m_gForceLateral_ = new int[] {60, 61, 62, 63};
+	public static int[] m_gForceLongitudinal_ = new int[] {64, 65, 66, 67};
+	public static int[] m_gForceVertical_ = new int[] {68, 69, 70, 71};
+	public static int[] m_yaw_ = new int[] {72, 73, 74, 75};
+	public static int[] m_pitch_ = new int[] {76, 77, 78, 79};
+	public static int[] m_roll_ = new int[] {80, 81, 82, 83};
+	public static int[] m_suspensionPosition_RL = new int[] {1344, 1345, 1346, 1347};
+	public static int[] m_suspensionPosition_RR = new int[] {1348, 1349, 1350, 1351};
+	public static int[] m_suspensionPosition_FL = new int[] {1352, 1353, 1354, 1355};
+	public static int[] m_suspensionPosition_FR = new int[] {1356, 1357, 1358, 1359};
+	public static int[] m_suspensionVelocity_RL = new int[] {1360, 1361, 1362, 1363};
+	public static int[] m_suspensionVelocity_RR = new int[] {1364, 1365, 1366, 1367};
+	public static int[] m_suspensionVelocity_FL = new int[] {1368, 1369, 1370, 1371};
+	public static int[] m_suspensionVelocity_FR = new int[] {1372, 1373, 1374, 1375};
+	public static int[] m_suspensionAcceleration_RL = new int[] {1376, 1377, 1378, 1379};
+	public static int[] m_suspensionAcceleration_RR = new int[] {1380, 1381, 1382, 1383};
+	public static int[] m_suspensionAcceleration_FL = new int[] {1384, 1385, 1386, 1387};
+	public static int[] m_suspensionAcceleration_FR = new int[] {1388, 1389, 1390, 1391};
+	public static int[] m_wheelSpeed_RL = new int[] {1392, 1393, 1394, 1395};
+	public static int[] m_wheelSpeed_RR = new int[] {1396, 1397, 1398, 1399};
+	public static int[] m_wheelSpeed_FL = new int[] {1400, 1401, 1402, 1403};
+	public static int[] m_wheelSpeed_FR = new int[] {1404, 1405, 1406, 1407};
+	public static int[] m_wheelSlip_RL = new int[] {1408, 1409, 1410, 1411};
+	public static int[] m_wheelSlip_RR = new int[] {1412, 1413, 1414, 1415};
+	public static int[] m_wheelSlip_FL = new int[] {1416, 1417, 1418, 1419};
+	public static int[] m_wheelSlip_FR = new int[] {1420, 1421, 1422, 1423};
+	public static int[] m_localVelocityX = new int[] {1424, 1425, 1426, 1427};
+	public static int[] m_localVelocityY = new int[] {1428, 1429, 1430, 1431};
+	public static int[] m_localVelocityZ = new int[] {1432, 1433, 1434, 1435};
+	public static int[] m_angularVelocityX = new int[] {1436, 1437, 1438, 1439};
+	public static int[] m_angularVelocityY = new int[] {1440, 1441, 1442, 1443};
+	public static int[] m_angularVelocityZ = new int[] {1444, 1445, 1446, 1447};
+	public static int[] m_angularAccelerationX = new int[] {1448, 1449, 1450, 1451};
+	public static int[] m_angularAccelerationY = new int[] {1452, 1453, 1454, 1455};
+	public static int[] m_angularAccelerationZ = new int[] {1456, 1457, 1458, 1459};
+	public static int[] m_frontWheelsAngle = new int[] {1460, 1461, 1462, 1463};
+
+	public static int CarMotionData = 60;
+}

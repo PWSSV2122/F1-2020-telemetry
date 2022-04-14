@@ -31,9 +31,9 @@ public class Lap_data {
 	private byte resultStatus;
 	
 	public Lap_data(float lastLapTime, float currentLapTime, short sector1TimeInMS, short sector2TimeInMS, float bestLapTime, byte bestLapNum, short bestLapSector1TimeInMS, short bestLapSector2TimeInMS,
-			short bestLapSector3TimeInMS, short bestOverallSector1TimeInMS, byte bestOverallSector1LapNum, short bestOverallSector2TimeInMS, short bestOverallSector3TimeInMS, byte bestOverallSector3LapNum,
+			short bestLapSector3TimeInMS, short bestOverallSector1TimeInMS, byte bestOverallSector1LapNum, short bestOverallSector2TimeInMS, byte bestOverallSector2LapNum, short bestOverallSector3TimeInMS, byte bestOverallSector3LapNum,
 			float lapDistance, float totalDistance, float safetyCarDelta, byte carPosition, byte currentLapNum, byte pitStatus, byte sector, byte currentLapInvalid, byte penalties, byte gridPosition, 
-			byte driverStatus, byte resultStatus, byte bestOverallSector2LapNum) {
+			byte driverStatus, byte resultStatus) {
 	
 		this.lastLapTime = lastLapTime;
 		this.currentLapTime = currentLapTime;
@@ -63,7 +63,7 @@ public class Lap_data {
 		this.driverStatus = driverStatus;
 		this.resultStatus = resultStatus;
 	}
-	
+
 	public float getLastLapTime() {
 		return lastLapTime;
 	}
