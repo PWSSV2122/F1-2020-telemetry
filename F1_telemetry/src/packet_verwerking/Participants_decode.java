@@ -11,8 +11,13 @@ public class Participants_decode {
 	private static packet_struct.Participants.Participants_players[] Participants_players = new packet_struct.Participants.Participants_players[22];
 	
 	public static void decode(byte[] packet) {
-		Participants_data = new packet_struct.Participants.Participants(
-			packet[Participants.m_numActiveCars[0]]);
+		try {
+			Participants_data = new packet_struct.Participants.Participants(
+				packet[Participants.m_numActiveCars[0]]);	
+		} catch (Exception e) {
+			e.printStackTrace();
+			//custom error message
+		}
 		
 		for (int i = 0; i < 22; i++) {
 			int offset = Participants.Participants * i;
@@ -20,14 +25,19 @@ public class Participants_decode {
 			for (int o = 0; o < 48; o++) {
 				Name[i] = packet[Participants.m_name_[i] + offset];
 			}
-			Participants_players[i] = new packet_struct.Participants.Participants_players(
-				packet[Participants.m_aiControlled_[0] + offset],
-				packet[Participants.m_driverId_[0] + offset],
-				packet[Participants.m_teamId_[0] + offset],
-				packet[Participants.m_raceNumber_[0] + offset],
-				packet[Participants.m_nationality_[0] + offset],
-				new String(Name, StandardCharsets.UTF_8),						
-				packet[Participants.m_yourTelemetry_[0] + offset]);
+			try {
+				Participants_players[i] = new packet_struct.Participants.Participants_players(
+					packet[Participants.m_aiControlled_[0] + offset],
+					packet[Participants.m_driverId_[0] + offset],
+					packet[Participants.m_teamId_[0] + offset],
+					packet[Participants.m_raceNumber_[0] + offset],
+					packet[Participants.m_nationality_[0] + offset],
+					new String(Name, StandardCharsets.UTF_8),						
+					packet[Participants.m_yourTelemetry_[0] + offset]);	
+			} catch (Exception e) {
+				e.printStackTrace();
+				//custom error message
+			}
 		}
 		
 		Data.Participants = Participants_data;
