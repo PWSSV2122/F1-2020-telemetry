@@ -9,6 +9,7 @@ import java.nio.ByteOrder;
 import Global_vars.Data;
 import Global_vars.Settings;
 import Global_vars.Thread_Queue;
+import Saves.Save_to_file;
 import packet_verwerking.Packet_locations.Header;
 import packet_verwerking.Car_setups_decode;
 import packet_verwerking.Car_status_decode;
@@ -23,9 +24,9 @@ import packet_verwerking.Session_decode;
 
 public class Inkoming {
 	
-	private static int Packet_loss = 0;
+	private static int Packet_loss[] = new int[10];
 	private static packet_struct.Header Header_Data;
-	private static int count = 0;
+	private static boolean first[] = new boolean[10];
 	
 	public static void recieve() {
 		try {
@@ -50,29 +51,11 @@ public class Inkoming {
 						packet[Header.m_playerCarIndex[0]],
 						packet[Header.m_secondaryPlayerCarIndex[0]]);
 				
-				//package los detection
-				//moet voor iedere packet appart
-				if (Header_Data.getFrameIdentifier() <= Packet_loss) {
-					//custom error message
-//					System.out.println("wut");
-//					System.out.println("Package lossed");
-//					System.out.println("Package ID : " + Header_Data.getPacketId());
-//					System.out.println("Packages lossed : " + (Header_Data.getFrameIdentifier() - Packet_loss - 1) + " : " + Packet_loss + " : " + Header_Data.getFrameIdentifier());
-				} else if (Header_Data.getFrameIdentifier() - 1 == Packet_loss) {
-					if (Header_Data.getPacketId() == 0) {
-						count++;
-						System.out.println(count);
-					}
-					decode(packet);
-					Packet_loss++;
-				} else {
-					//custom error message
-					//System.out.println("Package lossed");
-					//System.out.println("Package ID : " + Header_Data.getPacketId());
-					//System.out.println("Packages lossed : " + (Header_Data.getFrameIdentifier() - Packet_loss - 1) + " : " + Packet_loss + " : " + Header_Data.getFrameIdentifier());
-					Packet_loss = Header_Data.getFrameIdentifier();
-					decode(packet);
-				}	
+				if (first[Header_Data.getPacketId()]) {
+					Packet_loss[Header_Data.getPacketId()] = Header_Data.getFrameIdentifier() - 1;
+					first[Header_Data.getPacketId()] = false;
+				}
+				decode(packet);
 			}
 			socket.close();
 		} catch (IOException e) {
@@ -82,76 +65,143 @@ public class Inkoming {
 	}
 	
 	private static void decode(byte[] packet) {
-		if (Header_Data.getPacketId() == 0) { //Motion
-			Thread_Queue.Motion.submit(new Runnable() {
-				public void run() {
-					Motion_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});	
-		} else if (Header_Data.getPacketId() == 1) { //Session
-			Thread_Queue.Session.submit(new Runnable() {
-				public void run() {
-					Session_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
-		} else if (Header_Data.getPacketId() == 2) { //Lap Data
-			Thread_Queue.Lap_data.submit(new Runnable() {
-				public void run() {
-					Lap_data_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
-		} else if (Header_Data.getPacketId() == 3) { //Event Needs testing
-			Thread_Queue.Event.submit(new Runnable() {
-				public void run() {
-					Event_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
-		} else if (Header_Data.getPacketId() == 4) { //Participants
-			Thread_Queue.Participants.submit(new Runnable() {
-				public void run() {
-					Participants_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
-		} else if (Header_Data.getPacketId() == 5) { //Car Setups Needs testing
-			Thread_Queue.Car_setups.submit(new Runnable() {
-				public void run() {
-					Car_setups_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
-		} else if (Header_Data.getPacketId() == 6) { //Car Telemetry
-			Thread_Queue.Car_telemetry.submit(new Runnable() {
-				public void run() {
-					Car_telemetry_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
-		} else if (Header_Data.getPacketId() == 7) { //Car Status
-			Thread_Queue.Car_status.submit(new Runnable() {
-				public void run() {
-					Car_status_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
-		} else if (Header_Data.getPacketId() == 8) { //Final Classification Needs testing
-			Thread_Queue.Final_classification.submit(new Runnable() {
-				public void run() {
-					Final_classification_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
-		} else if (Header_Data.getPacketId() == 9) { //Lobby Info Needs testing
-			Thread_Queue.Lobby_info.submit(new Runnable() {
-				public void run() {
-					Lobby_info_decode.decode(packet);
-					//packet loss detection en integrity check
-				}
-			});
+		if (Header_Data.getFrameIdentifier() <= Packet_loss[Header_Data.getPacketId()]) {
+			//custom error message
+		} else if (Header_Data.getFrameIdentifier() - 1 == Packet_loss[Header_Data.getPacketId()]) {
+			Packet_loss[Header_Data.getPacketId()]++;
+			
+			if (Header_Data.getPacketId() == 0) { //Motion
+				Thread_Queue.Motion.submit(new Runnable() {
+					public void run() {
+						Motion_decode.decode(packet);
+						
+						Save_to_file.save("Motion.Motion", Data.MotionID, false, new Object[] {Data.Motion}, new Object[] {Data.Motion_comp});
+						Save_to_file.save("Motion", Data.MotionID, false, new Object[] {Data.Motion_car}, new Object[] {Data.Motion_car_comp});
+						Data.MotionID++;
+						
+						Data.Motion_comp = Data.Motion;
+						Data.Motion_car_comp = Data.Motion_car;
+						//integrity check
+					}
+				});	
+			} else if (Header_Data.getPacketId() == 1) { //Session
+				Thread_Queue.Session.submit(new Runnable() {
+					public void run() {
+						Session_decode.decode(packet);
+						
+						Save_to_file.save("Session.Session", Data.SessionID, false, new Object[] {Data.Session}, new Object[] {Data.Session_comp});
+						Save_to_file.save("Session.Session", Data.SessionID, true, new Object[] {Data.Session_marshal}, new Object[] {Data.Session_marshal_comp});
+						Save_to_file.save("Session.Session", Data.SessionID, true, new Object[] {Data.Session_weather}, new Object[] {Data.Session_weather_comp});
+						Data.SessionID++;
+						
+						Data.Session_comp = Data.Session;
+						Data.Session_marshal_comp = Data.Session_marshal;
+						Data.Session_weather_comp = Data.Session_weather;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 2) { //Lap Data
+				Thread_Queue.Lap_data.submit(new Runnable() {
+					public void run() {
+						Lap_data_decode.decode(packet);
+						
+						Save_to_file.save("Lap_data", Data.Lap_dataID, false, new Object[] {Data.Lap_data}, new Object[] {Data.Lap_data_comp});
+						Data.Lap_dataID++;
+						
+						Data.Lap_data_comp = Data.Lap_data;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 3) { //Event Needs testing
+				Thread_Queue.Event.submit(new Runnable() {
+					public void run() {
+						Event_decode.decode(packet);
+						
+						//to save
+						
+						Data.Event_comp = Data.Event;
+						Data.Event_fastestLap_comp  = Data.Event_fastestLap;
+						Data.Event_raceWinner_comp  = Data.Event_raceWinner;
+						Data.Event_retirement_comp  = Data.Event_retirement;
+						Data.Event_speedTrap_comp  = Data.Event_speedTrap;
+						Data.Event_TeamMateInPits_comp  = Data.Event_TeamMateInPits;
+						Data.Event_penalty_comp  = Data.Event_penalty;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 4) { //Participants
+				Thread_Queue.Participants.submit(new Runnable() {
+					public void run() {
+						Participants_decode.decode(packet);
+						
+						//to save
+						
+						Data.Participants_comp = Data.Participants;
+						Data.Participants_players_comp = Data.Participants_players;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 5) { //Car Setups Needs testing
+				Thread_Queue.Car_setups.submit(new Runnable() {
+					public void run() {
+						Car_setups_decode.decode(packet);
+						
+						//to save
+						
+						Data.Car_setups_comp = Data.Car_setups;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 6) { //Car Telemetry
+				Thread_Queue.Car_telemetry.submit(new Runnable() {
+					public void run() {
+						Car_telemetry_decode.decode(packet);
+						
+						//to save
+						
+						Data.Car_telemetry_comp = Data.Car_telemetry;
+						Data.Car_telemetry_car_comp = Data.Car_telemetry_car;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 7) { //Car Status
+				Thread_Queue.Car_status.submit(new Runnable() {
+					public void run() {
+						Car_status_decode.decode(packet);
+						
+						//to save
+						
+						Data.Car_status_comp = Data.Car_status;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 8) { //Final Classification Needs testing
+				Thread_Queue.Final_classification.submit(new Runnable() {
+					public void run() {
+						Final_classification_decode.decode(packet);
+						
+						//to save
+						
+						Data.Final_classification_comp = Data.Final_classification;
+						Data.Final_classification_car_comp = Data.Final_classification_car;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 9) { //Lobby Info Needs testing
+				Thread_Queue.Lobby_info.submit(new Runnable() {
+					public void run() {
+						Lobby_info_decode.decode(packet);
+						
+						//to save
+						
+						Data.Lobby_info_comp = Data.Lobby_info;
+						Data.Lobby_info_car_comp = Data.Lobby_info_car;
+						//integrity check
+					}
+				});
+			}
+		} else {
+			//custom error message
 		}
 	}
 }

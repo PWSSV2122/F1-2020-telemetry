@@ -180,48 +180,4 @@ public class Lap_data {
 	public byte getResultStatus() {
 		return resultStatus;
 	}
-	
-	private static String[] names = new String[] {"getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus", "getResultStatus"};
-	public static Class loadedList = null;
-	public static Queue<Byte> compaire(Lap_data one, Lap_data two) {
-		long start = System.nanoTime();
-		Queue<Byte> comp_result = new LinkedList<Byte>();
-		
-		try {
-			loadedList = Class.forName("packet_struct.Lap_data");
-		} catch (ClassNotFoundException e) {
-			//custom error message
-			e.printStackTrace();
-		}
-		//hoeft maar 1 keer uitgevoert te worden dus moet uit deze methoden gehaald worden
-		
-		for (int i = 0; i < 27; i++) {
-			try {
-				Method m = loadedList.getMethod(names[i], (Class[]) null);
-				Object value_1 = m.invoke(one);
-				Object value_2 = m.invoke(two);
-				if (value_1 != value_2) {
-					comp_result.add((byte)i);
-					if (value_2.getClass().equals(Byte.class)) {
-						comp_result.add((byte)value_2);
-					} else if (value_2.getClass().equals(Short.class)) {
-						for (int o = 0; o < 2; o++) {
-							 comp_result.add(ByteBuffer.allocate(2).putShort((short)value_2).array()[o]);
-						}
-					} else if (value_2.getClass().equals(Float.class)) {
-						for (int o = 0; o < 4; o++) {
-							 comp_result.add(ByteBuffer.allocate(4).putFloat((float)value_2).array()[o]);
-						}
-					} else {
-						//custom error message
-					}
-				}
-			} catch (Exception e) {
-				//custom error message
-				e.printStackTrace();
-			}
-		}
-	    System.out.println((float)(System.nanoTime() - start) / 1000000);
-		return comp_result;
-	}
 }

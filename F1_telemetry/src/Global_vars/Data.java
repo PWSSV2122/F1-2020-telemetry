@@ -66,4 +66,50 @@ public class Data {
 	
 	public static Lobby_info Lobby_info;
 	public static Lobby_info_car[] Lobby_info_car = new Lobby_info_car[22];
+	
+	
+	
+	public static Motion Motion_comp;
+	public static Motion_car[] Motion_car_comp = new Motion_car[22];
+	
+	public static Session Session_comp;
+	public static Session_Marshal[] Session_marshal_comp = new Session_Marshal[21];
+	public static Session_Weather[] Session_weather_comp = new Session_Weather[21];
+	
+	public static Lap_data[] Lap_data_comp = new Lap_data[22];
+	
+	public static Event Event_comp;
+	public static Event_FastestLap Event_fastestLap_comp;
+	public static Event_Retirement Event_retirement_comp;
+	public static Event_TeamMateInPits Event_TeamMateInPits_comp;
+	public static Event_RaceWinner Event_raceWinner_comp;
+	public static Event_Penalty Event_penalty_comp;
+	public static Event_SpeedTrap Event_speedTrap_comp;
+	 
+	public static Participants Participants_comp;
+	public static Participants_players[] Participants_players_comp = new Participants_players[22];
+	
+	public static Car_setups[] Car_setups_comp = new Car_setups[22];
+	
+	public static Car_telemetry Car_telemetry_comp;
+	public static Car_telemetry_car[] Car_telemetry_car_comp = new Car_telemetry_car[22];
+	
+	public static Car_status[] Car_status_comp = new Car_status[22];
+	
+	public static Final_classification Final_classification_comp;
+	public static Final_classification_car[] Final_classification_car_comp = new Final_classification_car[22];
+	
+	public static Lobby_info Lobby_info_comp;
+	public static Lobby_info_car[] Lobby_info_car_comp = new Lobby_info_car[22];
+	
+	public static int MotionID = 0;
+	public static int SessionID = 0;
+	public static int Lap_dataID = 0;
+	public static int EventID = 0;
+	public static int ParticipantsID = 0;
+	public static int Car_setupsID = 0;
+	public static int Car_telemetryID = 0;
+	public static int Car_statusID = 0;
+	public static int Final_classificationID = 0;
+	public static int Lobby_infoID = 0;
 }
