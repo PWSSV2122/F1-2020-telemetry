@@ -101,15 +101,4 @@ public class Data {
 	
 	public static Lobby_info Lobby_info_comp;
 	public static Lobby_info_car[] Lobby_info_car_comp = new Lobby_info_car[22];
-	
-	public static int MotionID = 0;
-	public static int SessionID = 0;
-	public static int Lap_dataID = 0;
-	public static int EventID = 0;
-	public static int ParticipantsID = 0;
-	public static int Car_setupsID = 0;
-	public static int Car_telemetryID = 0;
-	public static int Car_statusID = 0;
-	public static int Final_classificationID = 0;
-	public static int Lobby_infoID = 0;
 }
