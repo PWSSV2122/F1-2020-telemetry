@@ -74,9 +74,9 @@ public class Inkoming {
 					Motion_decode.decode(packet);
 					
 					for (int i = 0; i < 22; i++) {
-						toSave.ToFile(Data.Motion_car_comp, Data.Motion_car, PacketIDs.MotionCarA, Header_Data.getFrameIdentifier(), "Motion/" + i, structClassNames.Motion_car);
+						toSave.ToFile(Data.Motion_car_comp[i], Data.Motion_car[i], PacketIDs.MotionCarA, Header_Data.getFrameIdentifier(), "Motion/" + i, structClassNames.Motion_car, "Motion.Motion_car");
 					}
-					toSave.ToFile(Data.Motion_comp, Data.Motion, PacketIDs.MotionA, Header_Data.getFrameIdentifier(), "Motion/Motion", structClassNames.Motion);
+					toSave.ToFile(Data.Motion_comp, Data.Motion, PacketIDs.MotionA, Header_Data.getFrameIdentifier(), "Motion/Motion", structClassNames.Motion, "Motion.Motion");
 					
 					PacketIDs.MotionA = Header_Data.getFrameIdentifier();
 					PacketIDs.MotionCarA = Header_Data.getFrameIdentifier();
@@ -107,7 +107,7 @@ public class Inkoming {
 						Lap_data_decode.decode(packet);
 						
 						for(int i = 0; i < 22; i++) {
-							toSave.ToFile(Data.Lap_data_comp, Data.Lap_data, PacketIDs.LapDataA, Header_Data.getFrameIdentifier(), "Lap_data/" + i, structClassNames.Lap_data);
+							toSave.ToFile(Data.Lap_data_comp[i], Data.Lap_data[i], PacketIDs.LapDataA, Header_Data.getFrameIdentifier(), "Lap_data/" + i, structClassNames.Lap_data, "Lap_data");
 						}
 						
 						PacketIDs.LapDataA = Header_Data.getFrameIdentifier();
@@ -156,30 +156,39 @@ public class Inkoming {
 //						//integrity check
 //					}
 //				});
-//			} else if (Header_Data.getPacketId() == 6) { //Car Telemetry
-//				Thread_Queue.Car_telemetry.submit(new Runnable() {
-//					public void run() {
-//						Car_telemetry_decode.decode(packet);
-//						
-//						//to save
-//						
-//						Data.Car_telemetry_comp = Data.Car_telemetry;
-//						Data.Car_telemetry_car_comp = Data.Car_telemetry_car;
-//						//integrity check
-//					}
-//				});
-//			} else if (Header_Data.getPacketId() == 7) { //Car Status
-//				Thread_Queue.Car_status.submit(new Runnable() {
-//					public void run() {
-//						Car_status_decode.decode(packet);
-//						
-//						//to save
-//						
-//						Data.Car_status_comp = Data.Car_status;
-//						//integrity check
-//					}
-//				});
-//			} else if (Header_Data.getPacketId() == 8) { //Final Classification Needs testing
+			 else if (Header_Data.getPacketId() == 6) { //Car Telemetry
+				Thread_Queue.Car_telemetry.submit(new Runnable() {
+					public void run() {
+						Car_telemetry_decode.decode(packet);
+						
+						for (int i = 0; i < 22; i++) {
+							toSave.ToFile(Data.Car_telemetry_car_comp[i], Data.Car_telemetry_car[i], PacketIDs.CarTelemetryCarA, Header_Data.getFrameIdentifier(), "Car_telemetry/" + i, structClassNames.Car_telemetry_car, "Car_telemetry.Car_telemetry_car");
+						}
+						toSave.ToFile(Data.Car_telemetry_comp, Data.Car_telemetry, PacketIDs.CarTelemetryA, Header_Data.getFrameIdentifier(), "Car_telemetry/Car_telemetry" , structClassNames.Car_telemetry, "Car_telemetry.Car_telemetry");
+						
+						PacketIDs.CarTelemetryA = Header_Data.getFrameIdentifier();
+						PacketIDs.CarTelemetryCarA = Header_Data.getFrameIdentifier();
+						Data.Car_telemetry_comp = Data.Car_telemetry;
+						Data.Car_telemetry_car_comp = Data.Car_telemetry_car;
+						//integrity check
+					}
+				});
+			} else if (Header_Data.getPacketId() == 7) { //Car Status
+				Thread_Queue.Car_status.submit(new Runnable() {
+					public void run() {
+						Car_status_decode.decode(packet);
+						
+						for (int i = 0; i < 22; i++) {
+							toSave.ToFile(Data.Car_status_comp[i], Data.Car_status[i], PacketIDs.CarStatusA, Header_Data.getFrameIdentifier(), "Car_status/" + i, structClassNames.Car_status, "Car_status");	
+						}
+
+						PacketIDs.CarStatusA = Header_Data.getFrameIdentifier();
+						Data.Car_status_comp = Data.Car_status;
+						//integrity check
+					}
+				});
+			} 
+//				else if (Header_Data.getPacketId() == 8) { //Final Classification Needs testing
 //				Thread_Queue.Final_classification.submit(new Runnable() {
 //					public void run() {
 //						Final_classification_decode.decode(packet);

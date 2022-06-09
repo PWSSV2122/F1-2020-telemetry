@@ -32,12 +32,9 @@ public class PacketIDs {
 	public static int CarSetups = 0;
 	
 	public static int CarTelemetryA = 0;
-	public static int CarTelemetryB = 0;
 	public static int CarTelemetryCarA = 0;
-	public static int CarTelemetryCarB = 0;
 	
 	public static int CarStatusA = 0;
-	public static int CarStatusB = 0;
 	
 	// andere methode voor packet loss
 	public static int FinalClassification = 0;

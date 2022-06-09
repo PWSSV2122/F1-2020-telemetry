@@ -1,6 +1,7 @@
 package Saves;
 
 import java.io.FileOutputStream;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
 
@@ -10,7 +11,7 @@ import packet_struct.Lap_data;
 public class toSave {
 	//A = last received packet
 	//B = newest packet
-	public static void ToFile(Object A, Object B, int PacketIDA, int PacketIDB, String car, String[] names) {
+	public static void ToFile(Object A, Object B, int PacketIDA, int PacketIDB, String car, String[] names, String PacketName) {
 		if (PacketIDA >= PacketIDB) { return; }
 		LinkedList<byte[]> NewData = new LinkedList<byte[]>();
 
@@ -32,8 +33,9 @@ public class toSave {
 
 		for (int i = 0; i < names.length; i++) {
 			try {
-				if (Lap_data.class.getMethod(names[i]).invoke(A) != Lap_data.class.getMethod(names[i]).invoke(B)) {
-					Object Data = Lap_data.class.getMethod(names[i]).invoke(B);
+				Class<?> classRef = Class.forName("packet_struct." + PacketName);
+				if (classRef.getMethod(names[i]).invoke(A) != classRef.getMethod(names[i]).invoke(B)) {
+					Object Data = classRef.getMethod(names[i]).invoke(B);
 					NewData.add(new byte[] {(byte)(i + 2)});
 					if (Data.getClass().equals(Byte.class)) {
 						NewData.add(new byte[] {(byte)Data});
