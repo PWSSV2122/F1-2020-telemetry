@@ -1,18 +1,27 @@
 package manager;
 
+import Global_vars.Settings;
 import Global_vars.structClassNames;
 import Inkoming.Inkoming;
 import Saves.Temp_create;
 import Saves.toSave;
 import application.Main;
 import packet_struct.Lap_data;
+import errors.Error;
 
 public class program_manager {
 	
-	public static void main(String[] args) {			
+	public static void main(String[] args) {
+		Error.createLogFile();
+		Error.error("Log file created", 0);
+		Error.error("Log files folder size: " + Settings.logFileSize + "KB", 0);
+		
 		Temp_create.Temp();
+		Error.error("Temp save space created", 0);
 		
 		System.out.println("Startup done");
+		Error.error("Startup done", 0);
+//		Error.deleteLogFiles();
 //		Lap_data one = new Lap_data((float)0, (float)0, (short)0, (short)0, (float)0, (byte)0, (short)0, (short)0, (short)0, (short)0, (byte)0, (short)0, (byte)0, (short)0, (byte)0, (float)0, (float)0, (float)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0);
 //		Lap_data two = new Lap_data((float)1, (float)1, (short)1, (short)1, (float)1, (byte)1, (short)1, (short)1, (short)1, (short)1, (byte)1, (short)1, (byte)1, (short)1, (byte)1, (float)1, (float)1, (float)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1);
 //		long start = System.nanoTime();

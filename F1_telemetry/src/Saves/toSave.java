@@ -1,12 +1,10 @@
 package Saves;
 
 import java.io.FileOutputStream;
-import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.util.LinkedList;
 
 import application.Main;
-import packet_struct.Lap_data;
 
 public class toSave {
 	//A = last received packet
@@ -65,7 +63,5 @@ public class toSave {
 			e.printStackTrace();
 			//custom error message
 		}
-
-		//PacketIDs.LapDataA = PacketIDs.LapDataB;
 	}
 }
