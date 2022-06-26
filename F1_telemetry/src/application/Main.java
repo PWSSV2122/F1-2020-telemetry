@@ -34,7 +34,7 @@ import javafx.scene.shape.Rectangle;
 import data_compute.Historical_lap_data;
 
 public class Main extends Application{
-	public static double[] test = new double[] {1650, 1000};
+	public static double[] test = new double[] {1450, 800};
 	
 	public static Stage window;
 	public static Scene Main_menu, ComparisonPage_scene, TrackPage_scene, GraphPage_scene, LapTimePage_scene, TimingPage_scene, SetupPage_Brakes_scene, SetupPage_Suspension_Geometry_scene, SetupPage_Suspension_scene, SetupPage_Transmission_scene, SetupPage_Tyres_scene, SetupPage_Aerodynamics_scene;

@@ -1,5 +1,9 @@
 package manager;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import Global_vars.Settings;
 import Global_vars.structClassNames;
 import Inkoming.Inkoming;
@@ -21,6 +25,11 @@ public class program_manager {
 		
 		System.out.println("Startup done");
 		Error.error("Startup done", 0);
+		
+		//Saves.decode.decode.runSave = true;
+		//Saves.decode.decode.decode_save("temp");
+
+		//Saves.json.jsonMain.jsonToSave(null, 60);
 //		Error.deleteLogFiles();
 //		Lap_data one = new Lap_data((float)0, (float)0, (short)0, (short)0, (float)0, (byte)0, (short)0, (short)0, (short)0, (short)0, (byte)0, (short)0, (byte)0, (short)0, (byte)0, (float)0, (float)0, (float)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0);
 //		Lap_data two = new Lap_data((float)1, (float)1, (short)1, (short)1, (float)1, (byte)1, (short)1, (short)1, (short)1, (short)1, (byte)1, (short)1, (byte)1, (short)1, (byte)1, (float)1, (float)1, (float)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1, (byte)1);
@@ -33,7 +42,7 @@ public class program_manager {
 		new Thread() {
             @Override
             public void run() {
-            	//Main.main(args);
+            	Main.main(args);
             	Inkoming.recieve();
             }
         }.start();
