@@ -98,43 +98,7 @@ public class ContentUpdate {
 
 			        	LapTimePage.Lap.setSortType(TableColumn.SortType.ASCENDING);
 		        	} catch (Exception e) {
-		        		e.printStackTrace();
 		        	}
-		        } else if (Track_refresh == true) {
-		        	final ObservableList<TrackPage.Tabel_object> data = FXCollections.observableArrayList();
-		        	try {
-		        		for (int i = 0; i < L1.numActiveCars; i++) {
-		        			int position_index = 0;
-			    			try {
-			    				position_index = L1.car_positions.get((byte)i);
-			    			} catch (Exception e) {
-			    				e.printStackTrace();
-			    			}
-			    			ImageView Icon = new ImageView("images/Track_icons/" + (i + 1) + ".png");
-			    			Icon.setFitHeight(20);
-			    			Icon.setFitWidth(20);
-		        			data.add(new TrackPage.Tabel_object(
-		        					Icon,
-			        				L1.name[position_index]));
-		        		}
-		        		TrackPage.players.getItems().clear();
-		        		TrackPage.players.setItems(data);
-		        		TrackPage.Track.setImage(new Image("images/Tracks/" + L1.trackId + ".png"));
-		        	} catch (Exception e) {
-		        		e.printStackTrace();
-		        	}
-		        	for (int i = 0; i < 22; i++) {
-		        		if (i >= L1.numActiveCars) {
-		        			TrackPage.Track_Players[i].setVisible(false);
-		        		} else {
-		        			TrackPage.Track_Players[i].setVisible(true);
-		        		}
-		        		
-		    		}
-		        	for (int i = 0; i < L1.numActiveCars; i++) {
-		    			TrackPage.Track_Players[i].setX(L1.worldPositionX[i] + 200);
-		    			TrackPage.Track_Players[i].setY(L1.worldPositionY[i] - 100);
-		    		}
 		        }
 		    }
 		};

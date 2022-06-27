@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
@@ -54,7 +55,7 @@ public class GraphPage {
 		ScrollPane left_scroll = new ScrollPane();
 		left_scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent; ");
 		
-		GraphPage = new Scene(top_level, Main_menu.test[0], Main_menu.test[1]);
+		GraphPage = new Scene(top_level, Main.test[0], Main.test[1]);
 		
 		Rectangle H_line = new Rectangle();
 		H_line.setHeight(1);
@@ -75,8 +76,8 @@ public class GraphPage {
 		logo_image.setPreserveRatio(true);
 		logo_image.setFitHeight(70);
 		logo.getStylesheets().add("application/css/menu_button.css");
-		logo.setOnAction(e -> {Main_menu.window.setScene(Main_menu.Main_menu);
-			Main_menu.window.setTitle("F1 Tracker : Main Menu");});
+		logo.setOnAction(e -> {Main.window.setScene(Main.Main_menu);
+			Main.window.setTitle("F1 Tracker : Main Menu");});
 		
 		Button Settings = new Button();
 		ImageView Settings_image = new ImageView("images/settings.png");
@@ -98,29 +99,45 @@ public class GraphPage {
 			menubar_image[i].setFitWidth(90);
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
-		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");
-			SetupUpdate.Brakes_Boolean = false;
+		
+		Tooltip[] tooltip_menubuttons = new Tooltip[6];
+		for (int i = 0; i <6; i++) {
+				tooltip_menubuttons[i] = new Tooltip();
+				tooltip_menubuttons[i].setText(names[i]);
+				menubar_buttons[i].setTooltip(tooltip_menubuttons[i]);
+				Tooltip.install(menubar_buttons[i], tooltip_menubuttons[i]);	
+				tooltip_menubuttons[i].setStyle(
+						"-fx-background-color: #3F3F3F;"
+					+	"-fx-text-fill: white;"
+					+	"-fx-border-width: 1px;"
+					+	"-fx-border-color: red;"
+					+ 	"-fx-font-size: 15px;"
+				);	
+		}
+		
+		menubar_buttons[0].setOnAction(e -> {Main.window.setScene(Main.TrackPage_scene);
+			Main.window.setTitle("F1 Tracker : Track Page");
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.Track_refresh = true;});
-		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
-			SetupUpdate.Brakes_Boolean = false;
+		menubar_buttons[1].setOnAction(e -> {Main.window.setScene(Main.SetupPage_Brakes_scene);
+			Main.window.setTitle("F1 Tracker : Setup Page Brakes");
+			ContentUpdate.Graph_refresh = false;
 			SetupUpdate.Brakes_Boolean = true;});
-		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
-			SetupUpdate.Brakes_Boolean = false;
+		menubar_buttons[2].setOnAction(e -> {Main.window.setScene(Main.ComparisonPage_scene);
+			Main.window.setTitle("F1 Tracker : Comparison Page");
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.Comparison_refresh = true;});
-		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");
-			SetupUpdate.Brakes_Boolean = false;
+		menubar_buttons[3].setOnAction(e -> {Main.window.setScene(Main.GraphPage_scene);
+			Main.window.setTitle("F1 Tracker : Graph Page");
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.Graph_refresh = true;});
-		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
-			SetupUpdate.Brakes_Boolean = false;
+		menubar_buttons[4].setOnAction(e -> {Main.window.setScene(Main.LapTimePage_scene);
+			Main.window.setTitle("F1 Tracker : Lap Time Page");
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.LapTime_refresh = true;});
-		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");
-			SetupUpdate.Brakes_Boolean = false;
+		menubar_buttons[5].setOnAction(e -> {Main.window.setScene(Main.TimingPage_scene);
+			Main.window.setTitle("F1 Tracker : Timing Page");
+			ContentUpdate.Graph_refresh = false;
 			ContentUpdate.TimingPage_refresh = true;});
 		
 		Rectangle left_background = new Rectangle();
@@ -151,11 +168,11 @@ public class GraphPage {
 		HBox Items = new HBox();
 		Text Graph_Text = new Text("Graph");
 		Graph_Text.setTranslateX(10);
-		Graph_Text.setTranslateY(6);
+		Graph_Text.setTranslateY(5);
 		Graph_Text.setStyle("-fx-font: 24 arial;");
 		
+		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(30);
-		people.setTranslateY(6);
 		people.setPrefWidth(150);
 		people.setOnMouseClicked(e -> {
 			ContentUpdate.dropdown_update();
@@ -183,7 +200,7 @@ public class GraphPage {
 		Items.getChildren().addAll(Graph_Text, Deviders[0], people, Deviders[1]);
 		
 		Rectangle menu_items_underline = new Rectangle();
-		menu_items_underline.setWidth(Main_menu.test[0] - 115);
+//		menu_items_underline.setWidth(Main.test[0] - 115);
 		menu_items_underline.setHeight(1);
 		menu_items_underline.setStroke(Color.RED);
 		menu_items_underline.setFill(Color.RED);
@@ -192,7 +209,7 @@ public class GraphPage {
 		Selection.setVisible(false);
 		Rectangle spacer_selection = new Rectangle();
 		spacer_selection.setHeight(1);
-		spacer_selection.setWidth(1220);
+//		spacer_selection.setWidth(1220);
 		spacer_selection.setVisible(false);
 		
 		StackPane Selection_checkbox = new StackPane();
@@ -342,7 +359,7 @@ public class GraphPage {
         lineChart.getXAxis().setOpacity(0);
         lineChart.getYAxis().setTickLabelsVisible(false);
         lineChart.getYAxis().setOpacity(0);
-        lineChart.setPrefWidth(1540);
+//      lineChart.setPrefWidth(1540);
         lineChart.setMinHeight(870);
         lineChart.setMaxHeight(870);
         lineChart.setTranslateX(-20);
@@ -386,12 +403,16 @@ public class GraphPage {
 	        }
 	    });
 
-	   Main_menu.window.widthProperty().addListener((obs, oldVal, newVal) -> {
+	   Main.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
+		   menu_items_underline.setWidth((double) newVal - 130);
+		   lineChart.setPrefWidth((double) newVal - 130); 
+		   spacer_selection.setWidth((double) newVal - 450);
+		   
 	   });
 
-	   Main_menu.window.heightProperty().addListener((obs, oldVal, newVal) -> {
+	   Main.window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
 	   });
 	   
@@ -408,7 +429,6 @@ public class GraphPage {
 		    	int o = 0;
 		    	for (int i = 0; i < 24; i++) {
 					if (ContentUpdate.Graph_selection[i] == true) {
-						System.out.println("LK");
 						lineChart.getData().add(ComparisonPage.series[ContentUpdate.GraphPage_car][i]);
 						lineChart.getData().get(o).setName(Names[i]);;
 						o++;

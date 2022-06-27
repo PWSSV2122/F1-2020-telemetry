@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
@@ -43,7 +44,7 @@ public class TimingPage {
 		ScrollPane left_scroll = new ScrollPane();
 		left_scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent; ");
 		
-		TimingPage = new Scene(top_level, Main_menu.test[0], Main_menu.test[1]);
+		TimingPage = new Scene(top_level, Main.test[0], Main.test[1]);
 		
 		Rectangle H_line = new Rectangle();
 		H_line.setHeight(1);
@@ -64,8 +65,8 @@ public class TimingPage {
 		logo_image.setPreserveRatio(true);
 		logo_image.setFitHeight(70);
 		logo.getStylesheets().add("application/css/menu_button.css");
-		logo.setOnAction(e -> {Main_menu.window.setScene(Main_menu.Main_menu);
-			Main_menu.window.setTitle("F1 Tracker : Main Menu");
+		logo.setOnAction(e -> {Main.window.setScene(Main.Main_menu);
+			Main.window.setTitle("F1 Tracker : Main Menu");
 			ContentUpdate.TimingPage_refresh = false;});
 		
 		Button Settings = new Button();
@@ -88,28 +89,44 @@ public class TimingPage {
 			menubar_image[i].setFitWidth(90);
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
-		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");
+		
+		Tooltip[] tooltip_menubuttons = new Tooltip[6];
+		for (int i = 0; i <6; i++) {
+				tooltip_menubuttons[i] = new Tooltip();
+				tooltip_menubuttons[i].setText(names[i]);
+				menubar_buttons[i].setTooltip(tooltip_menubuttons[i]);
+				Tooltip.install(menubar_buttons[i], tooltip_menubuttons[i]);	
+				tooltip_menubuttons[i].setStyle(
+						"-fx-background-color: #3F3F3F;"
+					+	"-fx-text-fill: white;"
+					+	"-fx-border-width: 1px;"
+					+	"-fx-border-color: red;"
+					+ 	"-fx-font-size: 15px;"
+				);	
+		}
+		
+		menubar_buttons[0].setOnAction(e -> {Main.window.setScene(Main.TrackPage_scene);
+			Main.window.setTitle("F1 Tracker : Track Page");
 			ContentUpdate.TimingPage_refresh = false;
 			ContentUpdate.Track_refresh = true;});
-		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+		menubar_buttons[1].setOnAction(e -> {Main.window.setScene(Main.SetupPage_Brakes_scene);
+			Main.window.setTitle("F1 Tracker : Setup Page Brakes");
 			ContentUpdate.TimingPage_refresh = false;
 			SetupUpdate.Brakes_Boolean = true;});
-		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+		menubar_buttons[2].setOnAction(e -> {Main.window.setScene(Main.ComparisonPage_scene);
+			Main.window.setTitle("F1 Tracker : Comparison Page");
 			ContentUpdate.TimingPage_refresh = false;
 			ContentUpdate.Comparison_refresh = true;});
-		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+		menubar_buttons[3].setOnAction(e -> {Main.window.setScene(Main.GraphPage_scene);
+			Main.window.setTitle("F1 Tracker : Graph Page");
 			ContentUpdate.TimingPage_refresh = false;
 			ContentUpdate.Graph_refresh = true;});
-		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
+		menubar_buttons[4].setOnAction(e -> {Main.window.setScene(Main.LapTimePage_scene);
+			Main.window.setTitle("F1 Tracker : Lap Time Page");
 			ContentUpdate.TimingPage_refresh = false;
 			ContentUpdate.LapTime_refresh = true;});
-		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");});
+		menubar_buttons[5].setOnAction(e -> {Main.window.setScene(Main.TimingPage_scene);
+			Main.window.setTitle("F1 Tracker : Timing Page");});
 		
 		Rectangle left_background = new Rectangle();
 		left_background.setWidth(111);
@@ -142,18 +159,26 @@ public class TimingPage {
 		Timings.setTranslateX(10);
 		Timings.setTranslateY(6);
 		Timings.setStyle("-fx-font: 24 arial;");
-		Content.getChildren().add(Timings);
+		
+		Rectangle Deviders = new Rectangle();
+		Deviders.setTranslateX(20);
+		Deviders.setHeight(35);
+		Deviders.setWidth(1);
+		Deviders.setStroke(Color.RED);
+		Deviders.setFill(Color.RED);
+		
+		HBox Items = new HBox();
+		Items.getChildren().addAll(Timings, Deviders);
+		Content.getChildren().add(Items);
 		
 		Rectangle H_line_Content = new Rectangle();
 		H_line_Content.setHeight(1);
 		H_line_Content.setWidth(1520);
 		H_line_Content.setStroke(Color.RED);
-		H_line_Content.setTranslateY(11);
 		Content.getChildren().add(H_line_Content);
 		
 		Tabel.getStylesheets().add("application/css/TimingPageTabel.css");
 		Tabel.setPrefHeight(2000);
-		Tabel.setTranslateY(12);
 		Tabel.setTranslateX(1);
 		Content.getChildren().add(Tabel);
 		
@@ -190,14 +215,14 @@ public class TimingPage {
 	        }
 	    });
 
-	   Main_menu.window.widthProperty().addListener((obs, oldVal, newVal) -> {
+	   Main.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
 		   H_line_Content.setWidth((double) newVal - 130);
 		   Tabel.setMaxWidth((double) newVal - 132);
 	   });
 
-	   Main_menu.window.heightProperty().addListener((obs, oldVal, newVal) -> {
+	   Main.window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
 	       Tabel.setPrefHeight((double) newVal - 165);
 	   });

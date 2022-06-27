@@ -1,6 +1,6 @@
 package application.SetupPage;
 
-import application.Main_menu;
+import application.Main;
 import application.settings;
 import contentUpdate.ContentUpdate;
 import contentUpdate.SetupUpdate;
@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
@@ -33,6 +34,8 @@ public class Brakes {
 	public static Text Bias_waarde = new Text(null);
 	public static ProgressBar Bias_bar = new ProgressBar(0);
 	
+	public static Text Track = new Text("");
+	
 	public static Scene Brakes_scene() {
 		Scene Brakes;
 		
@@ -49,7 +52,7 @@ public class Brakes {
 		ScrollPane left_scroll = new ScrollPane();
 		left_scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent; ");
 		
-		Brakes = new Scene(top_level, Main_menu.test[0], Main_menu.test[1]);
+		Brakes = new Scene(top_level, Main.test[0], Main.test[1]);
 		
 		Rectangle H_line = new Rectangle();
 		H_line.setHeight(1);
@@ -70,8 +73,8 @@ public class Brakes {
 		logo_image.setPreserveRatio(true);
 		logo_image.setFitHeight(70);
 		logo.getStylesheets().add("application/css/menu_button.css");
-		logo.setOnAction(e -> {Main_menu.window.setScene(Main_menu.Main_menu);
-			Main_menu.window.setTitle("F1 Tracker : Main Menu");});
+		logo.setOnAction(e -> {Main.window.setScene(Main.Main_menu);
+			Main.window.setTitle("F1 Tracker : Main Menu");});
 		
 		Button Settings = new Button();
 		ImageView Settings_image = new ImageView("images/settings.png");
@@ -93,28 +96,44 @@ public class Brakes {
 			menubar_image[i].setFitWidth(90);
 			menubar_buttons[i].setGraphic(menubar_image[i]);
 		}
-		menubar_buttons[0].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TrackPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Track Page");
+		
+		Tooltip[] tooltip_menubuttons = new Tooltip[6];
+		for (int i = 0; i <6; i++) {
+				tooltip_menubuttons[i] = new Tooltip();
+				tooltip_menubuttons[i].setText(names[i]);
+				menubar_buttons[i].setTooltip(tooltip_menubuttons[i]);
+				Tooltip.install(menubar_buttons[i], tooltip_menubuttons[i]);	
+				tooltip_menubuttons[i].setStyle(
+						"-fx-background-color: #3F3F3F;"
+					+	"-fx-text-fill: white;"
+					+	"-fx-border-width: 1px;"
+					+	"-fx-border-color: red;"
+					+ 	"-fx-font-size: 15px;"
+				);	
+		}
+		
+		menubar_buttons[0].setOnAction(e -> {Main.window.setScene(Main.TrackPage_scene);
+			Main.window.setTitle("F1 Tracker : Track Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Track_refresh = true;});
-		menubar_buttons[1].setOnAction(e -> {Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
-			Main_menu.window.setTitle("F1 Tracker : Setup Page Brakes");
+		menubar_buttons[1].setOnAction(e -> {Main.window.setScene(Main.SetupPage_Brakes_scene);
+			Main.window.setTitle("F1 Tracker : Setup Page Brakes");
 			SetupUpdate.Brakes_Boolean = false;
 			SetupUpdate.Brakes_Boolean = true;});
-		menubar_buttons[2].setOnAction(e -> {Main_menu.window.setScene(Main_menu.ComparisonPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Comparison Page");
+		menubar_buttons[2].setOnAction(e -> {Main.window.setScene(Main.ComparisonPage_scene);
+			Main.window.setTitle("F1 Tracker : Comparison Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Comparison_refresh = true;});
-		menubar_buttons[3].setOnAction(e -> {Main_menu.window.setScene(Main_menu.GraphPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Graph Page");
+		menubar_buttons[3].setOnAction(e -> {Main.window.setScene(Main.GraphPage_scene);
+			Main.window.setTitle("F1 Tracker : Graph Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.Graph_refresh = true;});
-		menubar_buttons[4].setOnAction(e -> {Main_menu.window.setScene(Main_menu.LapTimePage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Lap Time Page");
+		menubar_buttons[4].setOnAction(e -> {Main.window.setScene(Main.LapTimePage_scene);
+			Main.window.setTitle("F1 Tracker : Lap Time Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.LapTime_refresh = true;});
-		menubar_buttons[5].setOnAction(e -> {Main_menu.window.setScene(Main_menu.TimingPage_scene);
-			Main_menu.window.setTitle("F1 Tracker : Timing Page");
+		menubar_buttons[5].setOnAction(e -> {Main.window.setScene(Main.TimingPage_scene);
+			Main.window.setTitle("F1 Tracker : Timing Page");
 			SetupUpdate.Brakes_Boolean = false;
 			ContentUpdate.TimingPage_refresh = true;});
 		
@@ -150,55 +169,53 @@ public class Brakes {
 		Setup.setTranslateY(6);
 		Setup.setStyle("-fx-font: 24 arial;");
 		
-		Text Track = new Text("test");
 		Track.setTranslateX(30);
 		Track.setTranslateY(6);
 		Track.setStyle("-fx-font: 24 arial;");
 		
 		ComboBox<String> Pagina = new ComboBox<String>();
 		Pagina.setTranslateX(50);
-		Pagina.setTranslateY(6);
 		Pagina.setPrefWidth(150);
 		for (int i = 0; i < SetupUpdate.paginas.length; i++) {
 			Pagina.getItems().add(SetupUpdate.paginas[i]);
 		}
+		Pagina.getStylesheets().add("application/css/Dropdown.css");
 		Pagina.setValue(SetupUpdate.paginas[0]);
 		Pagina.setOnAction(e -> {
 			if (NoChange == false) {
 				NoChange = true;
 				SetupUpdate.Brakes_Boolean = false;
 				if (Pagina.getValue() == SetupUpdate.paginas[0]) {
-					Main_menu.window.setScene(Main_menu.SetupPage_Brakes_scene);
+					Main.window.setScene(Main.SetupPage_Brakes_scene);
 					SetupUpdate.Brakes_Boolean = true;
-					Main_menu.window.setTitle("F1 Tracker : Setup Brake");
+					Main.window.setTitle("F1 Tracker : Setup Brake");
 				} else if (Pagina.getValue() == SetupUpdate.paginas[1]) {
-					Main_menu.window.setScene(Main_menu.SetupPage_Suspension_Geometry_scene);
+					Main.window.setScene(Main.SetupPage_Suspension_Geometry_scene);
 					SetupUpdate.Suspension_Geometry_Boolean = true;
-					Main_menu.window.setTitle("F1 Tracker : Setup Suspension Geometry");
+					Main.window.setTitle("F1 Tracker : Setup Suspension Geometry");
 				} else if (Pagina.getValue() == SetupUpdate.paginas[2]) {
-					Main_menu.window.setScene(Main_menu.SetupPage_Suspension_scene);
+					Main.window.setScene(Main.SetupPage_Suspension_scene);
 					SetupUpdate.Suspension_Boolean = true;
-					Main_menu.window.setTitle("F1 Tracker : Setup Suspension");
+					Main.window.setTitle("F1 Tracker : Setup Suspension");
 				} else if (Pagina.getValue() == SetupUpdate.paginas[3]) {
-					Main_menu.window.setScene(Main_menu.SetupPage_Transmission_scene);
+					Main.window.setScene(Main.SetupPage_Transmission_scene);
 					SetupUpdate.Transmission_Boolean = true;
-					Main_menu.window.setTitle("F1 Tracker : Setup Transmission");
+					Main.window.setTitle("F1 Tracker : Setup Transmission");
 				} else if (Pagina.getValue() == SetupUpdate.paginas[4]) {
-					Main_menu.window.setScene(Main_menu.SetupPage_Tyres_scene);
+					Main.window.setScene(Main.SetupPage_Tyres_scene);
 					SetupUpdate.Tyres_Boolean = true;
-					Main_menu.window.setTitle("F1 Tracker : Setup Tyres");
+					Main.window.setTitle("F1 Tracker : Setup Tyres");
 				} else if (Pagina.getValue() == SetupUpdate.paginas[5]) {
-					Main_menu.window.setScene(Main_menu.SetupPage_Aerodynamics_scene);
+					Main.window.setScene(Main.SetupPage_Aerodynamics_scene);
 					SetupUpdate.Aerodynamics_Boolean = true;
-					Main_menu.window.setTitle("F1 Tracker : Aerodynamics Tyres");
+					Main.window.setTitle("F1 Tracker : Aerodynamics Tyres");
 				}
 			}
 			Pagina.setValue(SetupUpdate.paginas[0]);
 			NoChange = false;
 		});
-		
+		people.getStylesheets().add("application/css/Dropdown.css");
 		people.setTranslateX(70);
-		people.setTranslateY(6);
 		people.setPrefWidth(150);
 		people.setOnMouseClicked(e -> {
 			SetupUpdate.dropdown_update();
@@ -216,7 +233,7 @@ public class Brakes {
 		int[] translate = new int[] {20, 40, 60, 80};
 		for (int i = 0; i < Deviders.length; i++) {
 			Deviders[i].setTranslateX(translate[i]);
-			Deviders[i].setHeight(35);
+			Deviders[i].setHeight(36);
 			Deviders[i].setWidth(1);
 			Deviders[i].setStroke(Color.RED);
 			Deviders[i].setFill(Color.RED);
@@ -224,7 +241,7 @@ public class Brakes {
 		menu_items.getChildren().addAll(Setup, Deviders[0], Track, Deviders[1], Pagina, Deviders[2], people, Deviders[3]);
 		
 		Rectangle menu_items_underline = new Rectangle();
-		menu_items_underline.setWidth(Main_menu.test[0] - 115);
+//		menu_items_underline.setWidth(Main.test[0] - 115);
 		menu_items_underline.setHeight(1);
 		menu_items_underline.setStroke(Color.RED);
 		menu_items_underline.setFill(Color.RED);
@@ -320,12 +337,13 @@ public class Brakes {
 	        }
 	    });
 
-	   Main_menu.window.widthProperty().addListener((obs, oldVal, newVal) -> {
+	   Main.window.widthProperty().addListener((obs, oldVal, newVal) -> {
 		   center_background.setWidth((double) newVal - 130);
 		   background_menu.setFitWidth((double) newVal - 130);
+		   menu_items_underline.setWidth((double) newVal - 130);
 	   });
 
-	   Main_menu.window.heightProperty().addListener((obs, oldVal, newVal) -> {
+	   Main.window.heightProperty().addListener((obs, oldVal, newVal) -> {
 	       center_background.setHeight((double) newVal - 39);
 	   });
 	   

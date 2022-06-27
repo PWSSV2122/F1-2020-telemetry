@@ -7,11 +7,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import application.Main;
+
 public class Saves {
 	public static String[] read() {
 		String[] data = new String[0];
 		try {
-			File myObj = new File("src/Saves/Saves.txt");
+			File myObj = new File(Main.dir + "Saves/Saves.txt");
 			Scanner myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
 				String[] data_temp = new String[data.length];
@@ -26,17 +28,15 @@ public class Saves {
 			}
 			myReader.close();
 			for(int i = 0; i < data.length; i++) {
-				System.out.println(data[i]);
 			}
 	    } catch (FileNotFoundException e) {
-	      e.printStackTrace();
 	    }
 		return data;
 	}
 
 	public static void write(String[] save) {
 		try {
-			FileWriter fw = new FileWriter("src/Saves/Saves.txt", true);
+			FileWriter fw = new FileWriter(Main.dir + "Saves/Saves.txt", true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			for (int i = 0; i < save.length; i++) {
 				bw.write(save[i]);
@@ -44,7 +44,6 @@ public class Saves {
 			}
 		    bw.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	    
 	}
