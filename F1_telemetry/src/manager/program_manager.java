@@ -1,16 +1,8 @@
 package manager;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import Global_vars.Settings;
-import Global_vars.structClassNames;
 import Inkoming.Inkoming;
 import Saves.Temp_create;
-import Saves.toSave;
-import application.Main;
-import packet_struct.Lap_data;
 import errors.Error;
 
 public class program_manager {
@@ -42,7 +34,7 @@ public class program_manager {
 		new Thread() {
             @Override
             public void run() {
-            	Main.main(args);
+            	//Main.main(args);
             	Inkoming.recieve();
             }
         }.start();

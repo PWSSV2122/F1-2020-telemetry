@@ -36,8 +36,10 @@ public class Packet_recieve {
 				DatagramPacket response = new DatagramPacket(test, test.length);
 				socket.receive(response);
 				
-				String quote = new String(test, 0, response.getLength());
-				byte[] e = quote.getBytes();
+				byte[] e = new byte[response.getLength()];
+				for (int i = 0; i < response.getLength(); i++) {
+					e[i] = test[i];
+				}
 				
 //		        for (byte b : e) {
 //		            String st = String.format("%02X ", b);

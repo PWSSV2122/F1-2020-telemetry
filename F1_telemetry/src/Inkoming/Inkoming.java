@@ -40,27 +40,35 @@ public class Inkoming {
 				DatagramPacket response = new DatagramPacket(packet_temp, packet_temp.length);
 				socket.receive(response);
 				
-				String quote = new String(packet_temp, 0, response.getLength());
-				byte[] packet = quote.getBytes();
-				
-				Header_Data  = new packet_struct.Header(
-						ByteBuffer.wrap(new byte[] {packet[Header.m_packetFormat[0]], packet[Header.m_packetFormat[1]]}).order(ByteOrder.LITTLE_ENDIAN).getShort(),
-						packet[Header.m_gameMajorVersion[0]],
-						packet[Header.m_gameMinorVersion[0]],
-						packet[Header.m_packetVersion[0]],
-						packet[Header.m_packetId[0]],
-						ByteBuffer.wrap(new byte[] {packet[Header.m_sessionUID[0]], packet[Header.m_sessionUID[1]], packet[Header.m_sessionUID[2]], packet[Header.m_sessionUID[3]], packet[Header.m_sessionUID[4]], packet[Header.m_sessionUID[5]], packet[Header.m_sessionUID[6]], packet[Header.m_sessionUID[7]]}).order(ByteOrder.LITTLE_ENDIAN).getLong(),
-						ByteBuffer.wrap(new byte[] {packet[Header.m_sessionTime[0]], packet[Header.m_sessionTime[1]], packet[Header.m_sessionTime[2]], packet[Header.m_sessionTime[3]]}).order(ByteOrder.LITTLE_ENDIAN).getFloat(),
-						ByteBuffer.wrap(new byte[] {packet[Header.m_frameIdentifier[0]], packet[Header.m_frameIdentifier[1]], packet[Header.m_frameIdentifier[2]], packet[Header.m_frameIdentifier[3]]}).order(ByteOrder.LITTLE_ENDIAN).getInt(),
-						packet[Header.m_playerCarIndex[0]],
-						packet[Header.m_secondaryPlayerCarIndex[0]]);
-				
-				if (first[Header_Data.getPacketId()]) {
-					Packet_loss[Header_Data.getPacketId()] = Header_Data.getFrameIdentifier() - 1;
-					first[Header_Data.getPacketId()] = false;
+				byte[] packet = new byte[response.getLength()];
+				for (int i = 0; i < response.getLength(); i++) {
+					packet[i] = packet_temp[i];
 				}
-				decode(packet);
-			}
+				
+			    for (byte b : packet) {
+		            String st = String.format("%02X ", b);
+		            System.out.print(st);
+		        }
+		        System.out.println("\n");
+					
+					Header_Data  = new packet_struct.Header(
+							ByteBuffer.wrap(new byte[] {packet[Header.m_packetFormat[0]], packet[Header.m_packetFormat[1]]}).order(ByteOrder.LITTLE_ENDIAN).getShort(),
+							packet[Header.m_gameMajorVersion[0]],
+							packet[Header.m_gameMinorVersion[0]],
+							packet[Header.m_packetVersion[0]],
+							packet[Header.m_packetId[0]],
+							ByteBuffer.wrap(new byte[] {packet[Header.m_sessionUID[0]], packet[Header.m_sessionUID[1]], packet[Header.m_sessionUID[2]], packet[Header.m_sessionUID[3]], packet[Header.m_sessionUID[4]], packet[Header.m_sessionUID[5]], packet[Header.m_sessionUID[6]], packet[Header.m_sessionUID[7]]}).order(ByteOrder.LITTLE_ENDIAN).getLong(),
+							ByteBuffer.wrap(new byte[] {packet[Header.m_sessionTime[0]], packet[Header.m_sessionTime[1]], packet[Header.m_sessionTime[2]], packet[Header.m_sessionTime[3]]}).order(ByteOrder.LITTLE_ENDIAN).getFloat(),
+							ByteBuffer.wrap(new byte[] {packet[Header.m_frameIdentifier[0]], packet[Header.m_frameIdentifier[1]], packet[Header.m_frameIdentifier[2]], packet[Header.m_frameIdentifier[3]]}).order(ByteOrder.LITTLE_ENDIAN).getInt(),
+							packet[Header.m_playerCarIndex[0]],
+							packet[Header.m_secondaryPlayerCarIndex[0]]);
+					
+					if (first[Header_Data.getPacketId()]) {
+						Packet_loss[Header_Data.getPacketId()] = Header_Data.getFrameIdentifier() - 1;
+						first[Header_Data.getPacketId()] = false;
+					}
+					decode(packet);
+			}	
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
