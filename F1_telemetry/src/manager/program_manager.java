@@ -18,6 +18,8 @@ public class program_manager {
 		System.out.println("Startup done");
 		Error.error("Startup done", 0);
 		
+		Global_vars.Appendices.AppendicesLoader.LoadAppendices();
+		
 		//Saves.decode.decode.runSave = true;
 		//Saves.decode.decode.decode_save("temp");
 

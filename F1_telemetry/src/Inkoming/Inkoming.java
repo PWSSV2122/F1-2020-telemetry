@@ -30,7 +30,7 @@ public class Inkoming {
 	private static int Packet_loss[] = new int[10];
 	private static packet_struct.Header Header_Data;
 	private static boolean first[] = new boolean[] {true, true, true, true, true, true, true, true, true, true};
-	private static int NumberOne = 0;
+	private static int PlayerCarIndex = 0;
 	
 	public static void recieve() {
 		try {
@@ -45,11 +45,11 @@ public class Inkoming {
 					packet[i] = packet_temp[i];
 				}
 				
-			    for (byte b : packet) {
-		            String st = String.format("%02X ", b);
-		            System.out.print(st);
-		        }
-		        System.out.println("\n");
+//			    for (byte b : packet) {
+//		            String st = String.format("%02X ", b);
+//		            System.out.print(st);
+//		        }
+//		        System.out.println("\n");
 					
 					Header_Data  = new packet_struct.Header(
 							ByteBuffer.wrap(new byte[] {packet[Header.m_packetFormat[0]], packet[Header.m_packetFormat[1]]}).order(ByteOrder.LITTLE_ENDIAN).getShort(),
@@ -122,17 +122,11 @@ public class Inkoming {
 					for(int i = 0; i < 22; i++) {
 						toSave.ToFile(Data.Lap_data_comp[i], Data.Lap_data[i], "Lap_data/" + i, structClassNames.Lap_data, "Lap_data");
 					}
-					if (Data.Lap_data[NumberOne].getCarPosition() != 1) {
-						for (int i = 0; i < 22; i++) {
-							if (Data.Lap_data[i].getCarPosition() == 1) {
-								NumberOne = i;
-								i = 22;
-							}
-						}
-					}
-					if (Data.Lap_data[NumberOne].getCurrentLapNum() != Data.Lap_data_comp[NumberOne].getCurrentLapNum()) {
-						if (Data.Lap_data[NumberOne].getCurrentLapNum() != 1) {
-							Saves.json.jsonLap.LapTimeStamp(Header_Data.getSessionTime(), Data.Lap_data[NumberOne].getCurrentLapNum());
+					
+					PlayerCarIndex = Header_Data.getPlayerCarIndex();
+					if (Data.Lap_data[PlayerCarIndex].getCurrentLapNum() != Data.Lap_data_comp[PlayerCarIndex].getCurrentLapNum()) {
+						if (Data.Lap_data[PlayerCarIndex].getCurrentLapNum() != 1) {
+							Saves.json.jsonLap.LapTimeStamp(Header_Data.getSessionTime(), Data.Lap_data[PlayerCarIndex].getCurrentLapNum());
 						}
 					}
 					
