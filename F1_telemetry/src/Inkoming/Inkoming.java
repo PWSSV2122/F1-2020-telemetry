@@ -66,6 +66,7 @@ public class Inkoming {
 					if (first[Header_Data.getPacketId()]) {
 						Packet_loss[Header_Data.getPacketId()] = Header_Data.getFrameIdentifier() - 1;
 						first[Header_Data.getPacketId()] = false;
+						Data.PlayerCarIndex = Header_Data.getPlayerCarIndex();
 					}
 					decode(packet);
 			}	

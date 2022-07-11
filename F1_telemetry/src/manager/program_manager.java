@@ -1,6 +1,8 @@
 package manager;
 
 import Global_vars.Settings;
+import Global_vars.Appendices.AppendicesLoader;
+import Global_vars.Delta.DeltaJsonLoad;
 import Inkoming.Inkoming;
 import Saves.Temp_create;
 import errors.Error;
@@ -15,10 +17,12 @@ public class program_manager {
 		Temp_create.Temp();
 		Error.error("Temp save space created", 0);
 		
+		AppendicesLoader.LoadAppendices();
+		DeltaJsonLoad.LoadDeltaJson();
+		Error.error("Json loaded", 0);
+		
 		System.out.println("Startup done");
 		Error.error("Startup done", 0);
-		
-		Global_vars.Appendices.AppendicesLoader.LoadAppendices();
 		
 		//Saves.decode.decode.runSave = true;
 		//Saves.decode.decode.decode_save("temp");

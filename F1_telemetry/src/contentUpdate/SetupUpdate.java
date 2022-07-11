@@ -1,10 +1,5 @@
 package contentUpdate;
 
-import application.SetupPage.Brakes;
-import application.SetupPage.Suspension_Geometry;
-import application.SetupPage.Suspension;
-import application.SetupPage.Transmission;
-import application.SetupPage.Tyres;
 import contentUpdate.Pages.Setup.Aerodynamic;
 import contentUpdate.Pages.Setup.Brake;
 import contentUpdate.Pages.Setup.SuspenionGeometry;
@@ -17,7 +12,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import Global_vars.Data;
-import application.SetupPage.Aerodynamics;
 
 public class SetupUpdate {
 	public static Boolean Brakes_Boolean = false;
