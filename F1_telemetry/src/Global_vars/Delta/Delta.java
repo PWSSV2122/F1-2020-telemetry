@@ -1,6 +1,7 @@
 package Global_vars.Delta;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Delta {
 
@@ -32,5 +33,5 @@ public class Delta {
 	public static JsonNode Hanoi;
 	public static JsonNode Zandvoort;
 	
-	public static JsonNode CustomOrDefault;
+	public static ObjectNode CustomOrDefault;
 }

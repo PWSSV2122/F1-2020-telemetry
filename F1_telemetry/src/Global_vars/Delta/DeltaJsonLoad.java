@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import application.Main;
 
@@ -11,11 +12,11 @@ public class DeltaJsonLoad {
 
 	public static void LoadDeltaJson() {
 		ObjectMapper mapper = new ObjectMapper();
-		String filePath = Main.dir + "data_compute/delta/";
+		String filePath = Main.dir + "Global_vars/Delta/";
 		
-		File from = new File(Main.dir + "/Global_vars/Delta/CustomOrDefault.Json");
+		File from = new File(filePath + "CustomOrDefault.Json");
 		try {
-			Delta.CustomOrDefault = mapper.readTree(from);
+			Delta.CustomOrDefault = (ObjectNode) mapper.readTree(from);
 		} catch(Exception e) {
 			//custom error message
 		}

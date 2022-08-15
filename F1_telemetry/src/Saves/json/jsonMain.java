@@ -48,7 +48,6 @@ public class jsonMain {
 		} catch (JsonProcessingException e) {
 			Error.error("could not convert json object to String. This falure makes the save useles.", 2);
 		}
-		System.out.println(json);
 		
 		FileOutputStream write;
 		try {
