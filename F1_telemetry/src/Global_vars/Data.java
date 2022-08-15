@@ -67,7 +67,9 @@ public class Data {
 	public static Lobby_info Lobby_info;
 	public static Lobby_info_car[] Lobby_info_car = new Lobby_info_car[22];
 	
+	public static int PlayerCarIndex = 0;
 	
+		
 	
 	public static Motion Motion_comp;
 	public static Motion_car[] Motion_car_comp = new Motion_car[22];

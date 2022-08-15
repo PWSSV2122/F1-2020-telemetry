@@ -1,6 +1,9 @@
 package manager;
 
+import Global_vars.PageUpdate;
 import Global_vars.Settings;
+import Global_vars.Appendices.AppendicesLoader;
+import Global_vars.Delta.DeltaJsonLoad;
 import Inkoming.Inkoming;
 import Saves.Temp_create;
 import errors.Error;
@@ -14,6 +17,14 @@ public class program_manager {
 		
 		Temp_create.Temp();
 		Error.error("Temp save space created", 0);
+		
+		AppendicesLoader.LoadAppendices();
+		DeltaJsonLoad.LoadDeltaJson();
+		Error.error("Json loaded", 0);
+		
+		PageUpdate.getPageNames();
+		PageUpdate.getSceneNames();
+		Error.error("Page Names loaded", 0);
 		
 		System.out.println("Startup done");
 		Error.error("Startup done", 0);
@@ -34,6 +45,7 @@ public class program_manager {
 		new Thread() {
             @Override
             public void run() {
+            	applicationNew.Main.main(args);
             	//Main.main(args);
             	Inkoming.recieve();
             }
