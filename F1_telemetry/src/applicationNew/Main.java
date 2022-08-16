@@ -1,101 +1,55 @@
 package applicationNew;
-	
-import java.io.File;
 
-import File_reader.Names;
+import applicationNew.SetupPage.Aerodynamics;
+import applicationNew.SetupPage.Brakes;
+import applicationNew.SetupPage.Suspension;
+import applicationNew.SetupPage.Suspension_Geometry;
+import applicationNew.SetupPage.Transmission;
+import applicationNew.SetupPage.Tyres;
+import applicationNew.UIBlocks.CenterItems;
 import applicationNew.UIBlocks.MenuBar;
-import contentUpdate.ContentUpdate;
-import contentUpdate.SetupUpdate;
+import applicationNew.UIBlocks.TopBar;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
+import manager.OnClose;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox; 
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.Rectangle;
+import Global_vars.PageUpdate;
 import Global_vars.PageVars;
 
 public class Main extends Application{
-	public static double[] test = new double[] {1450, 800};
+	public static double[] windowSize = new double[] {1450, 800};
 	
 	public static Stage window;
 	public static String dir = "src/";
-	Button button1;
 	
 	public static void main(String[] args) {
-		launch(args);	
+		launch(args);
 	}
 	
-	@Override
 	public void start(Stage primaryStage) {
-		File_reader.settings.read();
-		Names.data_decode();
 		window = primaryStage;
 			
 		BorderPane top_level = new BorderPane();
-		VBox top_box = new VBox();
-		HBox top_box2 = new HBox();
 		
-		StackPane top_pane = new StackPane();
-		StackPane center_pane = new StackPane();
+		PageVars.Main_menu = new Scene(top_level, windowSize[0], windowSize[1]);
+
+		VBox Top = TopBar.TopBox(window);
+		HBox Left = MenuBar.leftBox(window);
+		StackPane Center = CenterItems.CenterItem(window, Left);
 		
-		ScrollPane left_scroll = new ScrollPane();
-		left_scroll.setStyle("-fx-background: transparent; -fx-background-color: transparent; ");
-		
-		PageVars.Main_menu = new Scene(top_level, test[0], test[1]);
-		
-		Rectangle H_line = new Rectangle();
-		H_line.setHeight(1);
-		H_line.widthProperty().bind(PageVars.Main_menu.widthProperty());
-		H_line.setStroke(Color.RED);
-		
-		Pane top_spacer = new Pane();
-		top_spacer.setPrefWidth(10000000);
-		
-		Button logo = new Button();
-		ImageView logo_image = new ImageView("images/LOGO_full.png");
-		logo.setGraphic(logo_image);
-		logo_image.setPreserveRatio(true);
-		logo_image.setFitHeight(70);
-		logo.getStylesheets().add(getClass().getResource("css/menu_button.css").toExternalForm());
-		logo.setOnAction(e -> {window.setScene(PageVars.Main_menu);
-			window.setTitle("F1 Tracker : Main Menu");});
-		
-		Button Settings = new Button();
-		ImageView Settings_image = new ImageView("images/settings.png");
-		Settings.setGraphic(Settings_image);
-		Settings_image.setPreserveRatio(true);
-		Settings_image.setFitHeight(70);
-		Settings.getStylesheets().add(getClass().getResource("css/menu_button.css").toExternalForm());
-		Settings.setOnAction(e -> settings.display("Settings"));
-		
-		Rectangle top_background = new Rectangle();
-		top_background.widthProperty().bind(top_level.widthProperty());
-		top_background.setHeight(81);
-		top_background.setStroke(Color.rgb(63, 63, 63, 1));
-		top_background.setFill(Color.rgb(63, 63, 63, 1));
-		
-		Rectangle center_background = new Rectangle();
-		
-		Color center_menu_gray = Color.rgb(128, 128, 128, 0.9);
-		center_background.setStroke(center_menu_gray);
-		center_background.setFill(center_menu_gray);
-		
-		ImageView background_menu = new ImageView("images/background.png"); 
-		background_menu.fitHeightProperty().bind(PageVars.Main_menu.heightProperty());
-		
-		GridPane content = new GridPane();
-		content.setHgap(10);
-		content.setVgap(10);
+		GridPane Content = new GridPane();
+		Content.setHgap(10);
+		Content.setVgap(10);
 		
 		Button[] Content_buttons = new Button[6];
 		String[] Content_names = new String[] {"Track", "Suspension_page", "design_timings", "Graph_compaire", "GRAPH", "Times_driver"};
@@ -109,71 +63,66 @@ public class Main extends Application{
 			Content_images[i].setSmooth(true);
 			Content_images[i].setFitWidth(500);
 			Content_buttons[i].setGraphic(Content_images[i]);
-			content.add(Content_buttons[i], table[i][0], table[i][1]);
+			Content.add(Content_buttons[i], table[i][0], table[i][1]);
 			Content_buttons[i].setPadding(Insets.EMPTY);
-		}	
+			final int button = i + 6;
+			Content_buttons[i].setOnAction(e -> {
+				PageUpdate.SwitchPage(button);
+			});
+		}
 		
-		Content_buttons[0].setOnAction(e -> {window.setScene(PageVars.TrackPage_scene);
-			window.setTitle("F1 Tracker : Track Page");
-			ContentUpdate.Track_refresh = true;});
-		Content_buttons[1].setOnAction(e -> {window.setScene(PageVars.SetupPage_Brakes_scene);
-			window.setTitle("F1 Tracker : Setup Page Brakes");
-			SetupUpdate.Brakes_Boolean = true;});
-		Content_buttons[3].setOnAction(e -> {window.setScene(PageVars.ComparisonPage_scene);
-			window.setTitle("F1 Tracker : Comparison Page");
-			ContentUpdate.Comparison_refresh = true;});
-		Content_buttons[4].setOnAction(e -> {window.setScene(PageVars.GraphPage_scene);
-			window.setTitle("F1 Tracker : Graph Page");
-			ContentUpdate.Graph_refresh = true;});
-		Content_buttons[5].setOnAction(e -> {window.setScene(PageVars.LapTimePage_scene);
-			window.setTitle("F1 Tracker : Lap Time Page");
-			ContentUpdate.LapTime_refresh = true;});
-		Content_buttons[2].setOnAction(e -> {window.setScene(PageVars.TimingPage_scene);
-			window.setTitle("F1 Tracker : Timing Page");
-			ContentUpdate.TimingPage_refresh = true;});
-		
+		String[] names = new String[] {"TrackPage", "SetupPage", "ComparisonPage", "GraphPage", "LapTimePage", "TimingPage"};
+		Tooltip[] TooltipContentButton = new Tooltip[6];
+		for (int i = 0; i <6; i++) {
+			TooltipContentButton[i] = new Tooltip();
+			TooltipContentButton[i].setText(names[i]);
+			Content_buttons[i].setTooltip(TooltipContentButton[i]);
+			Tooltip.install(Content_buttons[i], TooltipContentButton[i]);	
+			TooltipContentButton[i].setStyle(
+					"-fx-background-color: #3F3F3F;"
+				+	"-fx-text-fill: white;"
+				+	"-fx-border-width: 1px;"
+				+	"-fx-border-color: red;"
+				+ 	"-fx-font-size: 15px;"
+			);	
+		}
+	
 		Box box1 = new Box();
 		box1.setHeight(120);
 		box1.setWidth(0);
-		content.add(box1, 0, 0);
-		
+		Content.add(box1, 0, 0);
+	
 		Box box2 = new Box();
 		box2.setHeight(150);
 		box2.setWidth(0);
-		content.add(box2, 0, 2);
+		Content.add(box2, 0, 2);
 		
-		top_level.setTop(top_box);
-		top_box.getChildren().addAll(top_pane, H_line);
-		top_pane.getChildren().addAll(top_background, top_box2);
-		top_box2.getChildren().addAll(logo, top_spacer, Settings);
+		Center.getChildren().add(Content);
 		
-		
-		top_level.setLeft(MenuBar.leftBox(window));
-		
-		top_level.setCenter(center_pane);
-		center_pane.getChildren().addAll(background_menu, center_background, content);
+		top_level.setTop(Top);
+		top_level.setLeft(Left);
+		top_level.setCenter(Center);
 
-	   window.widthProperty().addListener((obs, oldVal, newVal) -> {
-		   center_background.setWidth((double) newVal - 130);
-		   background_menu.setFitWidth((double) newVal - 130);
-		   for(int i = 0; i < 6; i++) {
-			   Content_buttons[i].setPrefWidth(((double) newVal - 40 - 150) / 3 - 1000);
-			   Content_images[i].setFitWidth(((double) newVal - 40 - 150) / 3 - 2);
-		   }
-		   test[0] = (double) newVal;
-	   });
+		window.widthProperty().addListener((obs, oldVal, newVal) -> {
+			for(int i = 0; i < 6; i++) {
+				   Content_buttons[i].setPrefWidth(((double) newVal - 40 - 150) / 3 - 1000);
+				   Content_images[i].setFitWidth(((double) newVal - 40 - 150) / 3 - 2);
+			   }
+			
+			windowSize[0] = (double) newVal;
+		});
 
-	   window.heightProperty().addListener((obs, oldVal, newVal) -> {
-	       center_background.setHeight((double) newVal - 39);
-	       box1.setHeight((double)newVal / 10);
-	       for(int i = 0; i < 6; i++) {
-	    	   Content_buttons[i].setPrefHeight(((double) newVal - 40 - 150) / 3 - 1000);
-	    	   Content_images[i].setFitHeight(((double) newVal - 40 - 150) / 3 - 2);
-		   }
-		   box1.setHeight(((double) newVal - 90 - 100) / 7 - 20);
-		   box2.setHeight(((double) newVal - 90 - 50) / 6 - 20);
-	       test[1] = (double) newVal;
-	   });
+		window.heightProperty().addListener((obs, oldVal, newVal) -> {
+			box1.setHeight((double)newVal / 10);
+		       for(int i = 0; i < 6; i++) {
+		    	   Content_buttons[i].setPrefHeight(((double) newVal - 40 - 150) / 3 - 1000);
+		    	   Content_images[i].setFitHeight(((double) newVal - 40 - 150) / 3 - 2);
+			   }
+			   box1.setHeight(((double) newVal - 90 - 100) / 7 - 20);
+			   box2.setHeight(((double) newVal - 90 - 50) / 6 - 20);
+			
+			windowSize[1] = (double) newVal;
+		});
 		
 		try {
 			//window.setY(257.0);
@@ -183,17 +132,24 @@ public class Main extends Application{
 			window.setTitle("F1 Tracker : Main Menu");
 			window.show();
 		} catch(Exception e) {
+			//custom error message
+			e.printStackTrace();
 		}
-		window.setOnCloseRequest(e -> PreferenceSave());
-	}
-	
-	public void PreferenceSave() {
-		File_reader.settings.write();
-		File file = new File("Saves/temp/Lap_Data.dec");
-		if (file.length() == 0) {
-		} else {
-			Save_file.display("Save File");
-		}
-		System.exit(0);
+		window.setOnCloseRequest(e -> OnClose.ProgramClose());
+		
+		PageVars.TrackPage_scene = TrackPage.TrackPage_scene();
+//		PageVars.ComparisonPage_scene = ComparisonPage.ComparisonPage_scene();
+//		PageVars.GraphPage_scene = GraphPage.GraphPage_scene();
+//		PageVars.LapTimePage_scene = LapTimePage.LapTimePage_scene();
+//		PageVars.TimingPage_scene = TimingPage.TimingPage_scene();
+//		   
+//		PageVars.SetupPage_Brakes_scene = Brakes.Brakes_scene();
+//		PageVars.SetupPage_Suspension_Geometry_scene = Suspension_Geometry.Suspension_Geometry_scene();
+//		PageVars.SetupPage_Suspension_scene = Suspension.Suspension_scene();
+//		PageVars.SetupPage_Transmission_scene = Transmission.Transmission_scene();
+//		PageVars.SetupPage_Tyres_scene = Tyres.Tyres_scene();
+//		PageVars.SetupPage_Aerodynamics_scene = Aerodynamics.Aerodynamics_scene();
+		
+		System.out.println("Test");
 	}
 }

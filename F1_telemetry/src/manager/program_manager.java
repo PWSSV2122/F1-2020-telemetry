@@ -1,11 +1,24 @@
 package manager;
 
 import Global_vars.PageUpdate;
+import Global_vars.PageVars;
 import Global_vars.Settings;
 import Global_vars.Appendices.AppendicesLoader;
 import Global_vars.Delta.DeltaJsonLoad;
 import Inkoming.Inkoming;
 import Saves.Temp_create;
+import applicationNew.ComparisonPage;
+import applicationNew.GraphPage;
+import applicationNew.LapTimePage;
+import applicationNew.Main;
+import applicationNew.TimingPage;
+import applicationNew.TrackPage;
+import applicationNew.SetupPage.Aerodynamics;
+import applicationNew.SetupPage.Brakes;
+import applicationNew.SetupPage.Suspension;
+import applicationNew.SetupPage.Suspension_Geometry;
+import applicationNew.SetupPage.Transmission;
+import applicationNew.SetupPage.Tyres;
 import errors.Error;
 
 public class program_manager {
@@ -27,6 +40,15 @@ public class program_manager {
 		Error.error("Page Names loaded", 0);
 		
 		System.out.println("Startup done");
+		
+		new Thread() {
+            @Override
+            public void run() {
+            	Main.main(args);
+            	//Inkoming.recieve();
+            }
+        }.start();
+		
 		Error.error("Startup done", 0);
 		
 		//Saves.decode.decode.runSave = true;
@@ -41,14 +63,5 @@ public class program_manager {
 //			toSave.ToFile(one, two, 0, 1, "Lap_data/" + 0, structClassNames.Lap_data);
 //		}
 //		System.out.println("MS: " + (float)((System.nanoTime() - start)) / 1000000);
-		
-		new Thread() {
-            @Override
-            public void run() {
-            	applicationNew.Main.main(args);
-            	//Main.main(args);
-            	Inkoming.recieve();
-            }
-        }.start();
 	}
 }

@@ -6,22 +6,20 @@ import applicationNew.Main;
 import javafx.scene.Scene;
 
 public class PageUpdate {
-	public static String[] pageNames;
-	public static String[] PageSceneNames;
 	
 	public static void getPageNames() {
 		Field[] temp = PageUpdate.class.getDeclaredFields();
-		pageNames = new String[temp.length];
+		PageVars.pageNames = new String[temp.length];
 		for (int i = 0; i < temp.length; i++) {
-			pageNames[i] = temp[i].getName();
+			PageVars.pageNames[i] = temp[i].getName();
 		}
 	}
 	
 	public static void getSceneNames() {
 		Field[] temp = PageVars.class.getDeclaredFields();
-		PageSceneNames = new String[temp.length];
+		PageVars.PageSceneNames = new String[temp.length];
 		for (int i = 0; i < temp.length; i++) {
-			PageSceneNames[i] = temp[i].getName();
+			PageVars.PageSceneNames[i] = temp[i].getName();
 		}
 	}
 	
@@ -31,18 +29,20 @@ public class PageUpdate {
 			try {
 				temp[i].set(false, false);
 			} catch (Exception e) {
+				e.printStackTrace();
 				//custom error message
 			}
 		}
 		try {
-			PageUpdate.class.getField(pageNames[button]).set(true, true);
-			Field temp2 = PageVars.class.getField(PageSceneNames[button]);
-			Scene temp3 = (Scene) temp2.get(temp2);
-			Main.window.setScene(temp3);
+			PageUpdate.class.getField(PageVars.pageNames[button]).set(true, true);
+			Field temp2 = PageVars.class.getField(PageVars.PageSceneNames[button]);
+			System.out.println(PageVars.class.getDeclaredField(PageVars.PageSceneNames[button]));
+			Main.window.setScene((Scene)PageVars.class.getDeclaredField(PageVars.PageSceneNames[button]).get(temp2));
+			Main.window.setTitle("F1 Tracker : " + PageVars.PageScreenName[button]);
 		} catch (Exception e) {
+			e.printStackTrace();
 			//custom error message
-		}
-		
+		}		
 	}
 
 	//setup pages

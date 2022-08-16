@@ -1,2 +1,2 @@
 Poort:20777
-Send Rate:60
+Send Rate:0
